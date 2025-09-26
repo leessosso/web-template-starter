@@ -1,0 +1,144 @@
+{
+  "navigation": {
+    "home": "Home",
+    "service": "Services",
+    "product": "Product",
+    "portfolio": "Portfolio",
+    "analytics": "Data Analytics",
+    "contact": "Request Quote"
+  },
+  "hero": {
+    "badge": "Instant draft delivery",
+    "headline": "Responsive web templates tailored to <span class=\"text-brand-400\">your clients</span>",
+    "description": "Pre-built sections and components help you deliver a customized draft as soon as an order comes in. Speed up your projects with a consistent design system and reusable pieces.",
+    "primaryCta": "Browse templates",
+    "secondaryCta": "View workflow",
+    "stats": {
+      "templates": "Templates ready",
+      "leadTime": "Average lead time",
+      "satisfaction": "Client satisfaction",
+      "revisions": "Revision rounds"
+    },
+    "statValues": {
+      "templates": "12+",
+      "leadTime": "2 days",
+      "satisfaction": "98%",
+      "revisions": "Unlimited"
+    }
+  },
+  "highlights": {
+    "title": "Why teams rely on us",
+    "subtitle": "We pre-build the sections and flows you need most often so you can adapt them quickly to every project.",
+    "responsive": {
+      "title": "Responsive grid system",
+      "description": "Tailwind CSS utilities deliver pixel-perfect layouts on every screen size.",
+      "points": ["Flexible 12-column grid", "Mobile-first approach", "Component-level placement"]
+    },
+    "branding": {
+      "title": "Brand-friendly design",
+      "description": "Adjust colors, typography, and components to reflect each brand identity in minutes.",
+      "points": ["Customizable color tokens", "Dark/light mode ready", "Brand-specific template variants"]
+    },
+    "templates": {
+      "title": "Ready-to-ship pages",
+      "description": "Home, services, product, and portfolio pages prebuilt for rapid delivery.",
+      "points": ["20+ sections including hero, CTA, testimonials", "Reusable across projects", "Mix-and-match page layouts"]
+    }
+  },
+  "workflow": {
+    "title": "3-step delivery workflow",
+    "description": "Most drafts ship within two days thanks to our streamlined, template-driven process.",
+    "steps": [
+      {
+        "title": "Select template & gather brand assets",
+        "description": "Match the client use case, then collect brand colors, logo, and tone of voice.",
+        "duration": "0.5 day"
+      },
+      {
+        "title": "Assemble sections & customize",
+        "description": "Compose hero, services, CTAs, and visuals to align with the brand narrative.",
+        "duration": "1 day"
+      },
+      {
+        "title": "QA & handoff",
+        "description": "Run responsive and accessibility checks, capture revisions, and prepare delivery.",
+        "duration": "0.5 day"
+      }
+    ]
+  },
+  "testimonials": {
+    "title": "Feedback from partners",
+    "subtitle": "Studios and freelancers use these templates to accelerate delivery without sacrificing quality.",
+    "items": [
+      {
+        "name": "Kim Pro",
+        "role": "Branding agency lead",
+        "quote": "With pre-built templates we recreate the client’s desired flow in half a day. Customizing details is effortless, and satisfaction is high."
+      },
+      {
+        "name": "Lee Designer",
+        "role": "Freelance UI designer",
+        "quote": "The grid and components are so well organized that my turnaround time doubled. Mobile responsiveness works from the start."
+      },
+      {
+        "name": "Park Dev",
+        "role": "Frontend engineer",
+        "quote": "Vite + React keeps builds fast, and Tailwind ensures consistent styling, making maintenance easy."
+      }
+    ]
+  },
+  "service": {
+    "title": "Service overview template",
+    "description": "Perfect for agencies and professional services. Put pricing, FAQs, and core value propositions in front of your clients instantly.",
+    "sections": {
+      "title": "Included sections",
+      "items": ["Hero + value proposition", "Service details & process", "Pricing plans & perks", "Testimonials & FAQ", "CTA and inquiry form"]
+    },
+    "recommendations": {
+      "title": "Recommended for",
+      "description": "Ideal when you need to highlight a clear service process and build trust—consulting, marketing, education, and more."
+    }
+  },
+  "product": {
+    "title": "Product landing template",
+    "description": "A flexible structure for SaaS, digital goods, and courses. Showcase features, benefits, and pricing clearly.",
+    "sections": {
+      "title": "Included sections",
+      "items": ["Hero + value proposition", "Features & benefits", "Pricing & plan comparison", "Customer stories & stats", "FAQ and CTA"]
+    },
+    "recommendations": {
+      "title": "Recommended for",
+      "description": "Best suited for SaaS startups, subscription services, and online education that need to explain product value quickly."
+    }
+  },
+  "portfolio": {
+    "title": "Portfolio showcase template",
+    "description": "Designed for freelancers, studios, and creators. Present your best work, process, and client feedback in a cohesive story.",
+    "sections": {
+      "title": "Included sections",
+      "items": ["Hero + expertise overview", "Featured project grid", "Process & services", "Testimonials & partners", "CTA and contact"]
+    },
+    "recommendations": {
+      "title": "Recommended for",
+      "description": "Great for design studios, personal portfolios, and media teams that need to emphasize visual references."
+    }
+  },
+  "footer": {
+    "description": "Deliver high-quality templates immediately and share rapid drafts with your clients.",
+    "sections": {
+      "templates": "Templates",
+      "resources": "Resources",
+      "company": "Company"
+    },
+    "links": {
+      "designSystem": "Design system",
+      "docs": "Documentation",
+      "library": "Component library",
+      "about": "About",
+      "blog": "Blog",
+      "careers": "Careers"
+    },
+    "copyright": "© {{year}} WebTemplateStudio. All rights reserved."
+  }
+}
+

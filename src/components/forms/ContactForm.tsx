@@ -1,0 +1,128 @@
+import React, { useState } from 'react';
+import { Input } from '../ui/Input';
+import { Button } from '../ui/Button';
+import { Alert } from '../ui/Alert';
+
+interface ContactFormData {
+  name: string;
+  email: string;
+  company?: string;
+  message: string;
+}
+
+interface ContactFormProps {
+  onSubmit?: (data: ContactFormData) => Promise<void>;
+  className?: string;
+}
+
+export function ContactForm({ onSubmit, className = '' }: ContactFormProps) {
+  const [formData, setFormData] = useState<ContactFormData>({
+    name: '',
+    email: '',
+    company: '',
+    message: '',
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [alert, setAlert] = useState<{
+    type: 'success' | 'error';
+    message: string;
+  } | null>(null);
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setAlert(null);
+
+    try {
+      if (onSubmit) {
+        await onSubmit(formData);
+        setAlert({
+          type: 'success',
+          message: '문의가 성공적으로 전송되었습니다. 곧 연락드리겠습니다.',
+        });
+        setFormData({ name: '', email: '', company: '', message: '' });
+      }
+    } catch (error) {
+      setAlert({
+        type: 'error',
+        message: '문의 전송 중 오류가 발생했습니다. 다시 시도해주세요.',
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className={`space-y-6 ${className}`}>
+      {alert && (
+        <Alert
+          type={alert.type}
+          onClose={() => setAlert(null)}
+          className="mb-4"
+        >
+          {alert.message}
+        </Alert>
+      )}
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <Input
+          label="이름"
+          name="name"
+          type="text"
+          required
+          value={formData.name}
+          onChange={handleChange}
+          placeholder="이름을 입력하세요"
+        />
+        <Input
+          label="이메일"
+          name="email"
+          type="email"
+          required
+          value={formData.email}
+          onChange={handleChange}
+          placeholder="이메일을 입력하세요"
+        />
+      </div>
+
+      <Input
+        label="회사명 (선택사항)"
+        name="company"
+        type="text"
+        value={formData.company}
+        onChange={handleChange}
+        placeholder="회사명을 입력하세요"
+      />
+
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-2">
+          문의사항
+        </label>
+        <textarea
+          name="message"
+          required
+          rows={5}
+          value={formData.message}
+          onChange={handleChange}
+          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+          placeholder="문의사항을 자세히 작성해주세요"
+        />
+      </div>
+
+      <Button
+        type="submit"
+        disabled={isSubmitting}
+        className="w-full"
+      >
+        {isSubmitting ? '전송 중...' : '문의 보내기'}
+      </Button>
+    </form>
+  );
+}
