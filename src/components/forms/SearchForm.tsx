@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import { Input } from '../ui/Input';
 import { Button } from '../ui/Button';
+import { useTrackSearch } from '../../analytics';
 
 interface SearchFormProps {
-  onSearch: (query: string, filters?: Record<string, any>) => void;
+  onSearch: (query: string, filters?: Record<string, unknown>) => void;
   placeholder?: string;
   filters?: {
     key: string;
     label: string;
     options: { value: string; label: string }[];
   }[];
-  showAdvanced?: boolean;
   className?: string;
 }
 
@@ -18,9 +18,9 @@ export function SearchForm({
   onSearch,
   placeholder = '검색어를 입력하세요',
   filters = [],
-  showAdvanced = false,
   className = '',
 }: SearchFormProps) {
+  const trackSearch = useTrackSearch();
   const [query, setQuery] = useState('');
   const [activeFilters, setActiveFilters] = useState<Record<string, string>>({});
   const [showFilters, setShowFilters] = useState(false);
@@ -28,6 +28,10 @@ export function SearchForm({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onSearch(query, activeFilters);
+    // Google Analytics: 검색 이벤트 추적
+    if (query.trim()) {
+      trackSearch(query.trim());
+    }
   };
 
   const handleFilterChange = (filterKey: string, value: string) => {

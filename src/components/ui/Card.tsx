@@ -24,7 +24,7 @@ export function Card({
 
   return (
     <div
-      className={`bg-white rounded-lg border border-gray-200 shadow-sm ${paddingClasses[padding]} ${hoverClasses} ${className}`}
+      className={`bg-card text-card-foreground rounded-lg border border-border shadow-sm ${paddingClasses[padding]} ${hoverClasses} ${className}`}
     >
       {children}
     </div>

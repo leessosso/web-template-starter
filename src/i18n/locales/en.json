@@ -9,7 +9,7 @@
   },
   "hero": {
     "badge": "Instant draft delivery",
-    "headline": "Responsive web templates tailored to <span class=\"text-brand-400\">your clients</span>",
+    "headline": "Responsive web templates tailored to <span className=\"text-primary\">your clients</span>",
     "description": "Pre-built sections and components help you deliver a customized draft as soon as an order comes in. Speed up your projects with a consistent design system and reusable pieces.",
     "primaryCta": "Browse templates",
     "secondaryCta": "View workflow",
@@ -32,17 +32,29 @@
     "responsive": {
       "title": "Responsive grid system",
       "description": "Tailwind CSS utilities deliver pixel-perfect layouts on every screen size.",
-      "points": ["Flexible 12-column grid", "Mobile-first approach", "Component-level placement"]
+      "points": [
+        "Flexible 12-column grid",
+        "Mobile-first approach",
+        "Component-level placement"
+      ]
     },
     "branding": {
       "title": "Brand-friendly design",
       "description": "Adjust colors, typography, and components to reflect each brand identity in minutes.",
-      "points": ["Customizable color tokens", "Dark/light mode ready", "Brand-specific template variants"]
+      "points": [
+        "Customizable color tokens",
+        "Dark/light mode ready",
+        "Brand-specific template variants"
+      ]
     },
     "templates": {
       "title": "Ready-to-ship pages",
       "description": "Home, services, product, and portfolio pages prebuilt for rapid delivery.",
-      "points": ["20+ sections including hero, CTA, testimonials", "Reusable across projects", "Mix-and-match page layouts"]
+      "points": [
+        "20+ sections including hero, CTA, testimonials",
+        "Reusable across projects",
+        "Mix-and-match page layouts"
+      ]
     }
   },
   "workflow": {
@@ -92,7 +104,13 @@
     "description": "Perfect for agencies and professional services. Put pricing, FAQs, and core value propositions in front of your clients instantly.",
     "sections": {
       "title": "Included sections",
-      "items": ["Hero + value proposition", "Service details & process", "Pricing plans & perks", "Testimonials & FAQ", "CTA and inquiry form"]
+      "items": [
+        "Hero + value proposition",
+        "Service details & process",
+        "Pricing plans & perks",
+        "Testimonials & FAQ",
+        "CTA and inquiry form"
+      ]
     },
     "recommendations": {
       "title": "Recommended for",
@@ -104,7 +122,13 @@
     "description": "A flexible structure for SaaS, digital goods, and courses. Showcase features, benefits, and pricing clearly.",
     "sections": {
       "title": "Included sections",
-      "items": ["Hero + value proposition", "Features & benefits", "Pricing & plan comparison", "Customer stories & stats", "FAQ and CTA"]
+      "items": [
+        "Hero + value proposition",
+        "Features & benefits",
+        "Pricing & plan comparison",
+        "Customer stories & stats",
+        "FAQ and CTA"
+      ]
     },
     "recommendations": {
       "title": "Recommended for",
@@ -116,7 +140,13 @@
     "description": "Designed for freelancers, studios, and creators. Present your best work, process, and client feedback in a cohesive story.",
     "sections": {
       "title": "Included sections",
-      "items": ["Hero + expertise overview", "Featured project grid", "Process & services", "Testimonials & partners", "CTA and contact"]
+      "items": [
+        "Hero + expertise overview",
+        "Featured project grid",
+        "Process & services",
+        "Testimonials & partners",
+        "CTA and contact"
+      ]
     },
     "recommendations": {
       "title": "Recommended for",
@@ -141,4 +171,3 @@
     "copyright": "© {{year}} WebTemplateStudio. All rights reserved."
   }
 }
-

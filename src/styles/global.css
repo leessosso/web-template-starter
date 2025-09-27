@@ -6,12 +6,75 @@
 
 @layer base {
   :root {
+    /* Base color system */
+    --color-background: 15 23 42; /* slate-950 */
+    --color-foreground: 241 245 249; /* slate-100 */
+    --color-muted: 30 41 59; /* slate-800 */
+    --color-muted-foreground: 148 163 184; /* slate-400 */
+    --color-accent: 59 130 246; /* blue-500 */
+    --color-accent-foreground: 255 255 255;
+    --color-border: 71 85 105; /* slate-600 */
+    --color-card: 30 41 59; /* slate-800 */
+    --color-card-foreground: 241 245 249; /* slate-100 */
+
+    /* Brand colors - Blue theme as default */
+    --color-primary: 255 107 53; /* #FF6B35 - 고객사 브랜드 색상 */
+    --color-primary-foreground: 255 255 255;
+    --color-secondary: 148 163 184;
+    --color-secondary-foreground: 15 23 42;
+
+    /* Theme variants */
+    --radius: 0.75rem;
     color-scheme: dark;
-    @apply bg-slate-950 text-slate-100;
+  }
+
+  /* Light mode overrides */
+  :root[data-theme="light"] {
+    --color-background: 255 255 255;
+    --color-foreground: 15 23 42;
+    --color-muted: 241 245 249;
+    --color-muted-foreground: 100 116 139;
+    --color-accent: 59 130 246;
+    --color-accent-foreground: 255 255 255;
+    --color-border: 226 232 240;
+    --color-card: 255 255 255;
+    --color-card-foreground: 15 23 42;
+    color-scheme: light;
+  }
+
+  /* Theme color variants */
+  :root[data-theme-color="green"] {
+    --color-primary: 34 197 94;
+  }
+
+  :root[data-theme-color="purple"] {
+    --color-primary: 147 51 234;
+  }
+
+  :root[data-theme-color="orange"] {
+    --color-primary: 249 115 22;
+  }
+
+  :root[data-theme-color="rose"] {
+    --color-primary: 244 63 94;
+  }
+
+  :root[data-theme-color="emerald"] {
+    --color-primary: 16 185 129;
+  }
+
+  :root[data-theme-color="red"] {
+    --color-primary: 220 38 38; /* 추가: 빨간색 테마 */
+  }
+
+  :root[data-theme-color="indigo"] {
+    --color-primary: 79 70 229; /* 추가: 남색 테마 */
   }
 
   body {
-    @apply min-h-screen bg-slate-950 font-body text-base antialiased;
+    @apply min-h-screen font-body text-base antialiased;
+    background-color: rgb(var(--color-background));
+    color: rgb(var(--color-foreground));
   }
 
   h1,
@@ -20,7 +83,8 @@
   h4,
   h5,
   h6 {
-    @apply font-display text-slate-50;
+    @apply font-display;
+    color: rgb(var(--color-foreground));
   }
 }
 
@@ -30,19 +94,48 @@
   }
 
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full bg-brand-500 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-brand-500/40 transition hover:bg-brand-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-400;
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold text-[rgb(var(--color-primary-foreground))] transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2;
+    background-color: rgb(var(--color-primary));
+    box-shadow: 0 4px 14px 0 rgb(var(--color-primary) / 0.4);
+  }
+
+  .btn-primary:hover {
+    background-color: rgb(var(--color-primary) / 0.9);
+  }
+
+  .btn-primary:focus-visible {
+    outline-color: rgb(var(--color-primary) / 0.6);
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/40;
+    @apply inline-flex items-center justify-center gap-2 rounded-full border px-5 py-3 text-sm font-semibold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2;
+    background-color: rgb(var(--color-muted));
+    color: rgb(var(--color-foreground));
+    border-color: rgb(var(--color-border));
+  }
+
+  .btn-secondary:hover {
+    background-color: rgb(var(--color-muted) / 0.8);
+  }
+
+  .btn-secondary:focus-visible {
+    outline-color: rgb(var(--color-border) / 0.6);
   }
 
   .card-surface {
-    @apply rounded-3xl border border-white/10 bg-white/[0.04] p-8 shadow-[0_20px_50px_-20px_rgba(15,23,42,0.9)];
+    @apply rounded-3xl p-8;
+    background-color: rgb(var(--color-card));
+    color: rgb(var(--color-card-foreground));
+    border-color: rgb(var(--color-border));
+    border-width: 1px;
+    box-shadow: 0 20px 50px -20px rgb(var(--color-background) / 0.9);
   }
 
   .surface-muted {
-    @apply rounded-3xl border border-white/5 bg-white/[0.02];
+    @apply rounded-3xl;
+    background-color: rgb(var(--color-muted));
+    border-color: rgb(var(--color-border));
+    border-width: 1px;
   }
 }
 

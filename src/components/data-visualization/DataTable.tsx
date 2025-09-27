@@ -14,12 +14,12 @@ import {
 
 export interface TableData {
   id: string;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 interface DataTableProps<T extends TableData> {
   data: T[];
-  columns: ColumnDef<T, any>[];
+  columns: ColumnDef<T, unknown>[];
   searchable?: boolean;
   sortable?: boolean;
   paginated?: boolean;
@@ -96,9 +96,9 @@ export function DataTable<T extends TableData>({
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
                       {sortable && header.column.getCanSort() && (
                         <span className="text-xs">
                           {header.column.getIsSorted() === 'asc' ? '↑' : ''}

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Input } from '../ui/Input';
 import { Button } from '../ui/Button';
 import { Alert } from '../ui/Alert';
+import { useTrackFormSubmit, useTrackClarityFormSubmit } from '../../analytics';
 
 interface ContactFormData {
   name: string;
@@ -16,6 +17,8 @@ interface ContactFormProps {
 }
 
 export function ContactForm({ onSubmit, className = '' }: ContactFormProps) {
+  const trackFormSubmit = useTrackFormSubmit('contact_form');
+  const trackClarityFormSubmit = useTrackClarityFormSubmit('contact_form');
   const [formData, setFormData] = useState<ContactFormData>({
     name: '',
     email: '',
@@ -48,12 +51,20 @@ export function ContactForm({ onSubmit, className = '' }: ContactFormProps) {
           message: '문의가 성공적으로 전송되었습니다. 곧 연락드리겠습니다.',
         });
         setFormData({ name: '', email: '', company: '', message: '' });
+        // Google Analytics: 폼 제출 성공 추적
+        trackFormSubmit(true);
+        // Microsoft Clarity: 폼 제출 성공 추적
+        trackClarityFormSubmit(true);
       }
-    } catch (error) {
+    } catch {
       setAlert({
         type: 'error',
         message: '문의 전송 중 오류가 발생했습니다. 다시 시도해주세요.',
       });
+      // Google Analytics: 폼 제출 실패 추적
+      trackFormSubmit(false);
+      // Microsoft Clarity: 폼 제출 실패 추적
+      trackClarityFormSubmit(false);
     } finally {
       setIsSubmitting(false);
     }

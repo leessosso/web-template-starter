@@ -8,6 +8,31 @@ export default {
         body: ['Inter', 'system-ui', 'sans-serif'],
       },
       colors: {
+        // Primary brand colors - now using CSS variables
+        primary: {
+          50: 'rgb(var(--color-primary) / 0.05)',
+          100: 'rgb(var(--color-primary) / 0.1)',
+          200: 'rgb(var(--color-primary) / 0.2)',
+          300: 'rgb(var(--color-primary) / 0.3)',
+          400: 'rgb(var(--color-primary) / 0.4)',
+          500: 'rgb(var(--color-primary) / 0.5)',
+          600: 'rgb(var(--color-primary) / 0.6)',
+          700: 'rgb(var(--color-primary) / 0.7)',
+          800: 'rgb(var(--color-primary) / 0.8)',
+          900: 'rgb(var(--color-primary) / 0.9)',
+          DEFAULT: 'rgb(var(--color-primary))',
+        },
+        // Semantic colors using CSS variables
+        background: 'rgb(var(--color-background))',
+        foreground: 'rgb(var(--color-foreground))',
+        muted: 'rgb(var(--color-muted))',
+        'muted-foreground': 'rgb(var(--color-muted-foreground))',
+        accent: 'rgb(var(--color-accent))',
+        'accent-foreground': 'rgb(var(--color-accent-foreground))',
+        border: 'rgb(var(--color-border))',
+        card: 'rgb(var(--color-card))',
+        'card-foreground': 'rgb(var(--color-card-foreground))',
+        // Legacy brand colors for backward compatibility
         brand: {
           DEFAULT: '#2563eb',
           50: '#eff6ff',
@@ -24,6 +49,9 @@ export default {
       },
       maxWidth: {
         content: '1200px',
+      },
+      borderRadius: {
+        DEFAULT: 'var(--radius)',
       },
     },
   },
