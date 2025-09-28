@@ -1,5 +1,5 @@
 import { Trans, useTranslation } from 'react-i18next'
-import { ThemeSelector } from '../../../components/ui'
+import { ThemeSelector, Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, Button } from '../../../components/ui'
 
 export function HeroSection() {
   const { t } = useTranslation()
@@ -21,6 +21,19 @@ export function HeroSection() {
           <a href="#workflow" className="btn-secondary">
             {t('hero.secondaryCta')}
           </a>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button variant="outline">Shadcn/ui 테스트</Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Shadcn/ui Dialog 테스트</DialogTitle>
+                <DialogDescription>
+                  Shadcn/ui 컴포넌트들이 정상적으로 작동하고 있어요! 🎉
+                </DialogDescription>
+              </DialogHeader>
+            </DialogContent>
+          </Dialog>
         </div>
         <dl className="grid grid-cols-2 gap-6 sm:grid-cols-4">
           {[
