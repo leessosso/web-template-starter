@@ -42,18 +42,18 @@ export function PricingCard({
       )}
 
       <div className="text-center mb-8">
-        <h3 className="text-2xl font-bold text-gray-900 mb-2">
+        <h3 className="text-2xl font-bold text-card-foreground mb-2">
           {name}
         </h3>
         <div className="mb-4">
-          <span className="text-4xl font-bold text-gray-900">
+          <span className="text-4xl font-bold text-card-foreground">
             ₩{price.toLocaleString()}
           </span>
           {period && (
-            <span className="text-gray-600">/{period}</span>
+            <span className="text-muted-foreground">/{period}</span>
           )}
         </div>
-        <p className="text-gray-600">
+        <p className="text-muted-foreground">
           {description}
         </p>
       </div>
@@ -64,14 +64,14 @@ export function PricingCard({
             <li key={index} className="flex items-center">
               <span
                 className={`mr-3 ${
-                  feature.included ? 'text-green-500' : 'text-gray-400'
+                  feature.included ? 'text-green-500' : 'text-muted-foreground'
                 }`}
               >
                 {feature.included ? '✓' : '✕'}
               </span>
               <span
                 className={`${
-                  feature.included ? 'text-gray-900' : 'text-gray-400 line-through'
+                  feature.included ? 'text-card-foreground' : 'text-muted-foreground line-through'
                 }`}
               >
                 {feature.text}

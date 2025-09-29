@@ -74,22 +74,22 @@ export function DataTable<T extends TableData>({
             type="text"
             value={globalFilter ?? ''}
             onChange={(event) => setGlobalFilter(String(event.target.value))}
-            className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full max-w-sm"
+            className="px-3 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full max-w-sm"
             placeholder="검색..."
           />
         </div>
       )}
 
       {/* Table */}
-      <div className="overflow-x-auto border border-gray-200 rounded-lg">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
+      <div className="overflow-x-auto border border-border rounded-lg">
+        <table className="min-w-full divide-y divide-border">
+          <thead className="bg-muted">
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
                   <th
                     key={header.id}
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                    className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider cursor-pointer hover:bg-background"
                     onClick={header.column.getToggleSortingHandler()}
                   >
                     <div className="flex items-center gap-2">
@@ -112,13 +112,13 @@ export function DataTable<T extends TableData>({
               </tr>
             ))}
           </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
+          <tbody className="bg-card divide-y divide-border">
             {table.getRowModel().rows.map((row) => (
-              <tr key={row.id} className="hover:bg-gray-50">
+              <tr key={row.id} className="hover:bg-muted">
                 {row.getVisibleCells().map((cell) => (
                   <td
                     key={cell.id}
-                    className="px-6 py-4 whitespace-nowrap text-sm text-gray-900"
+                    className="px-6 py-4 whitespace-nowrap text-sm text-card-foreground"
                   >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
@@ -131,8 +131,8 @@ export function DataTable<T extends TableData>({
 
       {/* Pagination */}
       {paginated && (
-        <div className="flex items-center justify-between mt-4 px-4 py-3 bg-white border-t border-gray-200">
-          <div className="flex items-center gap-2 text-sm text-gray-700">
+        <div className="flex items-center justify-between mt-4 px-4 py-3 bg-card border-t border-border">
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <span>
               {table.getState().pagination.pageIndex + 1} / {table.getPageCount()} 페이지
             </span>
@@ -142,14 +142,14 @@ export function DataTable<T extends TableData>({
           </div>
           <div className="flex items-center gap-2">
             <button
-              className="px-3 py-1 text-sm border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-3 py-1 text-sm border border-border rounded-md hover:bg-muted disabled:opacity-50 disabled:cursor-not-allowed"
               onClick={() => table.previousPage()}
               disabled={!table.getCanPreviousPage()}
             >
               이전
             </button>
             <button
-              className="px-3 py-1 text-sm border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-3 py-1 text-sm border border-border rounded-md hover:bg-muted disabled:opacity-50 disabled:cursor-not-allowed"
               onClick={() => table.nextPage()}
               disabled={!table.getCanNextPage()}
             >

@@ -50,11 +50,11 @@ export function Hero({
               {badge}
             </div>
           )}
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
             {title}
           </h1>
           {subtitle && (
-            <p className="text-xl sm:text-2xl text-white text-opacity-90 mb-10 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-xl sm:text-2xl text-muted-foreground mb-10 max-w-3xl mx-auto leading-relaxed">
               {subtitle}
             </p>
           )}
@@ -64,7 +64,7 @@ export function Hero({
                 variant="primary"
                 size="lg"
                 onClick={primaryButton.onClick}
-                className="bg-white text-gray-900 hover:bg-gray-100"
+                className="bg-primary text-primary-foreground hover:bg-primary/90"
               >
                 {primaryButton.text}
               </Button>
@@ -74,7 +74,7 @@ export function Hero({
                 variant="outline"
                 size="lg"
                 onClick={secondaryButton.onClick}
-                className="border-white text-white hover:bg-white hover:text-gray-900"
+                className="border-primary text-primary hover:bg-primary hover:text-primary-foreground"
               >
                 {secondaryButton.text}
               </Button>

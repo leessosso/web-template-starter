@@ -113,7 +113,7 @@ export function ContactForm({ onSubmit, className = '' }: ContactFormProps) {
       />
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <label className="block text-sm font-medium text-foreground mb-2">
           문의사항
         </label>
         <textarea
@@ -122,7 +122,7 @@ export function ContactForm({ onSubmit, className = '' }: ContactFormProps) {
           rows={5}
           value={formData.message}
           onChange={handleChange}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+          className="w-full px-3 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
           placeholder="문의사항을 자세히 작성해주세요"
         />
       </div>

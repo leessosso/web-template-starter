@@ -238,13 +238,13 @@ export default function AnalyticsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="min-h-screen bg-background py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-8">
           <div className="flex justify-between items-start">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">초보자용 분석 대시보드</h1>
-              <p className="mt-2 text-gray-600">
+              <h1 className="text-3xl font-bold text-foreground">초보자용 분석 대시보드</h1>
+              <p className="mt-2 text-muted-foreground">
                 Google Analytics와 Microsoft Clarity로 웹사이트를 분석해보세요.
               </p>
 
@@ -253,12 +253,12 @@ export default function AnalyticsPage() {
                 <div className="flex items-center gap-2">
                   <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                   <span className="text-sm font-medium">Google Analytics 4</span>
-                  <span className="text-xs text-gray-500">(활성화)</span>
+                  <span className="text-xs text-muted-foreground">(활성화)</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <div className={`w-3 h-3 rounded-full ${clarityEnabled ? (clarityLoaded ? 'bg-green-500' : 'bg-yellow-500') : 'bg-gray-400'}`}></div>
                   <span className="text-sm font-medium">Microsoft Clarity</span>
-                  <span className="text-xs text-gray-500">
+                  <span className="text-xs text-muted-foreground">
                     ({clarityEnabled ? (clarityLoaded ? '활성화' : '로딩중') : '설정 필요'})
                   </span>
                 </div>
@@ -266,8 +266,8 @@ export default function AnalyticsPage() {
 
               {/* Clarity 설정 안내 */}
               {!clarityEnabled && (
-                <div className="mt-3 p-3 bg-blue-50 border border-blue-200 rounded-lg">
-                  <p className="text-sm text-blue-800">
+                <div className="mt-3 p-3 bg-primary/10 border border-primary/30 rounded-lg">
+                  <p className="text-sm text-primary">
                     💡 <strong>Microsoft Clarity를 활성화하려면:</strong>
                     <br />
                     1. Microsoft Clarity 계정 생성 → 2. 프로젝트 ID를 .env 파일에 추가 → 3. 서버 재시작
@@ -278,7 +278,7 @@ export default function AnalyticsPage() {
             <div className="flex gap-3">
               <button
                 onClick={handleRefreshData}
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
               >
                 데이터 새로고침
               </button>
@@ -295,8 +295,8 @@ export default function AnalyticsPage() {
         {/* 방문자 분석 차트 섹션 */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
           {/* 일별 방문자 추이 */}
-          <div className="bg-white rounded-lg shadow p-6">
-            <h2 className="text-xl font-semibold mb-4">일별 방문자 추이</h2>
+          <div className="bg-card rounded-lg shadow p-6">
+            <h2 className="text-xl font-semibold text-card-foreground mb-4">일별 방문자 추이</h2>
             <LineChart
               data={convertVisitorDataToChartData(visitorData.slice(-14))} // 최근 14일 데이터
               lines={[
@@ -308,8 +308,8 @@ export default function AnalyticsPage() {
           </div>
 
           {/* 트래픽 소스별 비중 */}
-          <div className="bg-white rounded-lg shadow p-6">
-            <h2 className="text-xl font-semibold mb-4">트래픽 소스별 비중</h2>
+          <div className="bg-card rounded-lg shadow p-6">
+            <h2 className="text-xl font-semibold text-card-foreground mb-4">트래픽 소스별 비중</h2>
             <PieChart
               data={[
                 { name: 'Organic', value: 45, color: '#0088FE' },
@@ -324,8 +324,8 @@ export default function AnalyticsPage() {
         </div>
 
         {/* 세션 분석 바 차트 */}
-        <div className="bg-white rounded-lg shadow p-6 mb-8">
-          <h2 className="text-xl font-semibold mb-4">세션 분석 (최근 7일)</h2>
+        <div className="bg-card rounded-lg shadow p-6 mb-8">
+          <h2 className="text-xl font-semibold text-card-foreground mb-4">세션 분석 (최근 7일)</h2>
           <BarChart
             data={convertVisitorDataToChartData(visitorData.slice(-7))}
             bars={[
@@ -337,7 +337,7 @@ export default function AnalyticsPage() {
         </div>
 
         {/* 방문자 데이터 테이블 */}
-        <div className="bg-white rounded-lg shadow p-6 mb-8">
+        <div className="bg-card rounded-lg shadow p-6 mb-8">
           <h2 className="text-xl font-semibold mb-4">방문자 상세 데이터</h2>
           <DataTable
             data={convertVisitorDataToTableData(visitorData)}
@@ -350,7 +350,7 @@ export default function AnalyticsPage() {
         </div>
 
         {/* 이벤트 추적 데이터 테이블 */}
-        <div className="bg-white rounded-lg shadow p-6 mb-8">
+        <div className="bg-card rounded-lg shadow p-6 mb-8">
           <h2 className="text-xl font-semibold mb-4">이벤트 추적 데이터</h2>
           <DataTable
             data={convertEventDataToTableData(eventData)}
@@ -363,15 +363,15 @@ export default function AnalyticsPage() {
         </div>
 
         {/* 초보자를 위한 사용 설명 */}
-        <div className="bg-gradient-to-r from-blue-50 to-green-50 rounded-lg shadow p-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">📊 초보자를 위한 분석 가이드</h2>
+        <div className="bg-muted rounded-lg shadow p-8">
+          <h2 className="text-2xl font-bold text-foreground mb-6">📊 초보자를 위한 분석 가이드</h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Google Analytics 설명 */}
-            <div className="bg-white rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-blue-600 mb-3">Google Analytics 4</h3>
-              <p className="text-gray-600 mb-4">숫자로 웹사이트 성과를 파악하세요</p>
-              <ul className="space-y-2 text-sm text-gray-700">
+            <div className="bg-card rounded-lg p-6">
+              <h3 className="text-lg font-semibold text-primary mb-3">Google Analytics 4</h3>
+              <p className="text-muted-foreground mb-4">숫자로 웹사이트 성과를 파악하세요</p>
+              <ul className="space-y-2 text-sm text-muted-foreground">
                 <li>✅ <strong>방문자 수:</strong> 얼마나 많은 사람이 방문했나?</li>
                 <li>✅ <strong>트래픽 출처:</strong> 어디서 왔는지 알 수 있어요</li>
                 <li>✅ <strong>인기 페이지:</strong> 어떤 페이지가 많이 봐요?</li>
@@ -382,7 +382,7 @@ export default function AnalyticsPage() {
                   href="https://analytics.google.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-600 hover:text-blue-800 font-medium"
+                  className="text-primary hover:text-primary/80 font-medium"
                 >
                   Google Analytics 바로가기 →
                 </a>
@@ -390,10 +390,10 @@ export default function AnalyticsPage() {
             </div>
 
             {/* Microsoft Clarity 설명 */}
-            <div className="bg-white rounded-lg p-6">
+            <div className="bg-card rounded-lg p-6">
               <h3 className="text-lg font-semibold text-orange-600 mb-3">Microsoft Clarity</h3>
-              <p className="text-gray-600 mb-4">동영상으로 사용자 행동을 직접 보세요</p>
-              <ul className="space-y-2 text-sm text-gray-700">
+              <p className="text-muted-foreground mb-4">동영상으로 사용자 행동을 직접 보세요</p>
+              <ul className="space-y-2 text-sm text-muted-foreground">
                 <li>✅ <strong>세션 녹화:</strong> 사용자가 어떻게 클릭하는지 동영상으로</li>
                 <li>✅ <strong>히트맵:</strong> 어디를 많이 클릭하는지 색깔로 표시</li>
                 <li>✅ <strong>사용자 여정:</strong> 어떤 경로로 이동하는지 추적</li>
@@ -404,7 +404,7 @@ export default function AnalyticsPage() {
                   href="https://clarity.microsoft.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-orange-600 hover:text-orange-800 font-medium"
+                  className="text-orange-600 hover:text-orange-700 font-medium"
                 >
                   Microsoft Clarity 바로가기 →
                 </a>
@@ -413,23 +413,23 @@ export default function AnalyticsPage() {
           </div>
 
           {/* 함께 사용하기 팁 */}
-          <div className="mt-8 bg-white rounded-lg p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-3">💡 함께 사용하기 팁</h3>
+          <div className="mt-8 bg-card rounded-lg p-6">
+            <h3 className="text-lg font-semibold text-card-foreground mb-3">💡 함께 사용하기 팁</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
               <div className="text-center">
                 <div className="text-2xl mb-2">🔍</div>
                 <strong>Google Analytics</strong>
-                <p className="text-gray-600 mt-1">"얼마나 많이 방문했나?"</p>
+                <p className="text-muted-foreground mt-1">"얼마나 많이 방문했나?"</p>
               </div>
               <div className="text-center">
                 <div className="text-2xl mb-2">🎬</div>
                 <strong>Microsoft Clarity</strong>
-                <p className="text-gray-600 mt-1">"어떻게 행동했나?"</p>
+                <p className="text-muted-foreground mt-1">"어떻게 행동했나?"</p>
               </div>
               <div className="text-center">
                 <div className="text-2xl mb-2">🚀</div>
                 <strong>함께 사용</strong>
-                <p className="text-gray-600 mt-1">"왜 떠났을까?" 답 찾기</p>
+                <p className="text-muted-foreground mt-1">"왜 떠났을까?" 답 찾기</p>
               </div>
             </div>
           </div>

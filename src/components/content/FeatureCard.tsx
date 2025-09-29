@@ -31,10 +31,10 @@ export function FeatureCard({
           </div>
         </div>
       )}
-      <h3 className="text-xl font-semibold text-gray-900 mb-4">
+      <h3 className="text-xl font-semibold text-card-foreground mb-4">
         {title}
       </h3>
-      <p className="text-gray-600 leading-relaxed">
+      <p className="text-muted-foreground leading-relaxed">
         {description}
       </p>
     </Card>

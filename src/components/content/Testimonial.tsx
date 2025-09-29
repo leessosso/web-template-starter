@@ -27,7 +27,7 @@ export function Testimonial({
             <span
               key={i}
               className={`text-lg ${
-                i < rating ? 'text-yellow-400' : 'text-gray-300'
+                i < rating ? 'text-yellow-400' : 'text-muted-foreground'
               }`}
             >
               ★
@@ -35,7 +35,7 @@ export function Testimonial({
           ))}
         </div>
       )}
-      <blockquote className="text-gray-700 mb-6 leading-relaxed">
+      <blockquote className="text-muted-foreground mb-6 leading-relaxed">
         "{quote}"
       </blockquote>
       <div className="flex items-center">
@@ -47,10 +47,10 @@ export function Testimonial({
           />
         )}
         <div>
-          <div className="font-semibold text-gray-900">
+          <div className="font-semibold text-foreground">
             {author.name}
           </div>
-          <div className="text-sm text-gray-600">
+          <div className="text-sm text-muted-foreground">
             {author.role}
             {author.company && ` at ${author.company}`}
           </div>

@@ -1,7 +1,6 @@
 import React from 'react'
 import { useTheme } from '../../contexts/ThemeContext'
 import type { Theme, ThemeColor } from '../../contexts/ThemeContext'
-import { Button } from './Button'
 
 const themeOptions: { value: Theme; label: string; icon: string }[] = [
     { value: 'light', label: '라이트', icon: '☀️' },
@@ -26,18 +25,25 @@ export const ThemeSelector: React.FC = () => {
         <div className="flex flex-col gap-4 p-4 bg-card border border-border rounded-lg">
             <div>
                 <h3 className="text-sm font-medium text-foreground mb-3">테마 모드</h3>
-                <div className="flex gap-2">
-                    {themeOptions.map((option) => (
-                        <Button
-                            key={option.value}
-                            variant={theme === option.value ? 'primary' : 'outline'}
-                            size="sm"
-                            onClick={() => setTheme(option.value)}
-                        >
-                            <span className="mr-1">{option.icon}</span>
-                            {option.label}
-                        </Button>
-                    ))}
+                <div className="flex items-center gap-3">
+                    <span className="text-muted-foreground">{themeOptions.find(t => t.value === 'light')?.icon}</span>
+                    <button
+                        onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+                        className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 ${theme === 'light'
+                            ? 'bg-primary'
+                            : 'bg-muted-foreground'
+                            }`}
+                        aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+                    >
+                        <span
+                            className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-200 ${theme === 'light' ? 'translate-x-1' : 'translate-x-6'
+                                }`}
+                        />
+                    </button>
+                    <span className="text-muted-foreground">{themeOptions.find(t => t.value === 'dark')?.icon}</span>
+                </div>
+                <div className="mt-2 text-xs text-muted-foreground">
+                    {themeOptions.find(t => t.value === theme)?.label} 모드
                 </div>
             </div>
 
@@ -60,7 +66,7 @@ export const ThemeSelector: React.FC = () => {
             </div>
 
             <div className="text-xs text-muted-foreground pt-2 border-t border-border">
-                현재: {themeOptions.find(t => t.value === theme)?.label} 모드, {colorOptions.find(c => c.value === themeColor)?.label} 색상
+                색상 테마: {colorOptions.find(c => c.value === themeColor)?.label}
             </div>
         </div>
     )

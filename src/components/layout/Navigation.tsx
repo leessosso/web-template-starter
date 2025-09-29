@@ -18,20 +18,20 @@ export function Navigation() {
   }
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/5 bg-slate-950/90 backdrop-blur">
+    <header className="sticky top-0 z-50 border-b border-border/5 bg-background/90 backdrop-blur">
       <div className="container-section flex h-20 items-center justify-between">
-        <NavLink to="/" className="text-lg font-semibold text-white">
+        <NavLink to="/" className="text-lg font-semibold text-foreground">
           WebTemplateStudio
         </NavLink>
-        <nav className="hidden gap-8 text-sm font-medium text-slate-300 md:flex">
+        <nav className="hidden gap-8 text-sm font-medium text-muted-foreground md:flex">
           {navItems.map((item) => (
             <NavLink
               key={item.to}
               to={item.to}
               className={({ isActive }) =>
                 [
-                  'transition-colors hover:text-white',
-                  isActive ? 'text-white' : undefined,
+                  'transition-colors hover:text-foreground',
+                  isActive ? 'text-foreground' : undefined,
                 ]
                   .filter(Boolean)
                   .join(' ')
@@ -48,7 +48,7 @@ export function Navigation() {
           <button
             type="button"
             onClick={toggleLanguage}
-            className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold uppercase text-slate-200 transition hover:bg-white/10"
+            className="rounded-full border border-border/10 bg-muted/5 px-4 py-2 text-xs font-semibold uppercase text-muted-foreground transition hover:bg-muted/10"
           >
             {i18n.language === 'ko' ? 'EN' : 'KO'}
           </button>

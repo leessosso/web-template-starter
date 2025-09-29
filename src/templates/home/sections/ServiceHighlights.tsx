@@ -24,20 +24,20 @@ export function ServiceHighlights() {
   return (
     <section id="templates" className="space-y-10">
       <div className="container-section flex flex-col gap-4">
-        <h2 className="text-3xl font-semibold text-white">{t('highlights.title')}</h2>
-        <p className="max-w-2xl text-base text-slate-400">{t('highlights.subtitle')}</p>
+        <h2 className="text-3xl font-semibold text-foreground">{t('highlights.title')}</h2>
+        <p className="max-w-2xl text-base text-muted-foreground">{t('highlights.subtitle')}</p>
       </div>
       <div className="container-section grid gap-6 lg:grid-cols-3">
         {highlights.map((item) => (
           <article key={item.title} className="card-surface space-y-5">
             <div>
-              <h3 className="text-xl font-semibold text-white">{item.title}</h3>
-              <p className="mt-2 text-sm text-slate-400">{item.description}</p>
+              <h3 className="text-xl font-semibold text-card-foreground">{item.title}</h3>
+              <p className="mt-2 text-sm text-muted-foreground">{item.description}</p>
             </div>
-            <ul className="space-y-2 text-sm text-slate-300">
+            <ul className="space-y-2 text-sm text-muted-foreground">
               {item.points.map((point) => (
                 <li key={point} className="flex items-start gap-3">
-                  <span className="mt-1 h-2 w-2 rounded-full bg-brand-400" />
+                  <span className="mt-1 h-2 w-2 rounded-full bg-primary" />
                   <span>{point}</span>
                 </li>
               ))}
