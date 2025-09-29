@@ -18,7 +18,7 @@
     --color-card-foreground: 241 245 249; /* slate-100 */
 
     /* Brand colors - Blue theme as default */
-    --color-primary: 255 107 53; /* #FF6B35 - 고객사 브랜드 색상 */
+    --color-primary: 59 130 246; /* blue-500 */
     --color-primary-foreground: 255 255 255;
     --color-secondary: 148 163 184;
     --color-secondary-foreground: 15 23 42;
@@ -69,6 +69,10 @@
 
   :root[data-theme-color="indigo"] {
     --color-primary: 79 70 229; /* 추가: 남색 테마 */
+  }
+
+  :root[data-theme-color="blue"] {
+    --color-primary: 59 130 246; /* 추가: 파란색 테마 */
   }
 
   body {
