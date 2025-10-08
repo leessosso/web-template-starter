@@ -81,7 +81,17 @@ function calculateMBTIScore(answers: Answer[], questions: Question[]): MBTIScore
   answers.forEach(answer => {
     const question = questions.find(q => q.id === answer.questionId);
     if (question) {
-      const weightedScore = answer.score * question.weight;
+      // 6단계 점수 변환: 1,2,3,4,5,6 → 3,2,1,1,2,3
+      let convertedScore = answer.score;
+      if (answer.score <= 3) {
+        // A 선택지: 1→3점, 2→2점, 3→1점
+        convertedScore = 4 - answer.score;
+      } else {
+        // B 선택지: 4→1점, 5→2점, 6→3점
+        convertedScore = answer.score - 3;
+      }
+      
+      const weightedScore = convertedScore * question.weight;
       score[question.dimension] += weightedScore;
     }
   });

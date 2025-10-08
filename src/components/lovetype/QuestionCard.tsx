@@ -13,33 +13,28 @@ export function QuestionCard({ question, onAnswer, currentAnswer, className = ''
         onAnswer(score);
     };
 
-  const getScoreLabel = (score: number) => {
-    switch (score) {
-      case 1: return 'A';
-      case 2: return 'B';
-      case 3: return 'C';
-      case 4: return 'D';
-      case 5: return 'E';
-      default: return '';
-    }
-  };
+    const getScoreLabel = (score: number) => {
+        switch (score) {
+            case 1: return 'A';
+            case 2: return 'B';
+            case 3: return 'C';
+            case 4: return 'D';
+            case 5: return 'E';
+            default: return '';
+        }
+    };
 
-  const getHeartIntensity = (score: number) => {
-    // A 선택지 (1-3점): 왼쪽이 강한 A, 오른쪽이 약한 A
-    // B 선택지 (4-5점): 왼쪽이 약한 B, 오른쪽이 강한 B
-    if (score <= 3) {
-      return {
-        type: 'A',
-        intensity: score, // 1=강한A, 2=중간A, 3=약한A
-        hearts: [3, 2, 1] // 왼쪽부터 큰 하트
-      };
-    } else {
-      return {
-        type: 'B', 
-        intensity: score - 3, // 1=약한B, 2=강한B
-        hearts: [1, 2, 3] // 왼쪽부터 작은 하트
-      };
-    }
+  const getIntensityInfo = (score: number) => {
+    // 6단계: 강한A(1) → 중간A(2) → 약한A(3) → 약한B(4) → 중간B(5) → 강한B(6)
+    const intensityMap = {
+      1: { type: 'A', label: '강한 A', points: 3, color: 'pink' },
+      2: { type: 'A', label: '중간 A', points: 2, color: 'pink' },
+      3: { type: 'A', label: '약한 A', points: 1, color: 'pink' },
+      4: { type: 'B', label: '약한 B', points: 1, color: 'cyan' },
+      5: { type: 'B', label: '중간 B', points: 2, color: 'cyan' },
+      6: { type: 'B', label: '강한 B', points: 3, color: 'cyan' }
+    };
+    return intensityMap[score as keyof typeof intensityMap];
   };
 
     return (
@@ -53,110 +48,77 @@ export function QuestionCard({ question, onAnswer, currentAnswer, className = ''
                 </p>
             </div>
 
-            <div className="space-y-4">
-                {/* A 선택지 (1-3점) */}
-                <div className="space-y-2">
+            <div className="space-y-6">
+                {/* A/B 선택지 표시 */}
+                <div className="flex justify-between items-center px-4">
                     <div className="text-center">
-                        <span className="text-lg font-semibold text-gray-700">A. 네</span>
+                        <span className="text-lg font-semibold text-pink-600">A. 네</span>
                     </div>
-                    <div className="flex justify-center space-x-2">
-                        {[1, 2, 3].map((score) => {
-                            const heartData = getHeartIntensity(score);
-                            return (
-                                <button
-                                    key={score}
-                                    onClick={() => handleScoreClick(score)}
-                                    className={`flex flex-col items-center p-3 rounded-lg border-2 transition-all duration-200 ${
-                                        currentAnswer === score
-                                            ? 'border-pink-500 bg-pink-50'
-                                            : 'border-gray-200 hover:border-pink-300 hover:bg-pink-25'
-                                    }`}
-                                >
-                                    <div className="flex items-center space-x-1 mb-2">
-                                        {heartData.hearts.map((size, index) => (
-                                            <svg
-                                                key={index}
-                                                className={`text-pink-400 ${
-                                                    size === 3 ? 'w-6 h-6' : 
-                                                    size === 2 ? 'w-5 h-5' : 'w-4 h-4'
-                                                }`}
-                                                fill="none"
-                                                stroke="currentColor"
-                                                viewBox="0 0 24 24"
-                                            >
-                                                <path
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                    strokeWidth={2}
-                                                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                                                />
-                                            </svg>
-                                        ))}
-                                    </div>
-                                    <span className="text-sm font-medium text-gray-600">
-                                        {score === 1 ? '강한 A' : score === 2 ? '중간 A' : '약한 A'}
-                                    </span>
-                                </button>
-                            );
-                        })}
+                    <div className="text-center">
+                        <span className="text-lg font-semibold text-cyan-600">B. 아니요</span>
                     </div>
                 </div>
 
-                {/* B 선택지 (4-5점) */}
-                <div className="space-y-2">
-                    <div className="text-center">
-                        <span className="text-lg font-semibold text-gray-700">B. 아니요</span>
-                    </div>
-                    <div className="flex justify-center space-x-2">
-                        {[4, 5].map((score) => {
-                            const heartData = getHeartIntensity(score);
+                {/* 6단계 강도 선택 */}
+                <div className="space-y-4">
+                    <div className="flex justify-between items-center">
+                        {[1, 2, 3, 4, 5, 6].map((score) => {
+                            const intensityInfo = getIntensityInfo(score);
+                            const isSelected = currentAnswer === score;
+                            
                             return (
                                 <button
                                     key={score}
                                     onClick={() => handleScoreClick(score)}
-                                    className={`flex flex-col items-center p-3 rounded-lg border-2 transition-all duration-200 ${
-                                        currentAnswer === score
-                                            ? 'border-cyan-500 bg-cyan-50'
-                                            : 'border-gray-200 hover:border-cyan-300 hover:bg-cyan-25'
+                                    className={`flex flex-col items-center p-2 rounded-lg transition-all duration-200 ${
+                                        isSelected
+                                            ? intensityInfo.color === 'pink' 
+                                                ? 'bg-pink-100 border-2 border-pink-500' 
+                                                : 'bg-cyan-100 border-2 border-cyan-500'
+                                            : 'hover:bg-gray-50 border-2 border-transparent'
                                     }`}
                                 >
-                                    <div className="flex items-center space-x-1 mb-2">
-                                        {heartData.hearts.map((size, index) => (
-                                            <svg
-                                                key={index}
-                                                className={`text-cyan-400 ${
-                                                    size === 3 ? 'w-6 h-6' : 
-                                                    size === 2 ? 'w-5 h-5' : 'w-4 h-4'
-                                                }`}
-                                                fill="none"
-                                                stroke="currentColor"
-                                                viewBox="0 0 24 24"
-                                            >
-                                                <path
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                    strokeWidth={2}
-                                                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                                                />
-                                            </svg>
-                                        ))}
+                                    <div className="w-8 h-8 rounded-full flex items-center justify-center mb-1">
+                                        {isSelected ? (
+                                            <div className={`w-4 h-4 rounded-full ${
+                                                intensityInfo.color === 'pink' ? 'bg-pink-500' : 'bg-cyan-500'
+                                            }`} />
+                                        ) : (
+                                            <div className="w-4 h-4 rounded-full border-2 border-gray-300" />
+                                        )}
                                     </div>
-                                    <span className="text-sm font-medium text-gray-600">
-                                        {score === 4 ? '약한 B' : '강한 B'}
+                                    <span className={`text-xs font-medium ${
+                                        isSelected 
+                                            ? intensityInfo.color === 'pink' ? 'text-pink-700' : 'text-cyan-700'
+                                            : 'text-gray-500'
+                                    }`}>
+                                        {intensityInfo.label}
+                                    </span>
+                                    <span className={`text-xs ${
+                                        isSelected 
+                                            ? intensityInfo.color === 'pink' ? 'text-pink-600' : 'text-cyan-600'
+                                            : 'text-gray-400'
+                                    }`}>
+                                        {intensityInfo.points}점
                                     </span>
                                 </button>
                             );
                         })}
+                    </div>
+                    
+                    {/* 연결선 */}
+                    <div className="relative">
+                        <div className="absolute top-4 left-0 right-0 h-0.5 bg-gradient-to-r from-pink-300 via-gray-200 to-cyan-300"></div>
                     </div>
                 </div>
             </div>
 
             <div className="mt-6 text-center">
                 <p className="text-sm text-gray-500">
-                    💕 하트 크기로 강도를 표현합니다
+                    💕 A(네)와 B(아니요) 사이의 강도를 선택해주세요
                 </p>
                 <p className="text-xs text-gray-400 mt-1">
-                    A(네)는 핑크색, B(아니요)는 청록색으로 표시됩니다
+                    왼쪽으로 갈수록 강한 A, 오른쪽으로 갈수록 강한 B입니다
                 </p>
             </div>
         </div>
