@@ -68,10 +68,10 @@ export function TestPage() {
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-pink-50 via-purple-50 to-indigo-50">
-            <div className="container mx-auto px-4 py-8">
+            <div className="container mx-auto px-2 sm:px-4 py-4 sm:py-8">
                 {/* Header */}
                 <div className="text-center mb-8">
-                    <h1 className="text-3xl font-bold bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent mb-4">
+                    <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent mb-4">
                         LoveType 테스트
                     </h1>
                     <ProgressBar
@@ -107,7 +107,11 @@ export function TestPage() {
                         </p>
                         {currentAnswer && (
                             <p className="text-xs text-pink-600">
-                                답변 완료: {currentAnswer.score}점
+                                답변 완료: {currentAnswer.score === 1 ? 'A 강함' :
+                                    currentAnswer.score === 2 ? 'A 보통' :
+                                        currentAnswer.score === 3 ? 'A 약함' :
+                                            currentAnswer.score === 4 ? 'B 약함' :
+                                                currentAnswer.score === 5 ? 'B 보통' : 'B 강함'}
                             </p>
                         )}
                     </div>

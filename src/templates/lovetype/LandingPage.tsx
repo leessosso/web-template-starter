@@ -15,26 +15,33 @@ export function LandingPage() {
                 {/* Hero Section */}
                 <div className="text-center mb-16">
                     <div className="mb-8">
-                        <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent mb-6">
-                            LoveType
-                        </h1>
-                        <p className="text-xl md:text-2xl text-gray-700 mb-4">
-                            나만의 연애 유형을 알아보세요
+                        <div className="mb-6">
+                            <div className="text-6xl mb-4">💕</div>
+                            <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent mb-6">
+                                LoveType
+                            </h1>
+                        </div>
+                        <p className="text-xl md:text-2xl text-gray-700 mb-4 font-medium">
+                            💖 나만의 연애 유형을 알아보세요 💖
                         </p>
                         <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
                             리더십, 애정표현, 연애관, 태도 4가지 차원으로 분석하는 연애 유형 테스트로 당신의 연애 스타일을 확인해보세요.
                             <br />
-                            총 30개의 질문으로 정확한 분석을 제공합니다.
+                            <span className="text-pink-600 font-semibold">총 30개의 질문</span>으로 정확한 분석을 제공합니다.
                         </p>
                     </div>
 
-                    <Button
-                        onClick={handleStartTest}
-                        size="lg"
-                        className="bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white px-8 py-4 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
-                    >
-                        💕 테스트 시작하기
-                    </Button>
+                    <div className="relative">
+                        <Button
+                            onClick={handleStartTest}
+                            size="lg"
+                            className="bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white px-8 py-4 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                        >
+                            💕 테스트 시작하기 💕
+                        </Button>
+                        <div className="absolute -top-2 -right-2 text-2xl animate-bounce">✨</div>
+                        <div className="absolute -bottom-2 -left-2 text-2xl animate-pulse">💫</div>
+                    </div>
                 </div>
 
                 {/* Features */}

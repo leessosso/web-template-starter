@@ -293,14 +293,30 @@ function calculateMBTIScore(answers: Answer[], questions: Question[]): MBTIScore
     answers.forEach(answer => {
         const question = questions.find(q => q.id === answer.questionId);
         if (question) {
-            // 6단계 점수 변환: 1,2,3,4,5,6 → 3,2,1,1,2,3
+            // 6단계 점수 시스템: A쪽 3점 → 2점 → 1점 → 1점 → 2점 → 3점 B쪽
+            // 1: A강함(3점), 2: A보통(2점), 3: A약함(1점), 4: B약함(1점), 5: B보통(2점), 6: B강함(3점)
             let convertedScore = answer.score;
-            if (answer.score <= 3) {
-                // A 선택지: 1→3점, 2→2점, 3→1점
-                convertedScore = 4 - answer.score;
+
+            // 점수 변환: 1→3점, 2→2점, 3→1점, 4→1점, 5→2점, 6→3점
+            if (answer.score === 1 || answer.score === 6) {
+                convertedScore = 3; // 양끝은 3점
+            } else if (answer.score === 2 || answer.score === 5) {
+                convertedScore = 2; // 중간은 2점
             } else {
-                // B 선택지: 4→1점, 5→2점, 6→3점
-                convertedScore = answer.score - 3;
+                convertedScore = 1; // 가운데는 1점
+            }
+
+            // A 선택지 차원 (L, C, R, O)은 점수 그대로 사용
+            // B 선택지 차원 (F, A, P, E)은 역순으로 변환
+            if (question.dimension === 'F' || question.dimension === 'A' ||
+                question.dimension === 'P' || question.dimension === 'E') {
+                // B 선택지: 1→3점, 2→2점, 3→1점, 4→1점, 5→2점, 6→3점
+                if (answer.score === 1) convertedScore = 3; // A강함 → B약함
+                else if (answer.score === 2) convertedScore = 2; // A보통 → B보통
+                else if (answer.score === 3) convertedScore = 1; // A약함 → B약함
+                else if (answer.score === 4) convertedScore = 1; // B약함 → B약함
+                else if (answer.score === 5) convertedScore = 2; // B보통 → B보통
+                else if (answer.score === 6) convertedScore = 3; // B강함 → B강함
             }
 
             const weightedScore = convertedScore * question.weight;

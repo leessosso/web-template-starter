@@ -12,7 +12,7 @@ function App() {
     <ThemeProvider>
       <div className="min-h-screen">
         <Navigation />
-        <main className="mx-auto w-full max-w-content px-4 py-16">
+        <main className="mx-auto w-full max-w-content px-4 py-2">
           <Outlet />
         </main>
         <Footer />
