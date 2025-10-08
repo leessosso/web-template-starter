@@ -1,11 +1,13 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { newLoveTypes } from '../../lovetype/newLoveTypes';
 import { TypeCard } from '../../components/lovetype';
 import { Button } from '../../components/ui';
 
 export function TypesPage() {
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     const handleTypeClick = (type: string) => {
         navigate(`/result/${type}`);
@@ -25,24 +27,24 @@ export function TypesPage() {
                 {/* Header */}
                 <div className="text-center mb-8">
                     <h1 className="text-4xl font-bold bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent mb-4">
-                        16가지 연애 유형
+                        {t('lovetype.allTypes')}
                     </h1>
                     <p className="text-lg text-gray-600 mb-6">
-                        모든 연애 유형을 살펴보고 당신의 유형을 찾아보세요
+                        {t('lovetype.exploreAllTypes', '모든 연애 유형을 살펴보고 당신의 유형을 찾아보세요')}
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
                         <Button
                             onClick={handleStartTest}
                             className="bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white px-6 py-2"
                         >
-                            💕 테스트 시작하기
+                            💕 {t('lovetype.startTest')}
                         </Button>
                         <Button
                             onClick={handleGoHome}
                             variant="outline"
                             className="px-6 py-2"
                         >
-                            홈으로 돌아가기
+                            {t('lovetype.goHome')}
                         </Button>
                     </div>
                 </div>
@@ -94,13 +96,13 @@ export function TypesPage() {
 
                 {/* CTA */}
                 <div className="text-center mt-8">
-                    <p className="text-gray-600 mb-4">당신의 연애 유형이 궁금하다면?</p>
+                    <p className="text-gray-600 mb-4">{t('lovetype.curiousAboutType', '당신의 연애 유형이 궁금하다면?')}</p>
                     <Button
                         onClick={handleStartTest}
                         size="lg"
                         className="bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white px-8 py-4 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
                     >
-                        💕 무료 테스트 시작하기
+                        💕 {t('lovetype.freeTestStart', '무료 테스트 시작하기')}
                     </Button>
                 </div>
             </div>

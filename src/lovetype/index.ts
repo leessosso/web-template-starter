@@ -1,29 +1,25 @@
 // 모든 lovetype 관련 타입과 데이터를 하나의 파일로 통합
 
-// MBTI 16가지 유형 정의
-export type MBTIType =
-    | 'ENFP' | 'ENFJ' | 'ENTP' | 'ENTJ'
-    | 'ESFP' | 'ESFJ' | 'ESTP' | 'ESTJ'
-    | 'INFP' | 'INFJ' | 'INTP' | 'INTJ'
-    | 'ISFP' | 'ISFJ' | 'ISTP' | 'ISTJ';
+// 연애 유형 테스트 결과 (4가지 차원 기반)
+export type LoveTypeCode = string;
 
-// MBTI 차원별 점수
-export interface MBTIScore {
-    E: number; // 외향성 (Extraversion)
-    I: number; // 내향성 (Introversion)
-    S: number; // 감각 (Sensing)
-    N: number; // 직관 (Intuition)
-    T: number; // 사고 (Thinking)
-    F: number; // 감정 (Feeling)
-    J: number; // 판단 (Judging)
-    P: number; // 인식 (Perceiving)
+// 연애 유형 차원별 점수 (L/F, C/A, R/P, O/E)
+export interface LoveTypeScore {
+    L: number; // 리더십 - Lead
+    F: number; // 리더십 - Follow
+    C: number; // 애정 표현 - Cuddly
+    A: number; // 애정 표현 - Accept
+    R: number; // 연애관 - Realistic
+    P: number; // 연애관 - Passionate
+    O: number; // 태도 - Optimistic
+    E: number; // 태도 - Earnest
 }
 
 // 테스트 질문 타입
 export interface Question {
     id: number;
     text: string;
-    dimension: keyof MBTIScore; // 어떤 차원에 영향을 주는지
+    dimension: keyof LoveTypeScore; // 어떤 차원에 영향을 주는지
     weight: number; // 가중치 (1-5)
 }
 
@@ -35,15 +31,15 @@ export interface Answer {
 
 // 연애 유형 정보
 export interface LoveType {
-    code: MBTIType;
+    code: LoveTypeCode;
     title: string;
     nickname: string;
     description: string;
     loveStyle: string;
     strengths: string[];
     challenges: string[];
-    compatibleTypes: MBTIType[];
-    incompatibleTypes: MBTIType[];
+    compatibleTypes: LoveTypeCode[];
+    incompatibleTypes: LoveTypeCode[];
     advice: string;
     color: string;
 }
@@ -53,170 +49,204 @@ export interface TestState {
     currentQuestion: number;
     answers: Answer[];
     isCompleted: boolean;
-    result?: MBTIType;
+    result?: LoveTypeCode;
 }
 
-// MBTI 기반 연애 유형 테스트 질문들
+// 연애 유형 테스트 질문들 (L/F, C/A, R/P, O/E 차원 기반)
 export const questions: Question[] = [
-    // E/I 차원 질문들
+    // L/F 차원 질문들 (리더십: Lead/Follow) - 8개
     {
         id: 1,
-        text: "새로운 사람들과의 만남에서 에너지를 얻는다",
-        dimension: 'E',
+        text: "연인과 새로운 맛집을 찾아갈 때, 주로 누가 먼저 제안하나요?",
+        dimension: 'L',
         weight: 3
     },
     {
         id: 2,
-        text: "혼자만의 시간이 필요하다",
-        dimension: 'I',
+        text: "데이트 계획이 갑자기 틀어졌을 때, 당신의 반응은?",
+        dimension: 'L',
         weight: 3
     },
     {
         id: 3,
-        text: "파티나 모임에서 활발하게 참여한다",
-        dimension: 'E',
-        weight: 2
+        text: "연인과 주말 여행을 계획한다면, 당신은 주로 어떻게 준비하나요?",
+        dimension: 'L',
+        weight: 3
     },
     {
         id: 4,
-        text: "깊이 있는 대화를 선호한다",
-        dimension: 'I',
-        weight: 2
+        text: "연인과의 다툼 후, 먼저 화해를 시도하는 쪽은 주로 누구인가요?",
+        dimension: 'L',
+        weight: 3
     },
-
-    // S/N 차원 질문들
     {
         id: 5,
-        text: "현실적이고 구체적인 계획을 세운다",
-        dimension: 'S',
-        weight: 3
+        text: "새로운 도전이나 취미를 함께 시작할 때, 당신의 역할은?",
+        dimension: 'L',
+        weight: 2
     },
     {
         id: 6,
-        text: "미래의 가능성에 대해 상상한다",
-        dimension: 'N',
-        weight: 3
+        text: "평소 식사 메뉴를 결정할 때, 당신은 어느 쪽인가요?",
+        dimension: 'L',
+        weight: 2
     },
     {
         id: 7,
-        text: "세부사항에 주의를 기울인다",
-        dimension: 'S',
+        text: "연인에게서 뜻밖의 서프라이즈 이벤트를 받았을 때, 당신의 다음 행동은?",
+        dimension: 'L',
         weight: 2
     },
     {
         id: 8,
-        text: "큰 그림을 보는 것을 선호한다",
-        dimension: 'N',
+        text: "관심 없는 가게 쇼핑에 같이 가달라고 하면?",
+        dimension: 'L',
         weight: 2
     },
 
-    // T/F 차원 질문들
+    // C/A 차원 질문들 (애정 표현: Cuddly/Accept) - 7개
     {
         id: 9,
-        text: "논리적 분석을 통해 결정한다",
-        dimension: 'T',
+        text: "연인이 힘들어할 때, 당신은 주로 어떻게 반응하나요?",
+        dimension: 'C',
         weight: 3
     },
     {
         id: 10,
-        text: "다른 사람의 감정을 고려한다",
-        dimension: 'F',
+        text: "연인에게서 \"귀엽다\"는 말을 들었을 때, 당신의 솔직한 기분은?",
+        dimension: 'C',
         weight: 3
     },
     {
         id: 11,
-        text: "객관적 기준으로 판단한다",
-        dimension: 'T',
-        weight: 2
+        text: "연인의 사소한 투정이나 어리광을 접했을 때, 당신의 반응은?",
+        dimension: 'A',
+        weight: 3
     },
     {
         id: 12,
-        text: "조화로운 관계를 중시한다",
-        dimension: 'F',
+        text: "연인과의 스킨십에 대한 당신의 생각은?",
+        dimension: 'C',
         weight: 2
     },
-
-    // J/P 차원 질문들
     {
         id: 13,
-        text: "계획을 세우고 체계적으로 진행한다",
-        dimension: 'J',
-        weight: 3
+        text: "연인의 고민을 들어줄 때, 당신은 주로 어떤 태도인가요?",
+        dimension: 'C',
+        weight: 2
     },
     {
         id: 14,
-        text: "유연하고 즉흥적인 것을 선호한다",
+        text: "기념일이나 특별한 날, 연인에게서 어떤 선물을 받고 싶나요?",
+        dimension: 'C',
+        weight: 2
+    },
+    {
+        id: 15,
+        text: "문득 생각나는 연인상은?",
+        dimension: 'A',
+        weight: 2
+    },
+
+    // R/P 차원 질문들 (연애관: Realistic/Passionate) - 7개
+    {
+        id: 16,
+        text: "연인과 싸웠을 때 화해하는 가장 효과적인 방법은?",
+        dimension: 'R',
+        weight: 3
+    },
+    {
+        id: 17,
+        text: "연인과 기념일을 보낼 때, 더 중요하게 생각하는 것은?",
+        dimension: 'R',
+        weight: 3
+    },
+    {
+        id: 18,
+        text: "연인과의 프러포즈나 결혼식에 대한 환상이 있나요?",
         dimension: 'P',
         weight: 3
     },
     {
-        id: 15,
-        text: "마감일을 잘 지킨다",
-        dimension: 'J',
-        weight: 2
-    },
-    {
-        id: 16,
-        text: "새로운 기회에 열려있다",
-        dimension: 'P',
-        weight: 2
-    },
-
-    // 연애 관련 추가 질문들
-    {
-        id: 17,
-        text: "연인과 함께 새로운 경험을 추구한다",
-        dimension: 'E',
-        weight: 2
-    },
-    {
-        id: 18,
-        text: "연인과의 깊은 정신적 교감을 원한다",
-        dimension: 'I',
-        weight: 2
-    },
-    {
         id: 19,
-        text: "연인에게 실용적인 도움을 주고 싶다",
-        dimension: 'S',
+        text: "연애 중 재정 관리 방식은 어느 쪽에 가깝다고 생각하나요?",
+        dimension: 'R',
         weight: 2
     },
     {
         id: 20,
-        text: "연인과 함께 꿈을 키워나가고 싶다",
-        dimension: 'N',
+        text: "사랑이 식었다고 느껴질 때, 당신의 대처 방식은?",
+        dimension: 'R',
         weight: 2
     },
     {
         id: 21,
-        text: "연인과의 갈등을 논리적으로 해결하려 한다",
-        dimension: 'T',
+        text: "결혼에 대한 당신의 생각은?",
+        dimension: 'R',
         weight: 2
     },
     {
         id: 22,
-        text: "연인의 감정을 우선적으로 배려한다",
-        dimension: 'F',
+        text: "결혼 후, 연인과의 가장 이상적인 주말은 어떤 모습인가요?",
+        dimension: 'R',
         weight: 2
     },
+
+    // O/E 차원 질문들 (태도: Optimistic/Earnest) - 8개
     {
         id: 23,
-        text: "연인과의 데이트를 미리 계획한다",
-        dimension: 'J',
-        weight: 2
+        text: "연인과 사귀고 난 후, 당신의 개인적인 시간 활용은?",
+        dimension: 'O',
+        weight: 3
     },
     {
         id: 24,
-        text: "연인과의 데이트에서 즉흥적인 재미를 즐긴다",
-        dimension: 'P',
+        text: "연인이 너무 지나치게 질투하거나 집착하는 모습을 보일 때 당신의 반응은?",
+        dimension: 'O',
+        weight: 3
+    },
+    {
+        id: 25,
+        text: "이별 후 새로운 연애를 시작하기까지의 기간은?",
+        dimension: 'O',
+        weight: 3
+    },
+    {
+        id: 26,
+        text: "연애에 대한 친구들의 조언을 들었을 때, 당신의 반응은?",
+        dimension: 'O',
+        weight: 2
+    },
+    {
+        id: 27,
+        text: "연인과 취미나 관심사를 반드시 공유해야 한다고 생각하나요?",
+        dimension: 'O',
+        weight: 2
+    },
+    {
+        id: 28,
+        text: "연애 중 다른 이성과의 자연스러운 교류에 대해 당신의 생각은?",
+        dimension: 'O',
+        weight: 2
+    },
+    {
+        id: 29,
+        text: "연애 중 자신의 솔직한 감정을 어디까지 표현하는 편인가요?",
+        dimension: 'O',
+        weight: 2
+    },
+    {
+        id: 30,
+        text: "연애는 당신에게 어떤 의미인가요?",
+        dimension: 'O',
         weight: 2
     }
 ];
 
-// 답변을 기반으로 MBTI 점수 계산
-export function calculateMBTIScore(answers: Answer[], questions: Question[]): MBTIScore {
-    const score: MBTIScore = {
-        E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0
+// 답변을 기반으로 연애 유형 점수 계산
+export function calculateLoveTypeScore(answers: Answer[], questions: Question[]): LoveTypeScore {
+    const score: LoveTypeScore = {
+        L: 0, F: 0, C: 0, A: 0, R: 0, P: 0, O: 0, E: 0
     };
 
     answers.forEach(answer => {
@@ -230,262 +260,54 @@ export function calculateMBTIScore(answers: Answer[], questions: Question[]): MB
     return score;
 }
 
-// MBTI 점수를 기반으로 유형 결정
-export function determineMBTIType(score: MBTIScore): MBTIType {
-    const E_I = score.E > score.I ? 'E' : 'I';
-    const S_N = score.S > score.N ? 'S' : 'N';
-    const T_F = score.T > score.F ? 'T' : 'F';
-    const J_P = score.J > score.P ? 'J' : 'P';
+// 연애 유형 점수를 기반으로 유형 결정
+export function determineLoveType(score: LoveTypeScore): LoveTypeCode {
+    const leadership = score.L > score.F ? 'L' : 'F';
+    const affection = score.C > score.A ? 'C' : 'A';
+    const relationship = score.R > score.P ? 'R' : 'P';
+    const attitude = score.O > score.E ? 'O' : 'E';
 
-    return `${E_I}${S_N}${T_F}${J_P}` as MBTIType;
+    return `${leadership}${affection}${relationship}${attitude}`;
 }
 
 // 점수 차이를 백분율로 변환
-export function getScorePercentage(score: MBTIScore): Record<string, number> {
-    const totalE_I = score.E + score.I;
-    const totalS_N = score.S + score.N;
-    const totalT_F = score.T + score.F;
-    const totalJ_P = score.J + score.P;
+export function getScorePercentage(score: LoveTypeScore): Record<string, number> {
+    const totalL_F = score.L + score.F;
+    const totalC_A = score.C + score.A;
+    const totalR_P = score.R + score.P;
+    const totalO_E = score.O + score.E;
 
     return {
-        E: totalE_I > 0 ? Math.round((score.E / totalE_I) * 100) : 50,
-        I: totalE_I > 0 ? Math.round((score.I / totalE_I) * 100) : 50,
-        S: totalS_N > 0 ? Math.round((score.S / totalS_N) * 100) : 50,
-        N: totalS_N > 0 ? Math.round((score.N / totalS_N) * 100) : 50,
-        T: totalT_F > 0 ? Math.round((score.T / totalT_F) * 100) : 50,
-        F: totalT_F > 0 ? Math.round((score.F / totalT_F) * 100) : 50,
-        J: totalJ_P > 0 ? Math.round((score.J / totalJ_P) * 100) : 50,
-        P: totalJ_P > 0 ? Math.round((score.P / totalJ_P) * 100) : 50,
+        L: totalL_F > 0 ? Math.round((score.L / totalL_F) * 100) : 50,
+        F: totalL_F > 0 ? Math.round((score.F / totalL_F) * 100) : 50,
+        C: totalC_A > 0 ? Math.round((score.C / totalC_A) * 100) : 50,
+        A: totalC_A > 0 ? Math.round((score.A / totalC_A) * 100) : 50,
+        R: totalR_P > 0 ? Math.round((score.R / totalR_P) * 100) : 50,
+        P: totalR_P > 0 ? Math.round((score.P / totalR_P) * 100) : 50,
+        O: totalO_E > 0 ? Math.round((score.O / totalO_E) * 100) : 50,
+        E: totalO_E > 0 ? Math.round((score.E / totalO_E) * 100) : 50,
     };
 }
 
 // 궁합도 계산 (간단한 알고리즘)
-export function calculateCompatibility(type1: MBTIType, type2: MBTIType): number {
+export function calculateCompatibility(type1: LoveTypeCode, type2: LoveTypeCode): number {
     const type1Chars = type1.split('');
     const type2Chars = type2.split('');
 
     let compatibility = 0;
 
     // 같은 차원에서 반대 성향이면 높은 궁합
-    if (type1Chars[0] !== type2Chars[0]) compatibility += 25; // E/I
-    if (type1Chars[1] !== type2Chars[1]) compatibility += 25; // S/N
-    if (type1Chars[2] !== type2Chars[2]) compatibility += 25; // T/F
-    if (type1Chars[3] !== type2Chars[3]) compatibility += 25; // J/P
+    if (type1Chars[0] !== type2Chars[0]) compatibility += 25; // L/F
+    if (type1Chars[1] !== type2Chars[1]) compatibility += 25; // C/A
+    if (type1Chars[2] !== type2Chars[2]) compatibility += 25; // R/P
+    if (type1Chars[3] !== type2Chars[3]) compatibility += 25; // O/E
 
     return compatibility;
 }
 
-// 16가지 연애 유형 데이터
-export const loveTypes: Record<MBTIType, LoveType> = {
-    ENFP: {
-        code: 'ENFP',
-        title: '열정적인 영감가',
-        nickname: '자유로운 연애인',
-        description: '열정적이고 창의적인 연애를 추구하는 타입입니다. 새로운 경험과 자유를 중시하며, 연인과 함께 성장하는 것을 원합니다.',
-        loveStyle: '열정적이고 자유로운 연애',
-        strengths: ['창의적인 데이트 아이디어', '긍정적인 에너지', '연인의 꿈을 응원', '자유로운 관계'],
-        challenges: ['일관성 부족', '계획성 부족', '감정 기복'],
-        compatibleTypes: ['INTJ', 'INFJ', 'ENTJ'],
-        incompatibleTypes: ['ISTJ', 'ISFJ'],
-        advice: '연인과 함께 새로운 경험을 나누되, 약속은 꼭 지키도록 노력하세요.',
-        color: 'from-pink-400 to-rose-500'
-    },
-    ENFJ: {
-        code: 'ENFJ',
-        title: '따뜻한 조력자',
-        nickname: '완벽한 연인',
-        description: '연인의 성장과 행복을 최우선으로 생각하는 타입입니다. 따뜻하고 배려심이 깊어 이상적인 연인으로 여겨집니다.',
-        loveStyle: '따뜻하고 배려심 깊은 연애',
-        strengths: ['완벽한 배려심', '연인 성장 도움', '조화로운 관계', '따뜻한 위로'],
-        challenges: ['자기 희생 과다', '비판에 민감', '완벽주의'],
-        compatibleTypes: ['INFP', 'ISFP', 'INTP'],
-        incompatibleTypes: ['ISTP', 'ESTP'],
-        advice: '연인을 위해 희생하는 것도 좋지만, 자신의 감정과 욕구도 소중히 여기세요.',
-        color: 'from-rose-400 to-pink-500'
-    },
-    ENTP: {
-        code: 'ENTP',
-        title: '도전적인 토론가',
-        nickname: '지적인 연애인',
-        description: '지적 호기심이 많고 토론을 즐기는 타입입니다. 연인과의 지적 교감을 중시하며, 새로운 아이디어를 함께 탐구합니다.',
-        loveStyle: '지적이고 도전적인 연애',
-        strengths: ['풍부한 대화', '창의적 아이디어', '유연한 사고', '도전 정신'],
-        challenges: ['일관성 부족', '감정 표현 어려움', '세부사항 무시'],
-        compatibleTypes: ['INFJ', 'INTJ', 'INFP'],
-        incompatibleTypes: ['ISFJ', 'ESFJ'],
-        advice: '연인과의 지적 교감도 좋지만, 감정적 교감도 소중히 여기세요.',
-        color: 'from-purple-400 to-indigo-500'
-    },
-    ENTJ: {
-        code: 'ENTJ',
-        title: '리더십 있는 지휘관',
-        nickname: '목표지향적 연애인',
-        description: '목표 지향적이고 리더십이 강한 타입입니다. 연인과 함께 미래를 계획하고 성공을 추구합니다.',
-        loveStyle: '목표지향적이고 계획적인 연애',
-        strengths: ['명확한 목표 설정', '리더십', '효율적인 계획', '성취욕'],
-        challenges: ['감정 표현 부족', '유연성 부족', '지배욕'],
-        compatibleTypes: ['INFP', 'INTP', 'ISFP'],
-        incompatibleTypes: ['ISFP', 'ESFP'],
-        advice: '목표 달성도 중요하지만, 연인과의 감정적 교감도 놓치지 마세요.',
-        color: 'from-blue-500 to-indigo-600'
-    },
-    ESFP: {
-        code: 'ESFP',
-        title: '즐거운 연예인',
-        nickname: '즐거운 연애인',
-        description: '즐겁고 활발한 성격으로 연인과 함께 즐거운 시간을 보내는 것을 중시합니다. 자발적이고 열정적입니다.',
-        loveStyle: '즐겁고 활발한 연애',
-        strengths: ['긍정적 에너지', '즐거운 데이트', '자발적 표현', '유연한 성격'],
-        challenges: ['계획성 부족', '갈등 회피', '장기적 관점 부족'],
-        compatibleTypes: ['ISFJ', 'ISTJ', 'INTJ'],
-        incompatibleTypes: ['INTP', 'INTJ'],
-        advice: '즐거운 시간도 좋지만, 연인과의 진지한 대화도 필요합니다.',
-        color: 'from-yellow-400 to-orange-500'
-    },
-    ESFJ: {
-        code: 'ESFJ',
-        title: '따뜻한 돌봄이',
-        nickname: '배려심 깊은 연애인',
-        description: '배려심이 깊고 전통적인 가치를 중시하는 타입입니다. 연인을 돌보고 안정적인 관계를 추구합니다.',
-        loveStyle: '전통적이고 안정적인 연애',
-        strengths: ['완벽한 배려', '안정적인 관계', '전통적 가치', '희생정신'],
-        challenges: ['자기주장 부족', '변화 거부', '비판에 민감'],
-        compatibleTypes: ['ISFP', 'ISTP', 'INFP'],
-        incompatibleTypes: ['ENTP', 'INTP'],
-        advice: '연인을 배려하는 것도 좋지만, 자신의 의견도 적극적으로 표현하세요.',
-        color: 'from-green-400 to-emerald-500'
-    },
-    ESTP: {
-        code: 'ESTP',
-        title: '활동적인 모험가',
-        nickname: '액션 연애인',
-        description: '활동적이고 모험을 즐기는 타입입니다. 연인과 함께 새로운 경험과 스릴을 추구합니다.',
-        loveStyle: '활동적이고 모험적인 연애',
-        strengths: ['액티브한 데이트', '즉흥적 재미', '현실적 판단', '유연한 성격'],
-        challenges: ['장기적 계획 부족', '감정 표현 어려움', '규칙 거부'],
-        compatibleTypes: ['ISFJ', 'ISTJ', 'INFJ'],
-        incompatibleTypes: ['INFP', 'ENFJ'],
-        advice: '즐거운 모험도 좋지만, 연인과의 깊은 대화도 필요합니다.',
-        color: 'from-red-400 to-pink-500'
-    },
-    ESTJ: {
-        code: 'ESTJ',
-        title: '책임감 있는 관리자',
-        nickname: '신뢰할 수 있는 연애인',
-        description: '책임감이 강하고 체계적인 타입입니다. 연인과의 관계에서도 안정성과 신뢰를 중시합니다.',
-        loveStyle: '체계적이고 안정적인 연애',
-        strengths: ['신뢰성', '체계적 계획', '책임감', '안정성'],
-        challenges: ['유연성 부족', '감정 표현 어려움', '변화 거부'],
-        compatibleTypes: ['ISFP', 'ISTP', 'INFP'],
-        incompatibleTypes: ['INFP', 'ENFP'],
-        advice: '체계적인 관계도 좋지만, 연인과의 감정적 교감도 중요합니다.',
-        color: 'from-gray-500 to-slate-600'
-    },
-    INFP: {
-        code: 'INFP',
-        title: '이상주의적 중재자',
-        nickname: '로맨틱한 연애인',
-        description: '이상적이고 로맨틱한 연애를 추구하는 타입입니다. 깊은 정신적 교감과 진정한 사랑을 중시합니다.',
-        loveStyle: '이상적이고 로맨틱한 연애',
-        strengths: ['깊은 감정', '이상적 사랑', '창의적 표현', '진정성'],
-        challenges: ['현실성 부족', '갈등 회피', '완벽주의'],
-        compatibleTypes: ['ENFJ', 'ENTJ', 'INFJ'],
-        incompatibleTypes: ['ESTJ', 'ISTJ'],
-        advice: '이상적인 사랑도 좋지만, 현실적인 부분도 고려하세요.',
-        color: 'from-purple-300 to-pink-400'
-    },
-    INFJ: {
-        code: 'INFJ',
-        title: '통찰력 있는 옹호자',
-        nickname: '신비로운 연애인',
-        description: '깊은 통찰력과 직감을 가진 타입입니다. 연인과의 깊은 정신적 교감과 이해를 중시합니다.',
-        loveStyle: '깊고 신비로운 연애',
-        strengths: ['깊은 이해', '직감적 판단', '이상적 관계', '신비로운 매력'],
-        challenges: ['완벽주의', '갈등 회피', '현실성 부족'],
-        compatibleTypes: ['ENFP', 'ENTP', 'INFP'],
-        incompatibleTypes: ['ESTP', 'ESFP'],
-        advice: '깊은 교감도 좋지만, 연인과의 소통도 적극적으로 하세요.',
-        color: 'from-indigo-400 to-purple-500'
-    },
-    INTP: {
-        code: 'INTP',
-        title: '논리적인 사색가',
-        nickname: '지적인 연애인',
-        description: '논리적이고 분석적인 사고를 가진 타입입니다. 연인과의 지적 교감과 독립성을 중시합니다.',
-        loveStyle: '지적이고 독립적인 연애',
-        strengths: ['논리적 사고', '독립성', '지적 호기심', '객관적 판단'],
-        challenges: ['감정 표현 어려움', '소통 부족', '현실성 부족'],
-        compatibleTypes: ['ENTJ', 'ESTJ', 'INFJ'],
-        incompatibleTypes: ['ESFP', 'ESFJ'],
-        advice: '지적 교감도 좋지만, 연인과의 감정적 소통도 필요합니다.',
-        color: 'from-blue-400 to-cyan-500'
-    },
-    INTJ: {
-        code: 'INTJ',
-        title: '전략적인 건축가',
-        nickname: '계획적인 연애인',
-        description: '전략적이고 장기적인 관점을 가진 타입입니다. 연인과의 관계에서도 체계적이고 목표지향적입니다.',
-        loveStyle: '전략적이고 장기적인 연애',
-        strengths: ['장기적 계획', '논리적 판단', '독립성', '목표 지향'],
-        challenges: ['감정 표현 어려움', '유연성 부족', '소통 부족'],
-        compatibleTypes: ['ENFP', 'ENTP', 'INFP'],
-        incompatibleTypes: ['ESFP', 'ESFJ'],
-        advice: '체계적인 관계도 좋지만, 연인과의 감정적 교감도 중요합니다.',
-        color: 'from-slate-600 to-gray-700'
-    },
-    ISFP: {
-        code: 'ISFP',
-        title: '유연한 예술가',
-        nickname: '감성적인 연애인',
-        description: '감성적이고 예술적인 감각을 가진 타입입니다. 연인과의 조화로운 관계와 개인의 자유를 중시합니다.',
-        loveStyle: '감성적이고 조화로운 연애',
-        strengths: ['감성적 표현', '예술적 감각', '조화로운 관계', '개인적 자유'],
-        challenges: ['갈등 회피', '자기주장 부족', '계획성 부족'],
-        compatibleTypes: ['ESFJ', 'ESTJ', 'ENFJ'],
-        incompatibleTypes: ['ENTJ', 'ESTP'],
-        advice: '조화로운 관계도 좋지만, 자신의 의견도 적극적으로 표현하세요.',
-        color: 'from-pink-300 to-rose-400'
-    },
-    ISFJ: {
-        code: 'ISFJ',
-        title: '따뜻한 수호자',
-        nickname: '보호자 연애인',
-        description: '따뜻하고 보호적인 성격을 가진 타입입니다. 연인을 돌보고 안정적인 관계를 추구합니다.',
-        loveStyle: '보호적이고 안정적인 연애',
-        strengths: ['완벽한 보호', '안정적 관계', '희생정신', '전통적 가치'],
-        challenges: ['자기주장 부족', '변화 거부', '완벽주의'],
-        compatibleTypes: ['ESFP', 'ESTP', 'ENFP'],
-        incompatibleTypes: ['ENTP', 'INTP'],
-        advice: '연인을 보호하는 것도 좋지만, 자신의 욕구도 소중히 여기세요.',
-        color: 'from-emerald-400 to-teal-500'
-    },
-    ISTP: {
-        code: 'ISTP',
-        title: '실용적인 장인',
-        nickname: '실용적 연애인',
-        description: '실용적이고 현실적인 타입입니다. 연인과의 관계에서도 실용성과 개인의 공간을 중시합니다.',
-        loveStyle: '실용적이고 독립적인 연애',
-        strengths: ['실용적 도움', '독립성', '현실적 판단', '유연한 성격'],
-        challenges: ['감정 표현 어려움', '소통 부족', '계획성 부족'],
-        compatibleTypes: ['ESTJ', 'ESFJ', 'ENTJ'],
-        incompatibleTypes: ['ENFJ', 'INFJ'],
-        advice: '실용적인 도움도 좋지만, 연인과의 감정적 소통도 필요합니다.',
-        color: 'from-orange-400 to-red-500'
-    },
-    ISTJ: {
-        code: 'ISTJ',
-        title: '신뢰할 수 있는 논리주의자',
-        nickname: '신뢰할 수 있는 연애인',
-        description: '신뢰할 수 있고 책임감이 강한 타입입니다. 연인과의 관계에서도 안정성과 신뢰를 최우선으로 합니다.',
-        loveStyle: '신뢰할 수 있고 안정적인 연애',
-        strengths: ['완벽한 신뢰성', '안정적 관계', '책임감', '체계적 계획'],
-        challenges: ['유연성 부족', '감정 표현 어려움', '변화 거부'],
-        compatibleTypes: ['ESFP', 'ESTP', 'ENFP'],
-        incompatibleTypes: ['ENFP', 'INFP'],
-        advice: '안정적인 관계도 좋지만, 연인과의 감정적 교감도 중요합니다.',
-        color: 'from-gray-600 to-slate-700'
-    }
-};
+// 새로운 연애 유형 데이터를 import
+import { newLoveTypes } from './newLoveTypes';
+export const loveTypes = newLoveTypes;
 
 // useTest 훅을 위한 초기 상태
 const initialState: TestState = {
@@ -500,10 +322,10 @@ export function createTestHook() {
     return {
         initialState,
         questions,
-        calculateMBTIScore,
-        determineMBTIType,
+        calculateLoveTypeScore,
+        determineLoveType,
         getScorePercentage,
         calculateCompatibility,
-        loveTypes
+        loveTypes: loveTypes
     };
 }

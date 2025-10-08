@@ -1,27 +1,29 @@
 import { useState } from 'react';
-import type { MBTIType } from '../../lovetype/index';
+import { useTranslation } from 'react-i18next';
+import type { LoveTypeCode } from '../../lovetype/types';
 
 interface ShareButtonProps {
-    type: MBTIType;
+    type: LoveTypeCode;
     className?: string;
 }
 
 export function ShareButton({ type, className = '' }: ShareButtonProps) {
     const [copied, setCopied] = useState(false);
+    const { t } = useTranslation();
 
     const handleShare = async () => {
-        const shareText = `나의 연애 유형은 ${type}입니다! 당신의 연애 유형도 확인해보세요 💕`;
+        const shareText = t('lovetype.shareText', `나의 연애 유형은 ${type}입니다! 당신의 연애 유형도 확인해보세요 💕`);
         const shareUrl = window.location.origin;
 
         if (navigator.share) {
             try {
                 await navigator.share({
-                    title: '나의 연애 유형 테스트 결과',
+                    title: t('lovetype.shareTitle', '나의 연애 유형 테스트 결과'),
                     text: shareText,
                     url: shareUrl
                 });
             } catch (error) {
-                console.log('공유 취소됨');
+                console.log(t('lovetype.shareCancelled', '공유 취소됨'));
             }
         } else {
             // 클립보드에 복사
@@ -30,7 +32,7 @@ export function ShareButton({ type, className = '' }: ShareButtonProps) {
                 setCopied(true);
                 setTimeout(() => setCopied(false), 2000);
             } catch (error) {
-                console.error('클립보드 복사 실패:', error);
+                console.error(t('lovetype.clipboardError', '클립보드 복사 실패:'), error);
             }
         }
     };
@@ -45,14 +47,14 @@ export function ShareButton({ type, className = '' }: ShareButtonProps) {
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    복사됨!
+                    {t('lovetype.copied', '복사됨!')}
                 </>
             ) : (
                 <>
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
                     </svg>
-                    결과 공유하기
+                    {t('lovetype.share', '결과 공유하기')}
                 </>
             )}
         </button>

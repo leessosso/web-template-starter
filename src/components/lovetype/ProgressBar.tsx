@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface ProgressBarProps {
     current: number;
@@ -8,11 +9,12 @@ interface ProgressBarProps {
 
 export function ProgressBar({ current, total, className = '' }: ProgressBarProps) {
     const percentage = Math.round((current / total) * 100);
+    const { t } = useTranslation();
 
     return (
         <div className={`w-full ${className}`}>
             <div className="flex justify-between text-sm text-gray-600 mb-2">
-                <span>진행률</span>
+                <span>{t('lovetype.progress', '진행률')}</span>
                 <span>{current}/{total} ({percentage}%)</span>
             </div>
             <div className="w-full bg-gray-200 rounded-full h-2">

@@ -1,9 +1,11 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Button } from '../../components/ui';
 
 export function LandingPage() {
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     const handleStartTest = () => {
         navigate('/test');
@@ -22,12 +24,12 @@ export function LandingPage() {
                             </h1>
                         </div>
                         <p className="text-xl md:text-2xl text-gray-700 mb-4 font-medium">
-                            💖 나만의 연애 유형을 알아보세요 💖
+                            💖 {t('lovetype.subtitle')} 💖
                         </p>
                         <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
-                            리더십, 애정표현, 연애관, 태도 4가지 차원으로 분석하는 연애 유형 테스트로 당신의 연애 스타일을 확인해보세요.
+                            {t('lovetype.description')}
                             <br />
-                            <span className="text-pink-600 font-semibold">총 30개의 질문</span>으로 정확한 분석을 제공합니다.
+                            <span className="text-pink-600 font-semibold">{t('lovetype.questionCount', '총 24개의 질문')}</span>{t('lovetype.accurateAnalysis', '으로 정확한 분석을 제공합니다.')}.
                         </p>
                     </div>
 
@@ -89,24 +91,24 @@ export function LandingPage() {
 
                 {/* Test Info */}
                 <div className="bg-white rounded-xl shadow-lg p-8 max-w-4xl mx-auto">
-                    <h2 className="text-2xl font-bold text-center mb-6">테스트 안내</h2>
+                    <h2 className="text-2xl font-bold text-center mb-6">{t('lovetype.testGuide', '테스트 안내')}</h2>
                     <div className="grid md:grid-cols-2 gap-8">
                         <div>
-                            <h3 className="text-lg font-semibold mb-3 text-pink-600">📝 테스트 구성</h3>
+                            <h3 className="text-lg font-semibold mb-3 text-pink-600">📝 {t('lovetype.testStructure', '테스트 구성')}</h3>
                             <ul className="space-y-2 text-gray-600">
-                                <li>• 총 30개의 질문</li>
-                                <li>• 각 질문당 5점 척도</li>
-                                <li>• 약 5-10분 소요</li>
-                                <li>• 16가지 연애 유형 중 결과</li>
+                                <li>• {t('lovetype.totalQuestions', '총 24개의 질문')}</li>
+                                <li>• {t('lovetype.scoreScale', '각 질문당 6점 척도')}</li>
+                                <li>• {t('lovetype.duration', '약 5-10분 소요')}</li>
+                                <li>• {t('lovetype.resultTypes', '16가지 연애 유형 중 결과')}</li>
                             </ul>
                         </div>
                         <div>
-                            <h3 className="text-lg font-semibold mb-3 text-purple-600">💡 결과 내용</h3>
+                            <h3 className="text-lg font-semibold mb-3 text-purple-600">💡 {t('lovetype.resultContent', '결과 내용')}</h3>
                             <ul className="space-y-2 text-gray-600">
-                                <li>• 연애 스타일 분석</li>
-                                <li>• 장단점 및 특징</li>
-                                <li>• 궁합 좋은 유형</li>
-                                <li>• 연애 조언 및 팁</li>
+                                <li>• {t('lovetype.loveStyleAnalysis', '연애 스타일 분석')}</li>
+                                <li>• {t('lovetype.strengthsWeaknesses', '장단점 및 특징')}</li>
+                                <li>• {t('lovetype.compatibleTypes', '궁합 좋은 유형')}</li>
+                                <li>• {t('lovetype.loveAdvice', '연애 조언 및 팁')}</li>
                             </ul>
                         </div>
                     </div>
@@ -114,13 +116,13 @@ export function LandingPage() {
 
                 {/* CTA */}
                 <div className="text-center mt-12">
-                    <p className="text-gray-600 mb-4">지금 바로 시작해보세요!</p>
+                    <p className="text-gray-600 mb-4">{t('lovetype.startNow', '지금 바로 시작해보세요!')}</p>
                     <Button
                         onClick={handleStartTest}
                         size="lg"
                         className="bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white px-8 py-4 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
                     >
-                        💕 무료 테스트 시작하기
+                        💕 {t('lovetype.freeTestStart', '무료 테스트 시작하기')}
                     </Button>
                 </div>
             </div>

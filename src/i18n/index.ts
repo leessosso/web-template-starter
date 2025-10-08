@@ -3,6 +3,7 @@ import { initReactI18next } from 'react-i18next'
 
 import en from './locales/en.json'
 import ko from './locales/ko.json'
+import ja from './locales/ja.json'
 
 export const defaultNS = 'common'
 
@@ -12,8 +13,9 @@ void i18n
     resources: {
       ko: { common: ko },
       en: { common: en },
+      ja: { common: ja },
     },
-    lng: navigator.language.startsWith('ko') ? 'ko' : 'en',
+    lng: navigator.language.startsWith('ko') ? 'ko' : navigator.language.startsWith('ja') ? 'ja' : 'en',
     fallbackLng: 'en',
     defaultNS,
     interpolation: {

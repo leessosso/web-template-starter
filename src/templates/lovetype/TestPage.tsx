@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useTest } from '../../lovetype/useTest';
 import { ProgressBar, QuestionCard } from '../../components/lovetype';
 import { Button } from '../../components/ui';
 
 export function TestPage() {
     const navigate = useNavigate();
+    const { t } = useTranslation();
     const {
         testState,
         addAnswer,
@@ -60,7 +62,7 @@ export function TestPage() {
             <div className="min-h-screen bg-gradient-to-br from-pink-50 via-purple-50 to-indigo-50 flex items-center justify-center">
                 <div className="text-center">
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-pink-500 mx-auto mb-4"></div>
-                    <p className="text-gray-600">질문을 불러오는 중...</p>
+                    <p className="text-gray-600">{t('lovetype.loadingQuestions', '질문을 불러오는 중...')}</p>
                 </div>
             </div>
         );
@@ -72,12 +74,12 @@ export function TestPage() {
                 {/* Header */}
                 <div className="text-center mb-8">
                     <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent mb-4">
-                        LoveType 테스트
+                        {t('lovetype.testTitle', 'LoveType 테스트')}
                     </h1>
                     <ProgressBar
                         current={testState.currentQuestion}
                         total={totalQuestions}
-                        className="max-w-md mx-auto"
+                        className="max-w-2xl mx-auto"
                     />
                 </div>
 
@@ -98,7 +100,7 @@ export function TestPage() {
                         variant="outline"
                         className="px-6 py-2"
                     >
-                        ← 이전
+                        ← {t('lovetype.previous', '이전')}
                     </Button>
 
                     <div className="text-center">
@@ -107,11 +109,11 @@ export function TestPage() {
                         </p>
                         {currentAnswer && (
                             <p className="text-xs text-pink-600">
-                                답변 완료: {currentAnswer.score === 1 ? 'A 강함' :
-                                    currentAnswer.score === 2 ? 'A 보통' :
-                                        currentAnswer.score === 3 ? 'A 약함' :
-                                            currentAnswer.score === 4 ? 'B 약함' :
-                                                currentAnswer.score === 5 ? 'B 보통' : 'B 강함'}
+                                {t('lovetype.answerCompleted', '답변 완료')}: {currentAnswer.score === 1 ? t('lovetype.strongA', 'A 강함') :
+                                    currentAnswer.score === 2 ? t('lovetype.moderateA', 'A 보통') :
+                                        currentAnswer.score === 3 ? t('lovetype.weakA', 'A 약함') :
+                                            currentAnswer.score === 4 ? t('lovetype.weakB', 'B 약함') :
+                                                currentAnswer.score === 5 ? t('lovetype.moderateB', 'B 보통') : t('lovetype.strongB', 'B 강함')}
                             </p>
                         )}
                     </div>
@@ -122,7 +124,7 @@ export function TestPage() {
                             disabled={!canComplete()}
                             className="px-6 py-2 bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white"
                         >
-                            결과 보기 →
+                            {t('lovetype.viewResult', '결과 보기')} →
                         </Button>
                     ) : (
                         <Button
@@ -130,7 +132,7 @@ export function TestPage() {
                             disabled={!currentAnswer}
                             className="px-6 py-2 bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white"
                         >
-                            다음 →
+                            {t('lovetype.next', '다음')} →
                         </Button>
                     )}
                 </div>
@@ -138,7 +140,7 @@ export function TestPage() {
                 {/* Help Text */}
                 <div className="max-w-2xl mx-auto mt-8 text-center">
                     <p className="text-sm text-gray-500">
-                        💡 가장 자신에게 맞는 답변을 선택해주세요. 정확한 결과를 위해 솔직하게 답변해주세요.
+                        💡 {t('lovetype.helpText', '가장 자신에게 맞는 답변을 선택해주세요. 정확한 결과를 위해 솔직하게 답변해주세요.')}
                     </p>
                 </div>
             </div>

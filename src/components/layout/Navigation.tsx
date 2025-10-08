@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { LanguageSelector } from '../ui'
 
 const navItems = [
   { to: '/', key: 'navigation.home' },
@@ -8,12 +9,7 @@ const navItems = [
 ]
 
 export function Navigation() {
-  const { t, i18n } = useTranslation()
-
-  const toggleLanguage = () => {
-    const next = i18n.language === 'ko' ? 'en' : 'ko'
-    void i18n.changeLanguage(next)
-  }
+  const { t } = useTranslation()
 
   return (
     <header className="sticky top-0 z-50 border-b border-border/5 bg-background/90 backdrop-blur">
@@ -39,17 +35,11 @@ export function Navigation() {
             </NavLink>
           ))}
         </nav>
-        <div className="hidden items-center gap-2 md:flex">
+        <div className="hidden items-center gap-4 md:flex">
+          <LanguageSelector />
           <NavLink to="/test" className="btn-primary bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white">
-            테스트 시작
+            {t('lovetype.startTest', '테스트 시작')}
           </NavLink>
-          <button
-            type="button"
-            onClick={toggleLanguage}
-            className="rounded-full border border-border/10 bg-muted/5 px-4 py-2 text-xs font-semibold uppercase text-muted-foreground transition hover:bg-muted/10"
-          >
-            {i18n.language === 'ko' ? 'EN' : 'KO'}
-          </button>
         </div>
       </div>
     </header>

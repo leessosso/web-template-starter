@@ -1,4 +1,6 @@
-import type { Question } from '../../lovetype/useTest';
+import { useTranslation } from 'react-i18next';
+import type { Question } from '../../lovetype/types';
+import { getQuestionText } from '../../lovetype/questions';
 
 interface QuestionCardProps {
     question: Question;
@@ -8,6 +10,8 @@ interface QuestionCardProps {
 }
 
 export function QuestionCard({ question, onAnswer, currentAnswer, className = '' }: QuestionCardProps) {
+    const { t } = useTranslation();
+
     const handleScoreClick = (score: number) => {
         onAnswer(score);
     };
@@ -52,10 +56,10 @@ export function QuestionCard({ question, onAnswer, currentAnswer, className = ''
         <div className={`bg-white rounded-xl shadow-lg p-4 sm:p-6 ${className}`}>
             <div className="text-center mb-6">
                 <h2 className="text-xl font-semibold text-gray-800 mb-2">
-                    질문 {question.id}
+                    {t('lovetype.question')} {question.id}
                 </h2>
                 <p className="text-base sm:text-lg text-gray-700 leading-relaxed">
-                    {question.text}
+                    {getQuestionText(question.id, t)}
                 </p>
             </div>
 
@@ -80,7 +84,7 @@ export function QuestionCard({ question, onAnswer, currentAnswer, className = ''
                 {/* 6단계 A/B 선택지 점수 선택 */}
                 <div className="space-y-4">
                     <div className="text-center">
-                        <p className="text-sm font-medium text-gray-700 mb-3">💕 A와 B 중 어느 쪽에 얼마나 동의하시나요?</p>
+                        <p className="text-sm font-medium text-gray-700 mb-3">💕 {t('lovetype.agreementQuestion', 'A와 B 중 어느 쪽에 얼마나 동의하시나요?')}</p>
                     </div>
 
                     <div className="flex justify-center items-center gap-2 sm:gap-4">

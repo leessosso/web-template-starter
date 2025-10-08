@@ -1,4 +1,6 @@
+import { useTranslation } from 'react-i18next';
 import type { LoveType } from '../../lovetype/index';
+import { getLoveTypeData } from '../../lovetype/newLoveTypes';
 
 interface TypeCardProps {
     loveType: LoveType;
@@ -8,6 +10,9 @@ interface TypeCardProps {
 }
 
 export function TypeCard({ loveType, onClick, className = '', showDetails = false }: TypeCardProps) {
+    const { t } = useTranslation();
+    const localizedType = getLoveTypeData(loveType.code, t);
+
     return (
         <div
             className={`bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer transition-all duration-300 hover:shadow-xl hover:scale-105 ${className}`}
@@ -17,28 +22,28 @@ export function TypeCard({ loveType, onClick, className = '', showDetails = fals
             <div className={`bg-gradient-to-r ${loveType.color} p-6 text-white`}>
                 <div className="text-center">
                     <h3 className="text-2xl font-bold mb-2">{loveType.code}</h3>
-                    <h4 className="text-lg font-semibold mb-1">{loveType.title}</h4>
-                    <p className="text-sm opacity-90">{loveType.nickname}</p>
+                    <h4 className="text-lg font-semibold mb-1">{localizedType.title}</h4>
+                    <p className="text-sm opacity-90">{localizedType.nickname}</p>
                 </div>
             </div>
 
             {/* 내용 */}
             <div className="p-6">
                 <p className="text-gray-700 mb-4 leading-relaxed">
-                    {loveType.description}
+                    {localizedType.description}
                 </p>
 
                 {showDetails && (
                     <div className="space-y-4">
                         <div>
-                            <h5 className="font-semibold text-gray-800 mb-2">연애 스타일</h5>
-                            <p className="text-sm text-gray-600">{loveType.loveStyle}</p>
+                            <h5 className="font-semibold text-gray-800 mb-2">{t('lovetype.loveStyle', '연애 스타일')}</h5>
+                            <p className="text-sm text-gray-600">{localizedType.loveStyle}</p>
                         </div>
 
                         <div>
-                            <h5 className="font-semibold text-gray-800 mb-2">장점</h5>
+                            <h5 className="font-semibold text-gray-800 mb-2">{t('lovetype.strengths', '장점')}</h5>
                             <ul className="text-sm text-gray-600 space-y-1">
-                                {loveType.strengths.map((strength, index) => (
+                                {localizedType.strengths.map((strength, index) => (
                                     <li key={index} className="flex items-center">
                                         <span className="w-1.5 h-1.5 bg-pink-400 rounded-full mr-2"></span>
                                         {strength}
@@ -48,9 +53,9 @@ export function TypeCard({ loveType, onClick, className = '', showDetails = fals
                         </div>
 
                         <div>
-                            <h5 className="font-semibold text-gray-800 mb-2">주의할 점</h5>
+                            <h5 className="font-semibold text-gray-800 mb-2">{t('lovetype.challenges', '주의할 점')}</h5>
                             <ul className="text-sm text-gray-600 space-y-1">
-                                {loveType.challenges.map((challenge, index) => (
+                                {localizedType.challenges.map((challenge, index) => (
                                     <li key={index} className="flex items-center">
                                         <span className="w-1.5 h-1.5 bg-orange-400 rounded-full mr-2"></span>
                                         {challenge}
@@ -60,7 +65,7 @@ export function TypeCard({ loveType, onClick, className = '', showDetails = fals
                         </div>
 
                         <div>
-                            <h5 className="font-semibold text-gray-800 mb-2">궁합 좋은 유형</h5>
+                            <h5 className="font-semibold text-gray-800 mb-2">{t('lovetype.compatibleTypes', '궁합 좋은 유형')}</h5>
                             <div className="flex flex-wrap gap-2">
                                 {loveType.compatibleTypes.map((type) => (
                                     <span
@@ -74,8 +79,8 @@ export function TypeCard({ loveType, onClick, className = '', showDetails = fals
                         </div>
 
                         <div className="pt-4 border-t border-gray-200">
-                            <h5 className="font-semibold text-gray-800 mb-2">연애 조언</h5>
-                            <p className="text-sm text-gray-600 italic">"{loveType.advice}"</p>
+                            <h5 className="font-semibold text-gray-800 mb-2">{t('lovetype.advice', '연애 조언')}</h5>
+                            <p className="text-sm text-gray-600 italic">"{localizedType.advice}"</p>
                         </div>
                     </div>
                 )}

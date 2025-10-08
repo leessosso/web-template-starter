@@ -4,6 +4,7 @@ export { Input } from './Input';
 export { Badge } from './Badge';
 export { Alert } from './Alert';
 export { ThemeSelector } from './ThemeSelector';
+export { LanguageSelector } from './LanguageSelector';
 
 // Shadcn/ui 컴포넌트들
 export {

@@ -1,28 +1,26 @@
-// MBTI 16가지 유형 정의
-export type MBTIType =
-    | 'ENFP' | 'ENFJ' | 'ENTP' | 'ENTJ'
-    | 'ESFP' | 'ESFJ' | 'ESTP' | 'ESTJ'
-    | 'INFP' | 'INFJ' | 'INTP' | 'INTJ'
-    | 'ISFP' | 'ISFJ' | 'ISTP' | 'ISTJ';
+// 연애 유형 테스트 결과 (4가지 차원 기반)
+export type LoveTypeCode = string;
 
-// MBTI 차원별 점수
-export interface MBTIScore {
-    E: number; // 외향성 (Extraversion)
-    I: number; // 내향성 (Introversion)
-    S: number; // 감각 (Sensing)
-    N: number; // 직관 (Intuition)
-    T: number; // 사고 (Thinking)
-    F: number; // 감정 (Feeling)
-    J: number; // 판단 (Judging)
-    P: number; // 인식 (Perceiving)
+// 연애 유형 차원별 점수 (L/F, C/A, R/P, O/E)
+export interface LoveTypeScore {
+    L: number; // 리더십 - Lead
+    F: number; // 리더십 - Follow
+    C: number; // 애정 표현 - Cuddly
+    A: number; // 애정 표현 - Accept
+    R: number; // 연애관 - Realistic
+    P: number; // 연애관 - Passionate
+    O: number; // 태도 - Optimistic
+    E: number; // 태도 - Earnest
 }
 
 // 테스트 질문 타입
 export interface Question {
     id: number;
     text: string;
-    dimension: keyof MBTIScore; // 어떤 차원에 영향을 주는지
+    dimension: keyof LoveTypeScore; // 어떤 차원에 영향을 주는지
     weight: number; // 가중치 (1-5)
+    optionA?: string; // A 선택지
+    optionB?: string; // B 선택지
 }
 
 // 테스트 답변 타입
@@ -33,15 +31,15 @@ export interface Answer {
 
 // 연애 유형 정보
 export interface LoveType {
-    code: MBTIType;
+    code: LoveTypeCode;
     title: string;
     nickname: string;
     description: string;
     loveStyle: string;
     strengths: string[];
     challenges: string[];
-    compatibleTypes: MBTIType[];
-    incompatibleTypes: MBTIType[];
+    compatibleTypes: LoveTypeCode[];
+    incompatibleTypes: LoveTypeCode[];
     advice: string;
     color: string;
 }
@@ -51,5 +49,5 @@ export interface TestState {
     currentQuestion: number;
     answers: Answer[];
     isCompleted: boolean;
-    result?: MBTIType;
+    result?: LoveTypeCode;
 }
