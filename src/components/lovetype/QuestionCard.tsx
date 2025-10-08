@@ -56,7 +56,7 @@ export function QuestionCard({ question, onAnswer, currentAnswer, className = ''
                             <div className="w-6 h-6 bg-pink-500 text-white rounded-full flex items-center justify-center text-sm font-bold">A</div>
                             <div>
                                 <p className="font-semibold text-pink-800 mb-1">A 선택지</p>
-                                <p className="text-pink-700 text-sm">질문에 해당하는 A 선택지 내용이 여기에 표시됩니다</p>
+                                <p className="text-pink-700 text-sm">{question.optionA}</p>
                             </div>
                         </div>
                     </div>
@@ -66,7 +66,7 @@ export function QuestionCard({ question, onAnswer, currentAnswer, className = ''
                             <div className="w-6 h-6 bg-cyan-500 text-white rounded-full flex items-center justify-center text-sm font-bold">B</div>
                             <div>
                                 <p className="font-semibold text-cyan-800 mb-1">B 선택지</p>
-                                <p className="text-cyan-700 text-sm">질문에 해당하는 B 선택지 내용이 여기에 표시됩니다</p>
+                                <p className="text-cyan-700 text-sm">{question.optionB}</p>
                             </div>
                         </div>
                     </div>
@@ -77,7 +77,7 @@ export function QuestionCard({ question, onAnswer, currentAnswer, className = ''
                     <div className="text-center">
                         <p className="text-sm font-medium text-gray-700 mb-3">어느 쪽에 더 가까운지 강도를 선택해주세요</p>
                     </div>
-                    
+
                     <div className="flex justify-between items-center">
                         {[1, 2, 3, 4, 5, 6].map((score) => {
                             const intensityInfo = getIntensityInfo(score);
