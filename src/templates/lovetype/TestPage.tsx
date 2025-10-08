@@ -10,6 +10,7 @@ export function TestPage() {
         testState,
         addAnswer,
         goToPreviousQuestion,
+        goToNextQuestion,
         completeTest,
         getCurrentQuestion,
         getProgress,
@@ -31,9 +32,9 @@ export function TestPage() {
     const handleNext = () => {
         if (testState.currentQuestion >= totalQuestions - 1) {
             completeTest();
-            navigate('/result');
         } else {
-            // 다음 질문으로 자동 이동 (이미 addAnswer에서 처리됨)
+            // 다음 질문으로 이동
+            goToNextQuestion();
         }
     };
 
@@ -44,7 +45,6 @@ export function TestPage() {
     const handleComplete = () => {
         if (canComplete()) {
             completeTest();
-            navigate('/result');
         }
     };
 

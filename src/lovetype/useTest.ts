@@ -340,8 +340,8 @@ export function useTest() {
 
             return {
                 ...prev,
-                answers: newAnswers,
-                currentQuestion: prev.currentQuestion + 1
+                answers: newAnswers
+                // currentQuestion은 자동으로 증가시키지 않음
             };
         });
     }, []);
@@ -351,6 +351,14 @@ export function useTest() {
         setTestState(prev => ({
             ...prev,
             currentQuestion: Math.max(0, prev.currentQuestion - 1)
+        }));
+    }, []);
+
+    // 다음 질문으로 이동
+    const goToNextQuestion = useCallback(() => {
+        setTestState(prev => ({
+            ...prev,
+            currentQuestion: Math.min(questions.length - 1, prev.currentQuestion + 1)
         }));
     }, []);
 
@@ -410,6 +418,7 @@ export function useTest() {
         testState,
         addAnswer,
         goToPreviousQuestion,
+        goToNextQuestion,
         goToQuestion,
         completeTest,
         restartTest,
