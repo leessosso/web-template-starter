@@ -1,5 +1,4 @@
-import type React from 'react';
-import type { Question } from '../../lovetype/index';
+import type { Question } from '../../lovetype/useTest';
 
 interface QuestionCardProps {
     question: Question;
@@ -13,16 +12,6 @@ export function QuestionCard({ question, onAnswer, currentAnswer, className = ''
         onAnswer(score);
     };
 
-    const getScoreLabel = (score: number) => {
-        switch (score) {
-            case 1: return 'A';
-            case 2: return 'B';
-            case 3: return 'C';
-            case 4: return 'D';
-            case 5: return 'E';
-            default: return '';
-        }
-    };
 
     const getIntensityInfo = (score: number) => {
         // 6단계: 강한A(1) → 중간A(2) → 약한A(3) → 약한B(4) → 중간B(5) → 강한B(6)
@@ -60,7 +49,7 @@ export function QuestionCard({ question, onAnswer, currentAnswer, className = ''
                             </div>
                         </div>
                     </div>
-                    
+
                     <div className="bg-cyan-50 border-2 border-cyan-200 rounded-lg p-4">
                         <div className="flex items-start space-x-3">
                             <div className="w-6 h-6 bg-cyan-500 text-white rounded-full flex items-center justify-center text-sm font-bold">B</div>

@@ -1,4 +1,3 @@
-import type React from 'react';
 import type { LoveType } from '../../lovetype/index';
 
 interface TypeCardProps {
