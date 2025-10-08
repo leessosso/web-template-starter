@@ -22,9 +22,9 @@ export function LandingPage() {
                             나만의 연애 유형을 알아보세요
                         </p>
                         <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
-                            MBTI 기반 연애 성향 테스트로 당신의 연애 스타일과 궁합을 확인해보세요.
+                            리더십, 애정표현, 연애관, 태도 4가지 차원으로 분석하는 연애 유형 테스트로 당신의 연애 스타일을 확인해보세요.
                             <br />
-                            총 24개의 질문으로 정확한 분석을 제공합니다.
+                            총 30개의 질문으로 정확한 분석을 제공합니다.
                         </p>
                     </div>
 
@@ -38,34 +38,44 @@ export function LandingPage() {
                 </div>
 
                 {/* Features */}
-                <div className="grid md:grid-cols-3 gap-8 mb-16">
+                <div className="grid md:grid-cols-4 gap-6 mb-16">
                     <div className="text-center p-6 bg-white rounded-xl shadow-lg">
-                        <div className="w-16 h-16 bg-gradient-to-r from-pink-400 to-rose-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <span className="text-2xl">🧠</span>
+                        <div className="w-16 h-16 bg-gradient-to-r from-blue-400 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span className="text-2xl">⚡</span>
                         </div>
-                        <h3 className="text-xl font-semibold mb-2">MBTI 기반</h3>
-                        <p className="text-gray-600">
-                            과학적으로 검증된 MBTI 이론을 바탕으로 한 정확한 분석
+                        <h3 className="text-lg font-semibold mb-2">리더십</h3>
+                        <p className="text-gray-600 text-sm">
+                            연애에서 주도권을 잡는지 따라가는지 분석
                         </p>
                     </div>
 
                     <div className="text-center p-6 bg-white rounded-xl shadow-lg">
-                        <div className="w-16 h-16 bg-gradient-to-r from-purple-400 to-indigo-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <span className="text-2xl">💝</span>
+                        <div className="w-16 h-16 bg-gradient-to-r from-pink-400 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span className="text-2xl">💕</span>
                         </div>
-                        <h3 className="text-xl font-semibold mb-2">연애 특화</h3>
-                        <p className="text-gray-600">
-                            연애와 관계에 특화된 질문으로 더 정확한 결과 제공
+                        <h3 className="text-lg font-semibold mb-2">애정표현</h3>
+                        <p className="text-gray-600 text-sm">
+                            애정을 적극적으로 표현하는지 수용하는지 분석
                         </p>
                     </div>
 
                     <div className="text-center p-6 bg-white rounded-xl shadow-lg">
-                        <div className="w-16 h-16 bg-gradient-to-r from-indigo-400 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <span className="text-2xl">🎯</span>
+                        <div className="w-16 h-16 bg-gradient-to-r from-orange-400 to-orange-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span className="text-2xl">🔥</span>
                         </div>
-                        <h3 className="text-xl font-semibold mb-2">궁합 분석</h3>
-                        <p className="text-gray-600">
-                            다른 유형과의 궁합도와 연애 조언까지 제공
+                        <h3 className="text-lg font-semibold mb-2">연애관</h3>
+                        <p className="text-gray-600 text-sm">
+                            현실적인 연애를 추구하는지 열정적인지 분석
+                        </p>
+                    </div>
+
+                    <div className="text-center p-6 bg-white rounded-xl shadow-lg">
+                        <div className="w-16 h-16 bg-gradient-to-r from-green-400 to-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span className="text-2xl">😊</span>
+                        </div>
+                        <h3 className="text-lg font-semibold mb-2">태도</h3>
+                        <p className="text-gray-600 text-sm">
+                            낙관적인지 진지한지 연애에 대한 태도 분석
                         </p>
                     </div>
                 </div>
@@ -77,7 +87,7 @@ export function LandingPage() {
                         <div>
                             <h3 className="text-lg font-semibold mb-3 text-pink-600">📝 테스트 구성</h3>
                             <ul className="space-y-2 text-gray-600">
-                                <li>• 총 24개의 질문</li>
+                                <li>• 총 30개의 질문</li>
                                 <li>• 각 질문당 5점 척도</li>
                                 <li>• 약 5-10분 소요</li>
                                 <li>• 16가지 연애 유형 중 결과</li>

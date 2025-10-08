@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import type { MBTIType } from '../../lovetype/index';
-import { loveTypes } from '../../lovetype/index';
+import type { MBTIType } from '../../lovetype/useTest';
+import { newLoveTypes } from '../../lovetype/newLoveTypes';
 import { TypeCard, ShareButton } from '../../components/lovetype';
 import { Button } from '../../components/ui';
 import { calculateMBTIScore, getScorePercentage } from '../../lovetype/index';
@@ -14,7 +14,7 @@ export function ResultPage() {
     const [scorePercentage, setScorePercentage] = useState<Record<string, number> | null>(null);
 
     const mbtiType = type as MBTIType;
-    const loveType = loveTypes[mbtiType];
+    const loveType = newLoveTypes[mbtiType];
 
     useEffect(() => {
         if (testState.answers.length > 0) {
@@ -73,17 +73,17 @@ export function ResultPage() {
                     <div className="max-w-4xl mx-auto mb-8">
                         <div className="bg-white rounded-xl shadow-lg p-6">
                             <h3 className="text-xl font-bold text-center mb-6">성향 분석</h3>
-                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                                {[
-                                    { label: '외향성', key: 'E', color: 'from-blue-400 to-blue-600' },
-                                    { label: '내향성', key: 'I', color: 'from-indigo-400 to-indigo-600' },
-                                    { label: '감각', key: 'S', color: 'from-green-400 to-green-600' },
-                                    { label: '직관', key: 'N', color: 'from-purple-400 to-purple-600' },
-                                    { label: '사고', key: 'T', color: 'from-orange-400 to-orange-600' },
-                                    { label: '감정', key: 'F', color: 'from-pink-400 to-pink-600' },
-                                    { label: '판단', key: 'J', color: 'from-red-400 to-red-600' },
-                                    { label: '인식', key: 'P', color: 'from-yellow-400 to-yellow-600' }
-                                ].map(({ label, key, color }) => (
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                {[
+                  { label: '리더십', key: 'L', color: 'from-blue-400 to-blue-600' },
+                  { label: '팔로워', key: 'F', color: 'from-indigo-400 to-indigo-600' },
+                  { label: '애정표현', key: 'C', color: 'from-pink-400 to-pink-600' },
+                  { label: '수용', key: 'A', color: 'from-green-400 to-green-600' },
+                  { label: '현실적', key: 'R', color: 'from-orange-400 to-orange-600' },
+                  { label: '열정적', key: 'P', color: 'from-red-400 to-red-600' },
+                  { label: '낙관적', key: 'O', color: 'from-yellow-400 to-yellow-600' },
+                  { label: '진지함', key: 'E', color: 'from-purple-400 to-purple-600' }
+                ].map(({ label, key, color }) => (
                                     <div key={key} className="text-center">
                                         <h4 className="text-sm font-semibold text-gray-700 mb-2">{label}</h4>
                                         <div className="w-full bg-gray-200 rounded-full h-3 mb-2">

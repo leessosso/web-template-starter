@@ -13,16 +13,16 @@ export function QuestionCard({ question, onAnswer, currentAnswer, className = ''
         onAnswer(score);
     };
 
-    const getScoreLabel = (score: number) => {
-        switch (score) {
-            case 1: return '전혀 아니다';
-            case 2: return '아니다';
-            case 3: return '보통이다';
-            case 4: return '그렇다';
-            case 5: return '매우 그렇다';
-            default: return '';
-        }
-    };
+  const getScoreLabel = (score: number) => {
+    switch (score) {
+      case 1: return 'A';
+      case 2: return 'B';
+      case 3: return 'C';
+      case 4: return 'D';
+      case 5: return 'E';
+      default: return '';
+    }
+  };
 
     return (
         <div className={`bg-white rounded-xl shadow-lg p-6 ${className}`}>
@@ -45,9 +45,8 @@ export function QuestionCard({ question, onAnswer, currentAnswer, className = ''
                             : 'border-gray-200 hover:border-pink-300 hover:bg-pink-25'
                             }`}
                     >
-                        <div className="flex items-center justify-between">
-                            <span className="font-medium">{score}점</span>
-                            <span className="text-sm text-gray-600">{getScoreLabel(score)}</span>
+                        <div className="flex items-center justify-center">
+                            <span className="font-medium text-lg">{getScoreLabel(score)}</span>
                         </div>
                     </button>
                 ))}
