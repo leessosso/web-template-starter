@@ -1,10 +1,8 @@
 {
   "navigation": {
     "home": "홈",
-    "service": "서비스 소개",
-    "product": "제품 페이지",
-    "portfolio": "포트폴리오",
-    "analytics": "데이터 애널리틱스",
+    "test": "테스트",
+    "types": "유형 보기",
     "contact": "견적 문의"
   },
   "hero": {
@@ -154,20 +152,45 @@
     }
   },
   "footer": {
-    "description": "주문 즉시 사용할 수 있는 고품질 템플릿으로 고객에게 빠르게 시안을 제공하세요.",
+    "description": "MBTI 기반 연애 유형 테스트로 당신의 연애 스타일을 알아보세요.",
     "sections": {
-      "templates": "템플릿",
-      "resources": "리소스",
-      "company": "회사"
+      "test": "테스트",
+      "types": "유형",
+      "about": "소개"
     },
     "links": {
-      "designSystem": "디자인 시스템",
-      "docs": "문서화",
-      "library": "컴포넌트 라이브러리",
+      "startTest": "테스트 시작",
+      "allTypes": "모든 유형",
       "about": "소개",
-      "blog": "블로그",
-      "careers": "채용"
+      "contact": "문의"
     },
-    "copyright": "© {{year}} WebTemplateStudio. All rights reserved."
+    "copyright": "© {{year}} LoveType. All rights reserved."
+  },
+  "lovetype": {
+    "title": "LoveType",
+    "subtitle": "나만의 연애 유형을 알아보세요",
+    "description": "MBTI 기반 연애 성향 테스트로 당신의 연애 스타일과 궁합을 확인해보세요.",
+    "startTest": "테스트 시작하기",
+    "testProgress": "진행률",
+    "question": "질문",
+    "previous": "이전",
+    "next": "다음",
+    "complete": "결과 보기",
+    "result": "당신의 연애 유형",
+    "share": "결과 공유하기",
+    "restart": "다시 테스트하기",
+    "goHome": "홈으로 돌아가기",
+    "allTypes": "16가지 연애 유형",
+    "scoreAnalysis": "성향 분석",
+    "compatibility": "궁합",
+    "advice": "연애 조언",
+    "features": {
+      "mbti": "MBTI 기반",
+      "mbtiDesc": "과학적으로 검증된 MBTI 이론을 바탕으로 한 정확한 분석",
+      "love": "연애 특화",
+      "loveDesc": "연애와 관계에 특화된 질문으로 더 정확한 결과 제공",
+      "match": "궁합 분석",
+      "matchDesc": "다른 유형과의 궁합도와 연애 조언까지 제공"
+    }
   }
 }

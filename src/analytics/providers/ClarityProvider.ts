@@ -3,7 +3,7 @@ export class ClarityProvider {
     private projectId: string | undefined;
 
     constructor() {
-        this.projectId = import.meta.env.VITE_CLARITY_PROJECT_ID;
+        this.projectId = import.meta.env.VITE_CLARITY_PROJECT_ID || 'your_clarity_project_id_here';
     }
 
     // Clarity가 활성화되어 있는지 확인

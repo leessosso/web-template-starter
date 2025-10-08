@@ -3,28 +3,25 @@ import { Link } from 'react-router-dom'
 
 const footerLinks = [
   {
-    titleKey: 'footer.sections.templates',
+    titleKey: 'footer.sections.test',
     links: [
       { labelKey: 'navigation.home', href: '/' },
-      { labelKey: 'navigation.service', href: '/service' },
-      { labelKey: 'navigation.product', href: '/product' },
-      { labelKey: 'navigation.portfolio', href: '/portfolio' },
+      { labelKey: 'navigation.test', href: '/test' },
+      { labelKey: 'navigation.types', href: '/types' },
     ],
   },
   {
-    titleKey: 'footer.sections.resources',
+    titleKey: 'footer.sections.types',
     links: [
-      { labelKey: 'footer.links.designSystem', href: '#' },
-      { labelKey: 'footer.links.docs', href: '#' },
-      { labelKey: 'footer.links.library', href: '#' },
+      { labelKey: 'footer.links.startTest', href: '/test' },
+      { labelKey: 'footer.links.allTypes', href: '/types' },
     ],
   },
   {
-    titleKey: 'footer.sections.company',
+    titleKey: 'footer.sections.about',
     links: [
       { labelKey: 'footer.links.about', href: '#' },
-      { labelKey: 'footer.links.blog', href: '#' },
-      { labelKey: 'footer.links.careers', href: '#' },
+      { labelKey: 'footer.links.contact', href: '#' },
     ],
   },
 ]
@@ -36,7 +33,7 @@ export function Footer() {
     <footer className="border-t border-border/5 bg-background/90">
       <div className="container-section flex flex-col gap-12 py-12 md:flex-row md:items-start md:justify-between">
         <div className="max-w-sm space-y-4">
-          <h2 className="text-xl font-semibold text-foreground">WebTemplateStudio</h2>
+          <h2 className="text-xl font-semibold bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent">LoveType</h2>
           <p className="text-sm text-muted-foreground">
             {t('footer.description')}
           </p>

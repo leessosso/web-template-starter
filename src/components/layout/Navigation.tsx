@@ -3,10 +3,8 @@ import { useTranslation } from 'react-i18next'
 
 const navItems = [
   { to: '/', key: 'navigation.home' },
-  { to: '/service', key: 'navigation.service' },
-  { to: '/product', key: 'navigation.product' },
-  { to: '/portfolio', key: 'navigation.portfolio' },
-  { to: '/analytics', key: 'navigation.analytics' },
+  { to: '/test', key: 'navigation.test' },
+  { to: '/types', key: 'navigation.types' },
 ]
 
 export function Navigation() {
@@ -20,8 +18,8 @@ export function Navigation() {
   return (
     <header className="sticky top-0 z-50 border-b border-border/5 bg-background/90 backdrop-blur">
       <div className="container-section flex h-20 items-center justify-between">
-        <NavLink to="/" className="text-lg font-semibold text-foreground">
-          WebTemplateStudio
+        <NavLink to="/" className="text-lg font-semibold bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent">
+          LoveType
         </NavLink>
         <nav className="hidden gap-8 text-sm font-medium text-muted-foreground md:flex">
           {navItems.map((item) => (
@@ -42,8 +40,8 @@ export function Navigation() {
           ))}
         </nav>
         <div className="hidden items-center gap-2 md:flex">
-          <NavLink to="/contact" className="btn-primary">
-            {t('navigation.contact')}
+          <NavLink to="/test" className="btn-primary bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white">
+            테스트 시작
           </NavLink>
           <button
             type="button"
