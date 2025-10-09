@@ -43,6 +43,8 @@ export const trackEvent = (params: PartialEventParams): void => {
 
     const { category, action, label, value, customParameters } = params;
 
+    if (!action) return;
+
     window.gtag('event', action, {
         event_category: category,
         event_label: label,

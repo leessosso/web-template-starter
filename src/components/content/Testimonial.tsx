@@ -1,4 +1,3 @@
-import React from 'react';
 import { Card } from '../ui/Card';
 
 interface TestimonialProps {
@@ -26,9 +25,8 @@ export function Testimonial({
           {[...Array(5)].map((_, i) => (
             <span
               key={i}
-              className={`text-lg ${
-                i < rating ? 'text-yellow-400' : 'text-muted-foreground'
-              }`}
+              className={`text-lg ${i < rating ? 'text-yellow-400' : 'text-muted-foreground'
+                }`}
             >
               ★
             </span>

@@ -17,7 +17,6 @@ export function LanguageSelector({ className = '' }: LanguageSelectorProps) {
         i18n.changeLanguage(event.target.value);
     };
 
-    const currentLanguage = languages.find(lang => lang.code === i18n.language) || languages[0];
 
     return (
         <div className={`flex items-center space-x-2 ${className}`}>

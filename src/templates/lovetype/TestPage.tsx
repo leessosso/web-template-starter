@@ -22,7 +22,6 @@ export function TestPage() {
     } = useTest();
 
     const currentQuestion = getCurrentQuestion();
-    const progress = getProgress();
     const currentAnswer = getAnswer(currentQuestion?.id || 0);
 
     const handleAnswer = (score: number) => {

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Card } from '../ui/Card';
 import { Button } from '../ui/Button';
 import { Badge } from '../ui/Badge';
@@ -63,16 +62,14 @@ export function PricingCard({
           {features.map((feature, index) => (
             <li key={index} className="flex items-center">
               <span
-                className={`mr-3 ${
-                  feature.included ? 'text-green-500' : 'text-muted-foreground'
-                }`}
+                className={`mr-3 ${feature.included ? 'text-green-500' : 'text-muted-foreground'
+                  }`}
               >
                 {feature.included ? '✓' : '✕'}
               </span>
               <span
-                className={`${
-                  feature.included ? 'text-card-foreground' : 'text-muted-foreground line-through'
-                }`}
+                className={`${feature.included ? 'text-card-foreground' : 'text-muted-foreground line-through'
+                  }`}
               >
                 {feature.text}
               </span>
