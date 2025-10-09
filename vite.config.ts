@@ -9,6 +9,10 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 export default defineConfig({
   plugins: [react()],
   base: '/web-template-starter/',
+  build: {
+    outDir: 'dist',
+    assetsDir: 'assets',
+  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
