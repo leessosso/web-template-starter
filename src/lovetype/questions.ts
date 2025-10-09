@@ -2,7 +2,7 @@ import type { Question } from './types';
 
 // 연애 유형 테스트 질문들 (L/F, C/A, R/P, O/E 차원 기반)
 export const questions: Question[] = [
-    // L/F 차원 질문들 (리더십: Lead/Follow) - 총 7개 (L쪽 7개, F쪽 0개)
+    // L/F 차원 질문들 (리더십: Lead/Follow) - 총 6개
     {
         id: 1,
         text: "연인과 새로운 맛집을 찾아갈 때, 주로 누가 먼저 제안하나요?",
@@ -51,18 +51,10 @@ export const questions: Question[] = [
         optionA: "먹고 싶은 메뉴를 명확하게 정해서 제안한다",
         optionB: "상대방이 원하는 메뉴에 맞춰주는 편이다"
     },
+
+    // C/A 차원 질문들 (애정 표현: Cuddly 응석부리고 싶은/Accept 응석받고 싶은) - 총 6개
     {
         id: 7,
-        text: "연인에게서 뜻밖의 서프라이즈 이벤트를 받았을 때, 당신의 다음 행동은?",
-        dimension: 'L',
-        weight: 2,
-        optionA: "나도 상대방을 위한 깜짝 이벤트를 계획하고 실행한다",
-        optionB: "상대방의 마음 씀씀이에 고마워하며 그 애정을 만끽한다"
-    },
-
-    // C/A 차원 질문들 (애정 표현: Cuddly 응석부리고 싶은/Accept 응석받고 싶은) - 총 7개 (C쪽 3개, A쪽 4개)
-    {
-        id: 8,
         text: "연인이 힘들어할 때, 당신은 주로 어떻게 반응하나요?",
         dimension: 'A',
         weight: 3,
@@ -70,7 +62,7 @@ export const questions: Question[] = [
         optionB: "적극적으로 위로하고, 문제를 해결하는 데 함께하고 싶다"
     },
     {
-        id: 9,
+        id: 8,
         text: "연인에게서 \"귀엽다\"는 말을 들었을 때, 당신의 솔직한 기분은?",
         dimension: 'C',
         weight: 3,
@@ -78,7 +70,7 @@ export const questions: Question[] = [
         optionB: "내 모습 그대로를 받아들여 준 것 같아 뿌듯하고 흐뭇하다"
     },
     {
-        id: 10,
+        id: 9,
         text: "연인의 사소한 투정이나 어리광을 접했을 때, 당신의 반응은?",
         dimension: 'C',
         weight: 3,
@@ -86,15 +78,7 @@ export const questions: Question[] = [
         optionB: "귀엽고 사랑스러워서 더 받아주고 싶은 마음이 든다"
     },
     {
-        id: 11,
-        text: "연인과의 스킨십에 대한 당신의 생각은?",
-        dimension: 'A',
-        weight: 2,
-        optionA: "자연스러운 교감의 일부분이며, 상대방이 편안함을 느끼는 것이 중요하다",
-        optionB: "애정을 표현하고 확인하는 중요한 수단이라고 생각한다"
-    },
-    {
-        id: 12,
+        id: 10,
         text: "연인의 고민을 들어줄 때, 당신은 주로 어떤 태도인가요?",
         dimension: 'A',
         weight: 2,
@@ -102,7 +86,7 @@ export const questions: Question[] = [
         optionB: "상대방의 감정에 깊이 공감하고 함께 슬퍼하며 보듬어준다"
     },
     {
-        id: 13,
+        id: 11,
         text: "기념일이나 특별한 날, 연인에게서 어떤 선물을 받고 싶나요?",
         dimension: 'A',
         weight: 2,
@@ -110,7 +94,7 @@ export const questions: Question[] = [
         optionB: "나의 취향을 정확히 알고 정성껏 준비한 맞춤형 선물"
     },
     {
-        id: 14,
+        id: 12,
         text: "문득 생각나는 연인상은?",
         dimension: 'C',
         weight: 2,
@@ -118,9 +102,9 @@ export const questions: Question[] = [
         optionB: "내가 지켜주고 싶어지는 존재"
     },
 
-    // R/P 차원 질문들 (연애관: Realistic/Passionate) - 총 7개 (P쪽 7개, R쪽 0개)
+    // R/P 차원 질문들 (연애관: Realistic/Passionate) - 총 6개
     {
-        id: 15,
+        id: 13,
         text: "연인과 싸웠을 때 화해하는 가장 효과적인 방법은?",
         dimension: 'P',
         weight: 3,
@@ -128,7 +112,7 @@ export const questions: Question[] = [
         optionB: "차분히 앉아 문제의 원인을 분석하고 합리적인 해결책을 찾는다"
     },
     {
-        id: 16,
+        id: 14,
         text: "연인과 기념일을 보낼 때, 더 중요하게 생각하는 것은?",
         dimension: 'P',
         weight: 3,
@@ -136,7 +120,7 @@ export const questions: Question[] = [
         optionB: "실용적이고 필요한 선물을 주고받으며 현실적인 기쁨을 느낀다"
     },
     {
-        id: 17,
+        id: 15,
         text: "연인과의 프러포즈나 결혼식에 대한 환상이 있나요?",
         dimension: 'P',
         weight: 3,
@@ -144,15 +128,7 @@ export const questions: Question[] = [
         optionB: "진심이 담겨 있다면 소박하고 현실적인 것도 괜찮다고 생각한다"
     },
     {
-        id: 18,
-        text: "연애 중 재정 관리 방식은 어느 쪽에 가깝다고 생각하나요?",
-        dimension: 'P',
-        weight: 2,
-        optionA: "지금의 행복을 위해 아낌없이 투자하고 즐기는 편이다",
-        optionB: "미래를 위해 계획적으로 지출하고 저축하는 편이다"
-    },
-    {
-        id: 19,
+        id: 16,
         text: "사랑이 식었다고 느껴질 때, 당신의 대처 방식은?",
         dimension: 'P',
         weight: 2,
@@ -160,7 +136,7 @@ export const questions: Question[] = [
         optionB: "감정의 변화를 냉정하게 인정하고 관계를 정리할 방법을 모색한다"
     },
     {
-        id: 20,
+        id: 17,
         text: "결혼에 대한 당신의 생각은?",
         dimension: 'P',
         weight: 2,
@@ -168,7 +144,7 @@ export const questions: Question[] = [
         optionB: "현실적인 동반자 관계를 통해 안정과 행복을 추구하는 것이다"
     },
     {
-        id: 21,
+        id: 18,
         text: "결혼 후, 연인과의 가장 이상적인 주말은 어떤 모습인가요?",
         dimension: 'P',
         weight: 2,
@@ -176,9 +152,9 @@ export const questions: Question[] = [
         optionB: "미래를 위한 자기 계발이나 공동의 목표 달성에 시간을 보낸다"
     },
 
-    // O/E 차원 질문들 (태도: Optimistic/Earnest) - 총 7개 (O쪽 7개, E쪽 0개)
+    // O/E 차원 질문들 (태도: Optimistic/Earnest) - 총 6개
     {
-        id: 22,
+        id: 19,
         text: "연인과 사귀고 난 후, 당신의 개인적인 시간 활용은?",
         dimension: 'O',
         weight: 3,
@@ -186,7 +162,7 @@ export const questions: Question[] = [
         optionB: "연인을 최우선으로 생각하며, 대부분의 시간을 연인과 보내는 데 집중한다"
     },
     {
-        id: 23,
+        id: 20,
         text: "연인이 너무 지나치게 질투하거나 집착하는 모습을 보일 때 당신의 반응은?",
         dimension: 'O',
         weight: 3,
@@ -194,7 +170,7 @@ export const questions: Question[] = [
         optionB: "관계의 문제를 심각하게 느끼고 진지하게 대화하려 한다"
     },
     {
-        id: 24,
+        id: 21,
         text: "이별 후 새로운 연애를 시작하기까지의 기간은?",
         dimension: 'O',
         weight: 3,
@@ -202,15 +178,7 @@ export const questions: Question[] = [
         optionB: "충분히 슬퍼하고 관계를 정리한 후, 신중하게 다음 연애를 준비한다"
     },
     {
-        id: 25,
-        text: "연애에 대한 친구들의 조언을 들었을 때, 당신의 반응은?",
-        dimension: 'O',
-        weight: 2,
-        optionA: "참고는 하지만 결국 내 마음이 가는 대로 결정하는 편이다",
-        optionB: "친구들의 조언을 진지하게 고민하고 신중하게 반영한다"
-    },
-    {
-        id: 26,
+        id: 22,
         text: "연인과 취미나 관심사를 반드시 공유해야 한다고 생각하나요?",
         dimension: 'O',
         weight: 2,
@@ -218,7 +186,7 @@ export const questions: Question[] = [
         optionB: "깊은 관계를 위해 서로의 취미나 관심사를 함께하고 싶다"
     },
     {
-        id: 27,
+        id: 23,
         text: "연애 중 다른 이성과의 자연스러운 교류에 대해 당신의 생각은?",
         dimension: 'O',
         weight: 2,
@@ -226,7 +194,7 @@ export const questions: Question[] = [
         optionB: "연인이 있는 동안에는 오해의 소지를 만들지 않도록 조심한다"
     },
     {
-        id: 28,
+        id: 24,
         text: "연애 중 자신의 솔직한 감정을 어디까지 표현하는 편인가요?",
         dimension: 'O',
         weight: 2,
