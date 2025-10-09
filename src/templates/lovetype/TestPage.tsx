@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useTest } from '../../lovetype/useTest';
@@ -15,7 +15,6 @@ export function TestPage() {
         goToNextQuestion,
         completeTest,
         getCurrentQuestion,
-        getProgress,
         getAnswer,
         canComplete,
         totalQuestions
