@@ -37,7 +37,7 @@ export function LandingPage() {
                             size="lg"
                             className="bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white px-8 py-4 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
                         >
-                            💕 테스트 시작하기 💕
+                            💕 {t('lovetype.startTest')} 💕
                         </Button>
                     </div>
                 </div>
