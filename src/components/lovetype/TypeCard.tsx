@@ -11,7 +11,7 @@ interface TypeCardProps {
 
 export function TypeCard({ loveType, onClick, className = '', showDetails = false }: TypeCardProps) {
     const { t } = useTranslation();
-    const localizedType = getLoveTypeData(loveType.code, t);
+    const localizedType = getLoveTypeData(loveType.code, t) || loveType;
 
     return (
         <div

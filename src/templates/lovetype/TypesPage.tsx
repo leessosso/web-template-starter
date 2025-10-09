@@ -66,27 +66,27 @@ export function TypesPage() {
                         <h3 className="text-xl font-bold text-center mb-4">💡 유형별 특징</h3>
                         <div className="grid md:grid-cols-2 gap-6">
                             <div>
-                                <h4 className="font-semibold text-gray-800 mb-2">E (외향성) vs I (내향성)</h4>
+                                <h4 className="font-semibold text-gray-800 mb-2">L (리더십) vs F (팔로워십)</h4>
                                 <p className="text-sm text-gray-600">
-                                    외향성은 활발한 소통과 새로운 경험을, 내향성은 깊이 있는 대화와 개인적 공간을 선호합니다.
+                                    리더십은 관계를 주도하고 이끄는 것을, 팔로워십은 상대방을 따라가며 지지하는 것을 선호합니다.
                                 </p>
                             </div>
                             <div>
-                                <h4 className="font-semibold text-gray-800 mb-2">S (감각) vs N (직관)</h4>
+                                <h4 className="font-semibold text-gray-800 mb-2">C (응석부리고 싶은) vs A (응석받고 싶은)</h4>
                                 <p className="text-sm text-gray-600">
-                                    감각형은 현실적이고 구체적인 것을, 직관형은 가능성과 미래를 중시합니다.
+                                    C는 상대방에게 귀엽게 어리광부리고 싶어하며, A는 상대방이 나를 귀엽게 받아주고 보호해주기를 원합니다.
                                 </p>
                             </div>
                             <div>
-                                <h4 className="font-semibold text-gray-800 mb-2">T (사고) vs F (감정)</h4>
+                                <h4 className="font-semibold text-gray-800 mb-2">R (현실적) vs P (열정적)</h4>
                                 <p className="text-sm text-gray-600">
-                                    사고형은 논리적 분석을, 감정형은 조화와 배려를 우선시합니다.
+                                    현실적은 안정과 실용을, 열정적은 감정과 낭만을 중시합니다.
                                 </p>
                             </div>
                             <div>
-                                <h4 className="font-semibold text-gray-800 mb-2">J (판단) vs P (인식)</h4>
+                                <h4 className="font-semibold text-gray-800 mb-2">O (낙관적) vs E (진지한)</h4>
                                 <p className="text-sm text-gray-600">
-                                    판단형은 계획과 체계를, 인식형은 유연성과 즉흥성을 선호합니다.
+                                    낙관적은 자유롭고 유연한 관계를, 진지한은 신중하고 깊이 있는 관계를 선호합니다.
                                 </p>
                             </div>
                         </div>

@@ -1,220 +1,234 @@
 import { LoveType, LoveTypeCode } from './types';
 
 // 16가지 새로운 연애 유형 데이터 (L/F, C/A, R/P, O/E)
+// L/F: Lead(자신의 페이스에 맞춰주길 원함) / Follow(상대의 페이스에 맞춤)
+// C/A: Cuddly(응석부리고 싶은) / Accept(응석받고 싶은)
+// R/P: Realistic(현실적인 연애) / Passionate(열정적인 연애)
+// O/E: Optimistic(자유로운) / Earnest(진지한)
+
 export const newLoveTypes: Record<LoveTypeCode, LoveType> = {
-  LCAO: {
-    code: 'LCAO',
-    title: '리더십 있는 애정표현가',
-    nickname: '적극적 로맨틱',
-    description: '연애에서 주도권을 잡고 적극적으로 애정을 표현하는 타입입니다. 현실적이면서도 낙관적인 성향을 가지고 있어, 연인을 이끌면서도 따뜻한 사랑을 나눕니다. 데이트 계획을 세우고 연인을 놀라게 하는 것을 좋아하며, 관계의 발전을 위해 적극적으로 노력합니다.',
-    loveStyle: '주도적이고 애정표현이 풍부한 연애',
-    strengths: ['적극적인 리더십', '풍부한 애정표현', '현실적 판단', '낙관적 성격', '창의적인 데이트 아이디어', '연인의 성장을 도움'],
-    challenges: ['지나친 주도권', '감정 기복', '현실성 부족', '상대방의 자율성 침해'],
-    compatibleTypes: ['FFAP', 'FFRP', 'FCAO', 'FCAP'],
-    incompatibleTypes: ['LFRO', 'FFRO', 'FCRO'],
-    advice: '연인을 이끌되, 상대방의 의견도 충분히 들어주세요. 때로는 연인이 주도권을 잡을 수 있도록 배려하는 것도 중요합니다.',
-    color: 'from-pink-400 to-rose-500'
-  },
-  LCAP: {
-    code: 'LCAP',
-    title: '열정적인 리더',
-    nickname: '열정적 주도자',
-    description: '연애에서 주도권을 잡고 열정적으로 애정을 표현하는 타입입니다. 감정적이고 열정적인 연애를 추구하며, 연인과의 깊은 감정적 교감을 중시합니다. 사랑에 빠지면 모든 것을 쏟아붓는 스타일로, 연인을 위해 로맨틱한 서프라이즈를 준비하는 것을 좋아합니다.',
-    loveStyle: '열정적이고 주도적인 연애',
-    strengths: ['강한 리더십', '열정적 애정표현', '감정적 교감', '적극적 태도', '로맨틱한 서프라이즈', '깊은 감정 표현'],
-    challenges: ['감정 기복', '지나친 열정', '현실성 부족', '질투심', '감정적 소모'],
-    compatibleTypes: ['FFAP', 'FCRP', 'LCRO', 'FCAP'],
-    incompatibleTypes: ['LFRO', 'FFRO', 'FCRO'],
-    advice: '열정도 좋지만, 연인의 감정도 고려하여 균형을 맞추세요. 때로는 차분한 시간도 필요합니다.',
-    color: 'from-red-400 to-pink-500'
-  },
+  // Lead + Cuddly 유형들 (자신의 페이스 + 응석부리고 싶은)
   LCRO: {
     code: 'LCRO',
-    title: '현실적 애정표현가',
-    nickname: '현실적 로맨틱',
-    description: '연애에서 주도권을 잡고 현실적으로 애정을 표현하는 타입입니다. 낙관적이면서도 현실적인 연애를 추구하며, 안정적이고 지속 가능한 관계를 중시합니다. 연인과의 미래를 구체적으로 계획하고, 실용적인 사랑을 나누는 것을 좋아합니다.',
-    loveStyle: '현실적이고 주도적인 연애',
-    strengths: ['현실적 리더십', '안정적 애정표현', '낙관적 성격', '체계적 계획', '신뢰할 수 있는 파트너', '장기적 관계 비전'],
-    challenges: ['감정 표현 부족', '지나친 현실성', '유연성 부족', '로맨틱함 부족'],
-    compatibleTypes: ['FFRO', 'FCAO', 'LCAO', 'FCRO'],
-    incompatibleTypes: ['LFAP', 'FFAP', 'FCAP'],
-    advice: '현실적인 계획도 좋지만, 연인과의 감정적 교감도 중요합니다. 때로는 즉흥적인 로맨틱한 순간도 만들어보세요.',
-    color: 'from-blue-400 to-indigo-500'
+    title: '응석부리는 현실적 리더',
+    nickname: '귀여운 현실주의자',
+    description: '자신의 페이스로 관계를 이끌면서도 상대방에게 응석부리고 싶어하는 타입입니다. 현실적이고 자유로운 연애를 추구하며, 안정적인 관계 속에서 때로는 귀엽게 어리광부리고 싶어합니다.',
+    loveStyle: '현실적이면서 귀여운 주도형 연애',
+    strengths: ['현실적 리더십', '귀여운 매력', '자유로운 성격', '안정적 관계 추구', '균형잡힌 성향'],
+    challenges: ['감정 표현 부족', '지나친 응석', '의존성', '일관성 부족'],
+    compatibleTypes: ['FARE', 'FAPO', 'LARE', 'FCRO'],
+    incompatibleTypes: ['LCPE', 'FCPE', 'LAPE'],
+    advice: '현실적인 판단력을 유지하면서도 상대방과의 감정적 교감을 잊지 마세요.',
+    color: 'from-blue-400 to-cyan-500'
   },
   LCRP: {
     code: 'LCRP',
-    title: '열정적 현실주의자',
-    nickname: '열정적 계획가',
-    description: '연애에서 주도권을 잡고 현실적으로 애정을 표현하는 타입입니다. 열정적이면서도 현실적인 연애를 추구하며, 완벽한 관계를 만들기 위해 노력합니다. 연인과의 미래를 구체적으로 계획하면서도, 감정적으로는 열정적인 사랑을 나누는 균형잡힌 스타일입니다.',
-    loveStyle: '열정적이고 현실적인 연애',
-    strengths: ['강한 리더십', '현실적 애정표현', '열정적 태도', '체계적 계획', '완벽한 데이트 준비', '균형잡힌 관계 관리'],
-    challenges: ['감정 기복', '지나친 완벽주의', '유연성 부족', '스트레스 과다', '자발성 부족'],
-    compatibleTypes: ['FFRP', 'FCRP', 'LCAP', 'LCAO'],
-    incompatibleTypes: ['LFAP', 'FFAP', 'FCAO'],
-    advice: '완벽한 계획도 좋지만, 연인과의 자발적인 순간도 소중히 여기세요. 때로는 계획을 버리고 즉흥적으로 즐기는 것도 좋습니다.',
+    title: '응석부리는 현실적 리더 (열정형)',
+    nickname: '귀엽고 진지한 현실주의자',
+    description: '자신의 페이스로 관계를 이끌면서도 상대방에게 응석부리고 싶어하는 타입입니다. 현실적이지만 열정적이며 진지하게 연애에 임합니다.',
+    loveStyle: '현실적이고 진지하면서 귀여운 연애',
+    strengths: ['현실적 리더십', '귀여운 매력', '진지한 태도', '안정적 관계', '열정적'],
+    challenges: ['감정 기복', '지나친 완벽주의', '의존성', '스트레스'],
+    compatibleTypes: ['FARE', 'FCRE', 'LARPE', 'FARO'],
+    incompatibleTypes: ['LCPO', 'FCPO', 'LAPO'],
+    advice: '완벽을 추구하되, 때로는 여유를 가지고 즐기는 것도 중요합니다.',
     color: 'from-purple-400 to-indigo-500'
   },
-  LFAO: {
-    code: 'LFAO',
-    title: '수용적 리더',
-    nickname: '배려심 깊은 주도자',
-    description: '연애에서 주도권을 잡지만 상대방을 수용하는 타입입니다. 낙관적이면서도 배려심이 깊어, 연인의 의견을 존중하면서도 관계를 이끌어갑니다. 조화로운 관계를 중시하며, 연인과의 갈등을 최소화하려고 노력하는 따뜻한 리더십을 보입니다.',
-    loveStyle: '배려심 깊고 주도적인 연애',
-    strengths: ['배려심 깊은 리더십', '수용적 태도', '낙관적 성격', '안정적 관계', '조화로운 관계 유지', '연인의 의견 존중'],
-    challenges: ['자기주장 부족', '지나친 배려', '결정력 부족', '갈등 회피'],
-    compatibleTypes: ['FFAO', 'FCAO', 'LCAO', 'FCAP'],
-    incompatibleTypes: ['LFAP', 'FFAP', 'LCAP'],
-    advice: '상대방을 배려하는 것도 좋지만, 자신의 의견도 적극적으로 표현하세요. 때로는 확고한 입장을 보이는 것도 필요합니다.',
-    color: 'from-green-400 to-emerald-500'
+  LCPO: {
+    code: 'LCPO',
+    title: '응석부리는 열정적 리더',
+    nickname: '귀여운 열정가',
+    description: '자신의 페이스로 관계를 이끌면서도 상대방에게 응석부리고 싶어하는 타입입니다. 열정적이고 자유로운 연애를 추구하며, 감정적으로 풍부한 관계를 원합니다.',
+    loveStyle: '열정적이면서 귀여운 자유로운 연애',
+    strengths: ['열정적 리더십', '귀여운 매력', '자유로운 성격', '감정적 교감', '창의적'],
+    challenges: ['감정 기복', '충동적', '의존성', '현실성 부족'],
+    compatibleTypes: ['FAPE', 'FCPO', 'LAPO', 'FARE'],
+    incompatibleTypes: ['LCRE', 'FARE', 'LARE'],
+    advice: '열정도 좋지만, 상대방의 페이스도 존중하며 균형을 맞추세요.',
+    color: 'from-red-400 to-pink-500'
   },
-  LFAP: {
-    code: 'LFAP',
-    title: '열정적 수용자',
-    nickname: '열정적 배려자',
-    description: '연애에서 주도권을 잡지만 상대방을 수용하는 타입입니다. 열정적이면서도 배려심이 깊어, 연인과의 감정적 교감을 중시하면서도 관계를 이끌어갑니다. 연인의 감정에 민감하게 반응하며, 따뜻하고 열정적인 사랑을 나누는 것을 좋아합니다.',
-    loveStyle: '열정적이고 배려심 깊은 연애',
-    strengths: ['열정적 리더십', '수용적 태도', '감정적 교감', '배려심', '연인의 감정 이해', '따뜻한 사랑 표현'],
-    challenges: ['감정 기복', '자기주장 부족', '지나친 배려', '감정적 소모'],
-    compatibleTypes: ['FFAP', 'FCAO', 'LFRO', 'LFAO'],
-    incompatibleTypes: ['LCAP', 'FFRP', 'LCRP'],
-    advice: '상대방을 배려하는 것도 좋지만, 자신의 감정도 솔직하게 표현하세요. 때로는 자신의 욕구도 우선시하는 것이 중요합니다.',
-    color: 'from-orange-400 to-red-500'
+  LCPE: {
+    code: 'LCPE',
+    title: '응석부리는 열정적 리더 (진지형)',
+    nickname: '귀엽고 진지한 열정가',
+    description: '자신의 페이스로 관계를 이끌면서도 상대방에게 응석부리고 싶어하는 타입입니다. 열정적이지만 진지하게 연애에 임하며, 깊은 관계를 추구합니다.',
+    loveStyle: '열정적이고 진지하면서 귀여운 연애',
+    strengths: ['열정적 리더십', '귀여운 매력', '진지한 태도', '깊은 감정 교감', '헌신적'],
+    challenges: ['감정 기복', '지나친 집착', '의존성', '감정적 소모'],
+    compatibleTypes: ['FAPE', 'FCPE', 'LAPE', 'FARO'],
+    incompatibleTypes: ['LCRO', 'FARO', 'LARO'],
+    advice: '진지함도 좋지만, 때로는 가볍게 즐기는 여유도 필요합니다.',
+    color: 'from-pink-500 to-rose-600'
   },
-  LFRO: {
-    code: 'LFRO',
-    title: '현실적 수용자',
-    nickname: '현실적 배려자',
-    description: '연애에서 주도권을 잡지만 상대방을 수용하는 타입입니다. 현실적이면서도 배려심이 깊어, 안정적이고 지속 가능한 관계를 중시합니다. 연인의 의견을 존중하면서도 현실적인 계획을 세우는 균형잡힌 리더십을 보입니다.',
-    loveStyle: '현실적이고 배려심 깊은 연애',
-    strengths: ['현실적 리더십', '수용적 태도', '안정적 관계', '체계적 계획', '신뢰할 수 있는 파트너', '균형잡힌 의사결정'],
-    challenges: ['감정 표현 부족', '자기주장 부족', '지나친 현실성', '로맨틱함 부족'],
-    compatibleTypes: ['FFRO', 'FCAO', 'LFAP', 'LCRO'],
-    incompatibleTypes: ['LCAP', 'FFAP', 'FCAP'],
-    advice: '현실적인 계획도 좋지만, 연인과의 감정적 교감도 필요합니다. 때로는 감정을 표현하고 로맨틱한 순간을 만들어보세요.',
+
+  // Lead + Accept 유형들 (자신의 페이스 + 응석받고 싶은)
+  LARO: {
+    code: 'LARO',
+    title: '응석받고 싶은 현실적 리더',
+    nickname: '케어받고 싶은 리더',
+    description: '자신의 페이스로 관계를 이끌지만 상대방이 자신을 받아주고 보호해주기를 원하는 타입입니다. 현실적이고 자유로운 연애를 추구합니다.',
+    loveStyle: '현실적이면서 케어받고 싶은 연애',
+    strengths: ['현실적 리더십', '받아주는 매력', '자유로운 성격', '안정적', '균형잡힌'],
+    challenges: ['자기주장 과다', '수용 부족', '거리감', '냉정함'],
+    compatibleTypes: ['FCRO', 'FCPO', 'LCRO', 'FARE'],
+    incompatibleTypes: ['LAPE', 'FCPE', 'LCPE'],
+    advice: '리더십도 좋지만, 상대방의 애정표현도 받아들이는 여유를 가지세요.',
     color: 'from-teal-400 to-cyan-500'
   },
-  LFRP: {
-    code: 'LFRP',
-    title: '열정적 현실주의 수용자',
-    nickname: '열정적 현실 배려자',
-    description: '연애에서 주도권을 잡지만 상대방을 수용하는 타입입니다. 열정적이면서도 현실적이고 배려심이 깊습니다.',
-    loveStyle: '열정적이고 현실적인 배려 연애',
-    strengths: ['열정적 리더십', '수용적 태도', '현실적 판단', '배려심'],
-    challenges: ['감정 기복', '자기주장 부족', '지나친 완벽주의'],
-    compatibleTypes: ['FFRP', 'FCRP', 'LFAP'],
-    incompatibleTypes: ['LCAP', 'FFAP'],
-    advice: '완벽한 관계를 추구하는 것도 좋지만, 때로는 자연스러운 모습도 보여주세요.',
-    color: 'from-indigo-400 to-purple-500'
+  LARE: {
+    code: 'LARE',
+    title: '응석받고 싶은 현실적 리더 (진지형)',
+    nickname: '진지한 리더',
+    description: '자신의 페이스로 관계를 이끌지만 상대방이 자신을 받아주고 보호해주기를 원하는 타입입니다. 현실적이고 진지하게 연애에 임합니다.',
+    loveStyle: '현실적이고 진지한 리더형 연애',
+    strengths: ['강한 리더십', '현실적 판단', '진지한 태도', '신뢰감', '책임감'],
+    challenges: ['자기주장 과다', '수용 부족', '융통성 부족', '완벽주의'],
+    compatibleTypes: ['FCRE', 'FCPE', 'LCRO', 'FARO'],
+    incompatibleTypes: ['LAPO', 'FCPO', 'LCPO'],
+    advice: '진지함도 중요하지만, 때로는 유연하게 상대를 받아들이는 것도 필요합니다.',
+    color: 'from-indigo-500 to-blue-600'
   },
-  FCAO: {
-    code: 'FCAO',
-    title: '따뜻한 팔로워',
-    nickname: '애정표현 팔로워',
-    description: '연애에서 상대방을 따라가며 애정을 표현하는 타입입니다. 낙관적이면서도 따뜻한 성향을 가지고 있어, 연인의 리더십을 존중하면서도 풍부한 애정표현으로 관계를 풍요롭게 만듭니다. 조화로운 관계를 중시하며, 연인을 행복하게 만드는 것을 최우선으로 생각합니다.',
-    loveStyle: '따뜻하고 수용적인 연애',
-    strengths: ['따뜻한 애정표현', '수용적 태도', '낙관적 성격', '조화로운 관계', '연인을 행복하게 만드는 능력', '충성심'],
-    challenges: ['자기주장 부족', '지나친 수용', '결정력 부족', '의존성'],
-    compatibleTypes: ['LCAO', 'LFAP', 'FFAO', 'LFAO'],
-    incompatibleTypes: ['LCAP', 'FFRP', 'LCRP'],
-    advice: '상대방을 따라가는 것도 좋지만, 자신의 의견도 적극적으로 표현하세요. 때로는 자신만의 개성도 보여주는 것이 중요합니다.',
-    color: 'from-pink-300 to-rose-400'
+  LAPO: {
+    code: 'LAPO',
+    title: '응석받고 싶은 열정적 리더',
+    nickname: '열정적 케어 리더',
+    description: '자신의 페이스로 관계를 이끌지만 상대방이 자신을 받아주고 보호해주기를 원하는 타입입니다. 열정적이고 자유로운 연애를 추구합니다.',
+    loveStyle: '열정적이면서 케어받고 싶은 연애',
+    strengths: ['열정적 리더십', '감정적 풍부함', '자유로운 성격', '창의적', '매력적'],
+    challenges: ['감정 기복', '일관성 부족', '거리감', '충동적'],
+    compatibleTypes: ['FCPO', 'FCRO', 'LCPO', 'FAPE'],
+    incompatibleTypes: ['LARE', 'FCRE', 'LCRE'],
+    advice: '열정적인 리더십을 발휘하되, 상대방의 감정도 수용하세요.',
+    color: 'from-orange-400 to-red-500'
   },
-  FCAP: {
-    code: 'FCAP',
-    title: '열정적 팔로워',
-    nickname: '열정적 애정표현가',
-    description: '연애에서 상대방을 따라가며 열정적으로 애정을 표현하는 타입입니다. 감정적이고 열정적인 연애를 추구하며, 연인의 리더십을 존중하면서도 자신만의 열정적인 사랑을 표현합니다. 연인과의 깊은 감정적 교감을 중시하고, 사랑에 빠지면 모든 것을 쏟아붓는 스타일입니다.',
-    loveStyle: '열정적이고 수용적인 연애',
-    strengths: ['열정적 애정표현', '수용적 태도', '감정적 교감', '따뜻한 마음', '깊은 사랑 표현', '연인에 대한 헌신'],
-    challenges: ['감정 기복', '자기주장 부족', '지나친 열정', '감정적 소모'],
-    compatibleTypes: ['LFAP', 'FFAP', 'FCRP', 'LCAP'],
-    incompatibleTypes: ['LCRO', 'FFRO', 'FCRO'],
-    advice: '열정적인 애정표현도 좋지만, 연인의 감정도 고려하여 균형을 맞추세요. 때로는 자신의 감정을 조절하는 것도 필요합니다.',
-    color: 'from-rose-400 to-pink-500'
+  LAPE: {
+    code: 'LAPE',
+    title: '응석받고 싶은 열정적 리더 (진지형)',
+    nickname: '진지한 열정 리더',
+    description: '자신의 페이스로 관계를 이끌지만 상대방이 자신을 받아주고 보호해주기를 원하는 타입입니다. 열정적이지만 진지하게 연애에 임합니다.',
+    loveStyle: '열정적이고 진지한 리더형 연애',
+    strengths: ['강한 리더십', '열정적', '진지한 태도', '깊은 교감', '헌신적'],
+    challenges: ['감정 기복', '지나친 집착', '거리감', '감정적 소모'],
+    compatibleTypes: ['FCPE', 'FCRO', 'LCPE', 'FAPO'],
+    incompatibleTypes: ['LARO', 'FCRO', 'LCRO'],
+    advice: '진지한 열정도 좋지만, 상대방을 압도하지 않도록 주의하세요.',
+    color: 'from-rose-500 to-pink-600'
   },
+
+  // Follow + Cuddly 유형들 (상대의 페이스 + 응석부리고 싶은)
   FCRO: {
     code: 'FCRO',
-    title: '현실적 팔로워',
-    nickname: '현실적 애정표현가',
-    description: '연애에서 상대방을 따라가며 현실적으로 애정을 표현하는 타입입니다. 낙관적이면서도 현실적인 연애를 추구하며, 연인의 리더십을 존중하면서도 안정적이고 지속 가능한 관계를 만드는 데 집중합니다. 실용적인 사랑을 나누며, 연인과의 미래를 현실적으로 계획하는 것을 좋아합니다.',
-    loveStyle: '현실적이고 수용적인 연애',
-    strengths: ['현실적 애정표현', '수용적 태도', '안정적 관계', '체계적 계획', '신뢰할 수 있는 파트너', '실용적인 사랑'],
-    challenges: ['감정 표현 부족', '자기주장 부족', '지나친 현실성', '로맨틱함 부족'],
-    compatibleTypes: ['LFRO', 'FFRO', 'FCAO', 'LCRO'],
-    incompatibleTypes: ['LCAP', 'FFAP', 'FCAP'],
-    advice: '현실적인 계획도 좋지만, 연인과의 감정적 교감도 필요합니다. 때로는 감정을 표현하고 로맨틱한 순간을 만들어보세요.',
-    color: 'from-blue-300 to-indigo-400'
+    title: '응석부리는 현실적 팔로워',
+    nickname: '귀여운 서포터',
+    description: '상대의 페이스에 맞추면서도 상대방에게 응석부리고 싶어하는 타입입니다. 현실적이고 자유로운 연애를 추구하며, 안정적인 지지자 역할을 합니다.',
+    loveStyle: '현실적이면서 귀여운 서포터형 연애',
+    strengths: ['수용적', '귀여운 매력', '자유로운 성격', '안정적', '조화로운'],
+    challenges: ['자기주장 부족', '의존성', '결정력 부족', '수동적'],
+    compatibleTypes: ['LARO', 'LAPO', 'FCRO', 'FARE'],
+    incompatibleTypes: ['FCPE', 'LAPE', 'LCPE'],
+    advice: '상대를 따르되, 자신의 의견도 적극적으로 표현하세요.',
+    color: 'from-blue-300 to-cyan-400'
   },
-  FCRP: {
-    code: 'FCRP',
-    title: '열정적 현실 팔로워',
-    nickname: '열정적 현실주의자',
-    description: '연애에서 상대방을 따라가며 현실적으로 애정을 표현하는 타입입니다. 열정적이면서도 현실적인 연애를 추구하며, 연인의 리더십을 존중하면서도 완벽한 관계를 만들기 위해 노력합니다. 감정적으로는 열정적이지만, 현실적인 판단력으로 안정적인 관계를 유지하는 균형잡힌 스타일입니다.',
-    loveStyle: '열정적이고 현실적인 수용 연애',
-    strengths: ['열정적 애정표현', '현실적 판단', '수용적 태도', '체계적 계획', '완벽한 관계 추구', '균형잡힌 사랑'],
-    challenges: ['감정 기복', '자기주장 부족', '지나친 완벽주의', '스트레스 과다'],
-    compatibleTypes: ['LFRP', 'FFRP', 'FCAP', 'LCRP'],
-    incompatibleTypes: ['LCAP', 'FFAP', 'LCAO'],
-    advice: '완벽한 관계를 추구하는 것도 좋지만, 때로는 자연스러운 모습도 보여주세요. 완벽하지 않아도 괜찮다는 마음가짐이 필요합니다.',
+  FCRE: {
+    code: 'FCRE',
+    title: '응석부리는 현실적 팔로워 (진지형)',
+    nickname: '귀엽고 진지한 서포터',
+    description: '상대의 페이스에 맞추면서도 상대방에게 응석부리고 싶어하는 타입입니다. 현실적이고 진지하게 연애에 임합니다.',
+    loveStyle: '현실적이고 진지하면서 귀여운 연애',
+    strengths: ['수용적', '귀여운 매력', '진지한 태도', '신뢰감', '헌신적'],
+    challenges: ['자기주장 부족', '의존성', '완벽주의', '스트레스'],
+    compatibleTypes: ['LARE', 'LAPE', 'FCRE', 'FARO'],
+    incompatibleTypes: ['FCPO', 'LAPO', 'LCPO'],
+    advice: '진지함도 좋지만, 때로는 여유롭게 즐기는 것도 필요합니다.',
     color: 'from-purple-300 to-indigo-400'
   },
-  FFAO: {
-    code: 'FFAO',
-    title: '따뜻한 수용자',
-    nickname: '배려심 깊은 팔로워',
-    description: '연애에서 상대방을 따라가며 수용하는 타입입니다. 낙관적이면서도 배려심이 깊어, 연인의 모든 것을 받아들이고 이해하려고 노력합니다. 조화로운 관계를 최우선으로 생각하며, 연인을 행복하게 만드는 것을 자신의 기쁨으로 여기는 따뜻한 마음을 가지고 있습니다.',
-    loveStyle: '배려심 깊고 수용적인 연애',
-    strengths: ['따뜻한 수용', '배려심', '낙관적 성격', '조화로운 관계', '연인을 행복하게 만드는 능력', '무조건적인 사랑'],
-    challenges: ['자기주장 부족', '지나친 수용', '결정력 부족', '자기 희생'],
-    compatibleTypes: ['LFAO', 'FCAO', 'FFAP', 'LCAO'],
-    incompatibleTypes: ['LCAP', 'FFRP', 'LCRP'],
-    advice: '상대방을 배려하는 것도 좋지만, 자신의 의견도 적극적으로 표현하세요. 자신의 욕구도 소중히 여기는 것이 중요합니다.',
-    color: 'from-green-300 to-emerald-400'
+  FCPO: {
+    code: 'FCPO',
+    title: '응석부리는 열정적 팔로워',
+    nickname: '귀여운 열정 서포터',
+    description: '상대의 페이스에 맞추면서도 상대방에게 응석부리고 싶어하는 타입입니다. 열정적이고 자유로운 연애를 추구합니다.',
+    loveStyle: '열정적이면서 귀여운 서포터형 연애',
+    strengths: ['수용적', '귀여운 매력', '열정적', '자유로운', '감정적 교감'],
+    challenges: ['자기주장 부족', '의존성', '감정 기복', '충동적'],
+    compatibleTypes: ['LAPO', 'LARO', 'FCPO', 'FAPE'],
+    incompatibleTypes: ['FCRE', 'LARE', 'LCRE'],
+    advice: '열정도 좋지만, 자신의 욕구도 표현하는 용기를 가지세요.',
+    color: 'from-red-300 to-pink-400'
   },
-  FFAP: {
-    code: 'FFAP',
-    title: '열정적 수용자',
-    nickname: '열정적 배려자',
-    description: '연애에서 상대방을 따라가며 수용하는 타입입니다. 열정적이면서도 배려심이 깊어, 연인의 모든 것을 받아들이면서도 자신만의 열정적인 사랑을 표현합니다. 연인과의 깊은 감정적 교감을 중시하며, 사랑에 빠지면 모든 것을 쏟아붓는 헌신적인 스타일입니다.',
-    loveStyle: '열정적이고 배려심 깊은 수용 연애',
-    strengths: ['열정적 수용', '배려심', '감정적 교감', '따뜻한 마음', '무조건적인 사랑', '깊은 헌신'],
-    challenges: ['감정 기복', '자기주장 부족', '지나친 배려', '감정적 소모'],
-    compatibleTypes: ['LFAP', 'FCAP', 'FFAO', 'LCAP'],
-    incompatibleTypes: ['LCRO', 'FFRO', 'FCRO'],
-    advice: '상대방을 배려하는 것도 좋지만, 자신의 감정도 솔직하게 표현하세요. 때로는 자신의 욕구도 우선시하는 것이 중요합니다.',
-    color: 'from-orange-300 to-red-400'
+  FCPE: {
+    code: 'FCPE',
+    title: '응석부리는 열정적 팔로워 (진지형)',
+    nickname: '귀엽고 진지한 열정 서포터',
+    description: '상대의 페이스에 맞추면서도 상대방에게 응석부리고 싶어하는 타입입니다. 열정적이지만 진지하게 연애에 임합니다.',
+    loveStyle: '열정적이고 진지하면서 귀여운 연애',
+    strengths: ['수용적', '귀여운 매력', '열정적', '진지한', '깊은 헌신'],
+    challenges: ['자기주장 부족', '의존성', '감정 기복', '감정적 소모'],
+    compatibleTypes: ['LAPE', 'LARE', 'FCPE', 'FAPO'],
+    incompatibleTypes: ['FCRO', 'LARO', 'LCRO'],
+    advice: '진지한 열정도 좋지만, 자신의 행복도 챙기세요.',
+    color: 'from-pink-400 to-rose-500'
   },
-  FFRO: {
-    code: 'FFRO',
-    title: '현실적 수용자',
-    nickname: '현실적 배려자',
-    description: '연애에서 상대방을 따라가며 수용하는 타입입니다. 현실적이면서도 배려심이 깊어, 연인의 모든 것을 받아들이면서도 안정적이고 지속 가능한 관계를 만드는 데 집중합니다. 실용적인 사랑을 나누며, 연인과의 미래를 현실적으로 계획하는 것을 좋아합니다.',
-    loveStyle: '현실적이고 배려심 깊은 수용 연애',
-    strengths: ['현실적 수용', '배려심', '안정적 관계', '체계적 계획', '신뢰할 수 있는 파트너', '실용적인 사랑'],
-    challenges: ['감정 표현 부족', '자기주장 부족', '지나친 현실성', '로맨틱함 부족'],
-    compatibleTypes: ['LFRO', 'FCRO', 'FFAO', 'LCRO'],
-    incompatibleTypes: ['LCAP', 'FFAP', 'FCAP'],
-    advice: '현실적인 계획도 좋지만, 연인과의 감정적 교감도 필요합니다. 때로는 감정을 표현하고 로맨틱한 순간을 만들어보세요.',
+
+  // Follow + Accept 유형들 (상대의 페이스 + 응석받고 싶은)
+  FARO: {
+    code: 'FARO',
+    title: '응석받고 싶은 현실적 팔로워',
+    nickname: '케어받고 싶은 서포터',
+    description: '상대의 페이스에 맞추지만 상대방이 자신을 받아주고 보호해주기를 원하는 타입입니다. 현실적이고 자유로운 연애를 추구합니다.',
+    loveStyle: '현실적이면서 케어받고 싶은 연애',
+    strengths: ['수용적', '현실적', '자유로운', '안정적', '조화로운'],
+    challenges: ['자기주장 부족', '수용 부족', '거리감', '수동적'],
+    compatibleTypes: ['LCRO', 'LCPO', 'FARO', 'FCRE'],
+    incompatibleTypes: ['FAPE', 'LAPE', 'FCPE'],
+    advice: '상대를 따르면서도, 자신이 원하는 것을 표현하세요.',
     color: 'from-teal-300 to-cyan-400'
   },
-  FFRP: {
-    code: 'FFRP',
-    title: '열정적 현실 수용자',
-    nickname: '완벽한 배려자',
-    description: '연애에서 상대방을 따라가며 수용하는 타입입니다. 열정적이면서도 현실적이고 배려심이 깊어, 연인의 모든 것을 받아들이면서도 완벽한 관계를 만들기 위해 노력합니다. 감정적으로는 열정적이지만, 현실적인 판단력으로 안정적인 관계를 유지하는 균형잡힌 스타일입니다.',
-    loveStyle: '열정적이고 현실적인 완벽한 배려 연애',
-    strengths: ['열정적 수용', '현실적 판단', '배려심', '체계적 계획', '완벽한 관계 추구', '무조건적인 사랑'],
-    challenges: ['감정 기복', '자기주장 부족', '지나친 완벽주의', '스트레스 과다'],
-    compatibleTypes: ['LFRP', 'FCRP', 'FFAP', 'LCRP'],
-    incompatibleTypes: ['LCAP', 'FFAO', 'LCAO'],
-    advice: '완벽한 관계를 추구하는 것도 좋지만, 때로는 자연스러운 모습도 보여주세요. 완벽하지 않아도 괜찮다는 마음가짐이 필요합니다.',
-    color: 'from-indigo-300 to-purple-400'
+  FARE: {
+    code: 'FARE',
+    title: '응석받고 싶은 현실적 팔로워 (진지형)',
+    nickname: '진지한 서포터',
+    description: '상대의 페이스에 맞추지만 상대방이 자신을 받아주고 보호해주기를 원하는 타입입니다. 현실적이고 진지하게 연애에 임합니다.',
+    loveStyle: '현실적이고 진지한 서포터형 연애',
+    strengths: ['수용적', '현실적', '진지한', '신뢰감', '책임감'],
+    challenges: ['자기주장 부족', '수용 부족', '융통성 부족', '완벽주의'],
+    compatibleTypes: ['LCRE', 'LCPE', 'FARO', 'FCRO'],
+    incompatibleTypes: ['FAPO', 'LAPO', 'FCPO'],
+    advice: '진지함도 중요하지만, 감정적 교감도 잊지 마세요.',
+    color: 'from-indigo-400 to-blue-500'
+  },
+  FAPO: {
+    code: 'FAPO',
+    title: '응석받고 싶은 열정적 팔로워',
+    nickname: '열정적 케어 서포터',
+    description: '상대의 페이스에 맞추지만 상대방이 자신을 받아주고 보호해주기를 원하는 타입입니다. 열정적이고 자유로운 연애를 추구합니다.',
+    loveStyle: '열정적이면서 케어받고 싶은 연애',
+    strengths: ['수용적', '열정적', '자유로운', '감정적 교감', '매력적'],
+    challenges: ['자기주장 부족', '감정 기복', '거리감', '충동적'],
+    compatibleTypes: ['LCPO', 'LCRO', 'FAPO', 'FCPE'],
+    incompatibleTypes: ['FARE', 'LARE', 'FCRE'],
+    advice: '열정도 좋지만, 자신의 필요도 표현하는 용기를 가지세요.',
+    color: 'from-orange-300 to-red-400'
+  },
+  FAPE: {
+    code: 'FAPE',
+    title: '응석받고 싶은 열정적 팔로워 (진지형)',
+    nickname: '진지한 열정 서포터',
+    description: '상대의 페이스에 맞추지만 상대방이 자신을 받아주고 보호해주기를 원하는 타입입니다. 열정적이지만 진지하게 연애에 임합니다.',
+    loveStyle: '열정적이고 진지한 서포터형 연애',
+    strengths: ['수용적', '열정적', '진지한', '깊은 교감', '헌신적'],
+    challenges: ['자기주장 부족', '감정 기복', '거리감', '감정적 소모'],
+    compatibleTypes: ['LCPE', 'LCRO', 'FAPE', 'FCPO'],
+    incompatibleTypes: ['FARO', 'LARO', 'FCRO'],
+    advice: '진지한 열정도 좋지만, 자신의 행복도 중요하게 생각하세요.',
+    color: 'from-rose-400 to-pink-500'
   }
 };
 
 // 다국어 유형 데이터를 가져오는 함수들
 export const getLoveTypeData = (typeCode: LoveTypeCode, t: (key: string) => string) => {
   const baseType = newLoveTypes[typeCode];
+  if (!baseType) return null;
+
   return {
     ...baseType,
     title: t(`loveTypes.${typeCode}.title`),

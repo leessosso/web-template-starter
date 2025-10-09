@@ -5,14 +5,14 @@ export type LoveTypeCode = string;
 
 // 연애 유형 차원별 점수 (L/F, C/A, R/P, O/E)
 export interface LoveTypeScore {
-    L: number; // 리더십 - Lead
-    F: number; // 리더십 - Follow
-    C: number; // 애정 표현 - Cuddly
-    A: number; // 애정 표현 - Accept
-    R: number; // 연애관 - Realistic
-    P: number; // 연애관 - Passionate
-    O: number; // 태도 - Optimistic
-    E: number; // 태도 - Earnest
+    L: number; // Lead - 자신의 페이스에 맞춰주길 원함
+    F: number; // Follow - 상대의 페이스에 맞춤
+    C: number; // Cuddly - 응석부리고 싶은
+    A: number; // Accept - 응석받고 싶은
+    R: number; // Realistic - 현실적인 연애
+    P: number; // Passionate - 열정적인 연애
+    O: number; // Optimistic - 자유로운
+    E: number; // Earnest - 진지한
 }
 
 // 테스트 질문 타입

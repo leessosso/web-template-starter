@@ -68,7 +68,7 @@ export const questions: Question[] = [
         optionB: "상대방이 기뻐한다면 간다"
     },
 
-    // C/A 차원 질문들 (애정 표현: Cuddly/Accept) - 7개
+    // C/A 차원 질문들 (애정 표현: Cuddly 응석부리고 싶은/Accept 응석받고 싶은) - 7개
     {
         id: 9,
         text: "연인이 힘들어할 때, 당신은 주로 어떻게 반응하나요?",
