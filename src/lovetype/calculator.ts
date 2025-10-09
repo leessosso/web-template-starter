@@ -1,5 +1,16 @@
 import { LoveTypeScore, LoveTypeCode, Answer, Question } from './types';
 
+// 반대 차원을 반환하는 헬퍼 함수
+function getOppositeDimension(dimension: keyof LoveTypeScore): keyof LoveTypeScore {
+    const opposites: Record<string, keyof LoveTypeScore> = {
+        'L': 'F', 'F': 'L',
+        'C': 'A', 'A': 'C',
+        'R': 'P', 'P': 'R',
+        'O': 'E', 'E': 'O'
+    };
+    return opposites[dimension];
+}
+
 // 답변을 기반으로 연애 유형 점수 계산
 export function calculateLoveTypeScore(answers: Answer[], questions: Question[]): LoveTypeScore {
     const score: LoveTypeScore = {
@@ -9,8 +20,20 @@ export function calculateLoveTypeScore(answers: Answer[], questions: Question[])
     answers.forEach(answer => {
         const question = questions.find(q => q.id === answer.questionId);
         if (question) {
-            const weightedScore = answer.score * question.weight;
-            score[question.dimension] += weightedScore;
+            // 점수 시스템: 1-3은 A쪽(원래 dimension), 4-6은 B쪽(반대 dimension)
+            const isASide = answer.score <= 3;
+            const weight = question.weight;
+
+            if (isASide) {
+                // A쪽 점수 (1=3점, 2=2점, 3=1점) - 원래 dimension에 부여
+                const points = 4 - answer.score;
+                score[question.dimension] += points * weight;
+            } else {
+                // B쪽 점수 (4=1점, 5=2점, 6=3점) - 반대 dimension에 부여
+                const points = answer.score - 3;
+                const oppositeDim = getOppositeDimension(question.dimension);
+                score[oppositeDim] += points * weight;
+            }
         }
     });
 
@@ -19,10 +42,10 @@ export function calculateLoveTypeScore(answers: Answer[], questions: Question[])
 
 // 연애 유형 점수를 기반으로 유형 결정
 export function determineLoveType(score: LoveTypeScore): LoveTypeCode {
-    const leadership = score.L > score.F ? 'L' : 'F';
-    const affection = score.C > score.A ? 'C' : 'A';
-    const relationship = score.R > score.P ? 'R' : 'P';
-    const attitude = score.O > score.E ? 'O' : 'E';
+    const leadership = score.L >= score.F ? 'L' : 'F';
+    const affection = score.C >= score.A ? 'C' : 'A';
+    const relationship = score.R >= score.P ? 'R' : 'P';
+    const attitude = score.O >= score.E ? 'O' : 'E';
 
     return `${leadership}${affection}${relationship}${attitude}`;
 }

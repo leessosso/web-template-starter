@@ -55,10 +55,7 @@ export function QuestionCard({ question, onAnswer, currentAnswer, className = ''
     return (
         <div className={`bg-white rounded-xl shadow-lg p-4 sm:p-6 ${className}`}>
             <div className="text-center mb-6">
-                <h2 className="text-xl font-semibold text-gray-800 mb-2">
-                    {t('lovetype.question')} {question.id}
-                </h2>
-                <p className="text-base sm:text-lg text-gray-700 leading-relaxed">
+                <p className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 leading-relaxed">
                     {getQuestionText(question.id, t)}
                 </p>
             </div>

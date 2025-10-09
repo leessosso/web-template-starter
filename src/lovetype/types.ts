@@ -26,7 +26,7 @@ export interface Question {
 // 테스트 답변 타입
 export interface Answer {
     questionId: number;
-    score: number; // 1-5 점수
+    score: number; // 1-6 점수 (1-3: A쪽 성향, 4-6: B쪽 성향)
 }
 
 // 연애 유형 정보
