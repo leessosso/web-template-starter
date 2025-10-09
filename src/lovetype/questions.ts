@@ -2,7 +2,7 @@ import type { Question } from './types';
 
 // 연애 유형 테스트 질문들 (L/F, C/A, R/P, O/E 차원 기반)
 export const questions: Question[] = [
-    // L/F 차원 질문들 (리더십: Lead/Follow) - 총 6개
+    // L/F 차원 질문들 (리더십: Lead/Follow) - L 3개, F 3개
     {
         id: 1,
         text: "연인과 새로운 맛집을 찾아갈 때, 주로 누가 먼저 제안하나요?",
@@ -30,26 +30,26 @@ export const questions: Question[] = [
     {
         id: 4,
         text: "연인과의 다툼 후, 먼저 화해를 시도하는 쪽은 주로 누구인가요?",
-        dimension: 'L',
+        dimension: 'F',
         weight: 3,
-        optionA: "내가 먼저 관계 개선을 위해 대화를 주도하는 편이다",
-        optionB: "상대방의 화해 제스처를 기다리거나, 부드럽게 받아주는 편이다"
+        optionA: "상대방의 화해 제스처를 기다리거나, 부드럽게 받아주는 편이다",
+        optionB: "내가 먼저 관계 개선을 위해 대화를 주도하는 편이다"
     },
     {
         id: 5,
         text: "새로운 도전이나 취미를 함께 시작할 때, 당신의 역할은?",
-        dimension: 'L',
+        dimension: 'F',
         weight: 2,
-        optionA: "내가 주도적으로 방법을 찾고 연인을 이끌어간다",
-        optionB: "상대방이 이끄는 대로 따라가며 함께 즐긴다"
+        optionA: "상대방이 이끄는 대로 따라가며 함께 즐긴다",
+        optionB: "내가 주도적으로 방법을 찾고 연인을 이끌어간다"
     },
     {
         id: 6,
         text: "평소 식사 메뉴를 결정할 때, 당신은 어느 쪽인가요?",
-        dimension: 'L',
+        dimension: 'F',
         weight: 2,
-        optionA: "먹고 싶은 메뉴를 명확하게 정해서 제안한다",
-        optionB: "상대방이 원하는 메뉴에 맞춰주는 편이다"
+        optionA: "상대방이 원하는 메뉴에 맞춰주는 편이다",
+        optionB: "먹고 싶은 메뉴를 명확하게 정해서 제안한다"
     },
 
     // C/A 차원 질문들 (애정 표현: Cuddly 응석부리고 싶은/Accept 응석받고 싶은) - 총 6개
@@ -102,7 +102,7 @@ export const questions: Question[] = [
         optionB: "내가 지켜주고 싶어지는 존재"
     },
 
-    // R/P 차원 질문들 (연애관: Realistic/Passionate) - 총 6개
+    // R/P 차원 질문들 (연애관: Realistic/Passionate) - R 3개, P 3개
     {
         id: 13,
         text: "연인과 싸웠을 때 화해하는 가장 효과적인 방법은?",
@@ -130,29 +130,29 @@ export const questions: Question[] = [
     {
         id: 16,
         text: "사랑이 식었다고 느껴질 때, 당신의 대처 방식은?",
-        dimension: 'P',
+        dimension: 'R',
         weight: 2,
-        optionA: "관계를 되돌리기 위해 다시 열정을 불태우거나 감정적으로 괴로워한다",
-        optionB: "감정의 변화를 냉정하게 인정하고 관계를 정리할 방법을 모색한다"
+        optionA: "감정의 변화를 냉정하게 인정하고 관계를 정리할 방법을 모색한다",
+        optionB: "관계를 되돌리기 위해 다시 열정을 불태우거나 감정적으로 괴로워한다"
     },
     {
         id: 17,
         text: "결혼에 대한 당신의 생각은?",
-        dimension: 'P',
+        dimension: 'R',
         weight: 2,
-        optionA: "뜨거운 사랑의 결실이며, 인생의 가장 낭만적인 약속이다",
-        optionB: "현실적인 동반자 관계를 통해 안정과 행복을 추구하는 것이다"
+        optionA: "현실적인 동반자 관계를 통해 안정과 행복을 추구하는 것이다",
+        optionB: "뜨거운 사랑의 결실이며, 인생의 가장 낭만적인 약속이다"
     },
     {
         id: 18,
         text: "결혼 후, 연인과의 가장 이상적인 주말은 어떤 모습인가요?",
-        dimension: 'P',
+        dimension: 'R',
         weight: 2,
-        optionA: "즉흥적인 데이트나 새로운 경험을 통해 사랑을 다시 불태운다",
-        optionB: "미래를 위한 자기 계발이나 공동의 목표 달성에 시간을 보낸다"
+        optionA: "미래를 위한 자기 계발이나 공동의 목표 달성에 시간을 보낸다",
+        optionB: "즉흥적인 데이트나 새로운 경험을 통해 사랑을 다시 불태운다"
     },
 
-    // O/E 차원 질문들 (태도: Optimistic/Earnest) - 총 6개
+    // O/E 차원 질문들 (태도: Optimistic/Earnest) - O 3개, E 3개
     {
         id: 19,
         text: "연인과 사귀고 난 후, 당신의 개인적인 시간 활용은?",
@@ -180,26 +180,26 @@ export const questions: Question[] = [
     {
         id: 22,
         text: "연인과 취미나 관심사를 반드시 공유해야 한다고 생각하나요?",
-        dimension: 'O',
+        dimension: 'E',
         weight: 2,
-        optionA: "각자의 취미를 존중하며, 함께하는 시간도 중요하지만 개인 시간도 필요하다",
-        optionB: "깊은 관계를 위해 서로의 취미나 관심사를 함께하고 싶다"
+        optionA: "깊은 관계를 위해 서로의 취미나 관심사를 함께하고 싶다",
+        optionB: "각자의 취미를 존중하며, 함께하는 시간도 중요하지만 개인 시간도 필요하다"
     },
     {
         id: 23,
         text: "연애 중 다른 이성과의 자연스러운 교류에 대해 당신의 생각은?",
-        dimension: 'O',
+        dimension: 'E',
         weight: 2,
-        optionA: "연인이 질투하지 않는 선에서 폭넓게 어울리는 것도 괜찮다",
-        optionB: "연인이 있는 동안에는 오해의 소지를 만들지 않도록 조심한다"
+        optionA: "연인이 있는 동안에는 오해의 소지를 만들지 않도록 조심한다",
+        optionB: "연인이 질투하지 않는 선에서 폭넓게 어울리는 것도 괜찮다"
     },
     {
         id: 24,
         text: "연애 중 자신의 솔직한 감정을 어디까지 표현하는 편인가요?",
-        dimension: 'O',
+        dimension: 'E',
         weight: 2,
-        optionA: "때로는 감정을 숨기지 않고 자유롭게 표출하는 편이다",
-        optionB: "상대방을 배려하며 감정을 조절하고 신중하게 표현한다"
+        optionA: "상대방을 배려하며 감정을 조절하고 신중하게 표현한다",
+        optionB: "때로는 감정을 숨기지 않고 자유롭게 표출하는 편이다"
     }
 ];
 

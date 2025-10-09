@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import type { LoveTypeCode } from '../../lovetype/types';
 import { newLoveTypes } from '../../lovetype/newLoveTypes';
+import { getLoveTypeDetail } from '../../lovetype/loveTypeDetails';
 import { TypeCard, ShareButton } from '../../components/lovetype';
 import { Button } from '../../components/ui';
 import { calculateLoveTypeScore, getScorePercentage } from '../../lovetype/calculator';
@@ -17,6 +18,7 @@ export function ResultPage() {
 
     const loveTypeCode = type as LoveTypeCode;
     const loveType = newLoveTypes[loveTypeCode];
+    const loveTypeDetail = getLoveTypeDetail(loveTypeCode, t);
 
     useEffect(() => {
         if (testState.answers.length > 0) {
@@ -121,29 +123,104 @@ export function ResultPage() {
                     </Button>
                 </div>
 
-                {/* Additional Info */}
-                <div className="max-w-4xl mx-auto mt-12">
-                    <div className="bg-white rounded-xl shadow-lg p-6">
-                        <h3 className="text-xl font-bold text-center mb-4">💡 더 알아보기</h3>
-                        <div className="grid md:grid-cols-2 gap-6">
-                            <div>
-                                <h4 className="font-semibold text-gray-800 mb-2">다른 유형과의 궁합</h4>
-                                <p className="text-sm text-gray-600 mb-2">
-                                    {loveType.compatibleTypes.join(', ')} 유형과 특히 잘 맞습니다.
-                                </p>
-                                <p className="text-xs text-gray-500">
-                                    * 궁합은 참고용이며, 개인의 성격과 노력에 따라 달라질 수 있습니다.
-                                </p>
+                {/* Love Type Details */}
+                {loveTypeDetail && (
+                    <div className="max-w-4xl mx-auto mt-12 space-y-8">
+                        {/* Main Introduction */}
+                        <div className="bg-gradient-to-br from-pink-50 to-purple-50 rounded-xl p-8 shadow-lg">
+                            <div className="text-center mb-6">
+                                <h3 className="text-2xl font-bold bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent mb-2">
+                                    {loveTypeDetail.mainTitle}
+                                </h3>
                             </div>
-                            <div>
-                                <h4 className="font-semibold text-gray-800 mb-2">연애 성공 팁</h4>
-                                <p className="text-sm text-gray-600">
-                                    {loveType.advice}
+                            <p className="text-gray-700 leading-relaxed text-center">
+                                {loveTypeDetail.introduction}
+                            </p>
+                        </div>
+
+                        {/* Basic Tendency */}
+                        <div className="bg-white rounded-xl shadow-lg p-8">
+                            <div className="flex items-center mb-4">
+                                <span className="text-2xl mr-3">💖</span>
+                                <h3 className="text-xl font-bold text-gray-800">
+                                    당신의 마음속 이야기: 기본적인 연애 성향
+                                </h3>
+                            </div>
+                            <div className="prose prose-gray max-w-none">
+                                <p className="text-gray-700 leading-relaxed whitespace-pre-line">
+                                    {loveTypeDetail.basicTendency}
                                 </p>
                             </div>
                         </div>
+
+                        {/* In Relationship */}
+                        <div className="bg-white rounded-xl shadow-lg p-8">
+                            <div className="flex items-center mb-4">
+                                <span className="text-2xl mr-3">💌</span>
+                                <h3 className="text-xl font-bold text-gray-800">
+                                    사랑이 피어날 때: 관계에서의 당신의 모습
+                                </h3>
+                            </div>
+                            <div className="prose prose-gray max-w-none">
+                                <p className="text-gray-700 leading-relaxed whitespace-pre-line">
+                                    {loveTypeDetail.inRelationship}
+                                </p>
+                            </div>
+                        </div>
+
+                        {/* Perfect Match */}
+                        <div className="bg-white rounded-xl shadow-lg p-8">
+                            <div className="flex items-center mb-4">
+                                <span className="text-2xl mr-3">✨</span>
+                                <h3 className="text-xl font-bold text-gray-800">
+                                    당신의 완벽한 짝: 이런 사람과 가장 빛나요
+                                </h3>
+                            </div>
+                            <div className="prose prose-gray max-w-none">
+                                <p className="text-gray-700 leading-relaxed whitespace-pre-line">
+                                    {loveTypeDetail.perfectMatch}
+                                </p>
+                            </div>
+                        </div>
+
+                        {/* Marvel Message */}
+                        <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-8 shadow-lg">
+                            <div className="flex items-center mb-4">
+                                <span className="text-2xl mr-3">💬</span>
+                                <h3 className="text-xl font-bold text-gray-800">
+                                    마블의 따뜻한 한마디
+                                </h3>
+                            </div>
+                            <div className="prose prose-gray max-w-none">
+                                <p className="text-gray-700 leading-relaxed whitespace-pre-line italic">
+                                    {loveTypeDetail.marvelMessage}
+                                </p>
+                            </div>
+                        </div>
+
+                        {/* Compatibility & Advice */}
+                        <div className="bg-white rounded-xl shadow-lg p-6">
+                            <h3 className="text-xl font-bold text-center mb-6">💡 더 알아보기</h3>
+                            <div className="grid md:grid-cols-2 gap-6">
+                                <div>
+                                    <h4 className="font-semibold text-gray-800 mb-2">다른 유형과의 궁합</h4>
+                                    <p className="text-sm text-gray-600 mb-2">
+                                        {loveType.compatibleTypes.join(', ')} 유형과 특히 잘 맞습니다.
+                                    </p>
+                                    <p className="text-xs text-gray-500">
+                                        * 궁합은 참고용이며, 개인의 성격과 노력에 따라 달라질 수 있습니다.
+                                    </p>
+                                </div>
+                                <div>
+                                    <h4 className="font-semibold text-gray-800 mb-2">연애 성공 팁</h4>
+                                    <p className="text-sm text-gray-600">
+                                        {loveType.advice}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                )}
             </div>
         </div>
     );

@@ -44,6 +44,16 @@ export interface LoveType {
     color: string;
 }
 
+// 러브타입 상세 정보
+export interface LoveTypeDetail {
+    mainTitle: string;
+    introduction: string;
+    basicTendency: string;
+    inRelationship: string;
+    perfectMatch: string;
+    marvelMessage: string;
+}
+
 // 테스트 진행 상태
 export interface TestState {
     currentQuestion: number;
