@@ -37,15 +37,6 @@ export function TestPage() {
         }
     };
 
-    const handleNext = () => {
-        if (testState.currentQuestion >= totalQuestions - 1) {
-            completeTest();
-        } else {
-            // 다음 질문으로 이동
-            goToNextQuestion();
-        }
-    };
-
     const handlePrevious = () => {
         goToPreviousQuestion();
     };
