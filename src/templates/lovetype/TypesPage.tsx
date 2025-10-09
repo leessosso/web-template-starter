@@ -61,36 +61,52 @@ export function TypesPage() {
                 </div>
 
                 {/* Info Section */}
-                <div className="max-w-4xl mx-auto">
+                <div className="max-w-4xl mx-auto space-y-6">
+                    {/* 4가지 차원 설명 */}
                     <div className="bg-white rounded-xl shadow-lg p-6">
-                        <h3 className="text-xl font-bold text-center mb-4">💡 유형별 특징</h3>
+                        <h3 className="text-2xl font-bold text-center mb-6 bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent">
+                            💡 4가지 차원으로 분석하는 연애 유형
+                        </h3>
                         <div className="grid md:grid-cols-2 gap-6">
-                            <div>
-                                <h4 className="font-semibold text-gray-800 mb-2">L (리더십) vs F (팔로워십)</h4>
-                                <p className="text-sm text-gray-600">
+                            <div className="bg-gradient-to-br from-blue-50 to-cyan-50 p-4 rounded-lg">
+                                <h4 className="font-bold text-blue-800 mb-2 flex items-center">
+                                    <span className="text-2xl mr-2">🎯</span>
+                                    L (리더십) vs F (팔로워십)
+                                </h4>
+                                <p className="text-sm text-gray-700">
                                     리더십은 관계를 주도하고 이끄는 것을, 팔로워십은 상대방을 따라가며 지지하는 것을 선호합니다.
                                 </p>
                             </div>
-                            <div>
-                                <h4 className="font-semibold text-gray-800 mb-2">C (응석부리고 싶은) vs A (응석받고 싶은)</h4>
-                                <p className="text-sm text-gray-600">
+                            <div className="bg-gradient-to-br from-pink-50 to-rose-50 p-4 rounded-lg">
+                                <h4 className="font-bold text-pink-800 mb-2 flex items-center">
+                                    <span className="text-2xl mr-2">💕</span>
+                                    C (응석부리고 싶은) vs A (응석받고 싶은)
+                                </h4>
+                                <p className="text-sm text-gray-700">
                                     C는 상대방에게 귀엽게 어리광부리고 싶어하며, A는 상대방이 나를 귀엽게 받아주고 보호해주기를 원합니다.
                                 </p>
                             </div>
-                            <div>
-                                <h4 className="font-semibold text-gray-800 mb-2">R (현실적) vs P (열정적)</h4>
-                                <p className="text-sm text-gray-600">
+                            <div className="bg-gradient-to-br from-orange-50 to-amber-50 p-4 rounded-lg">
+                                <h4 className="font-bold text-orange-800 mb-2 flex items-center">
+                                    <span className="text-2xl mr-2">⚖️</span>
+                                    R (현실적) vs P (열정적)
+                                </h4>
+                                <p className="text-sm text-gray-700">
                                     현실적은 안정과 실용을, 열정적은 감정과 낭만을 중시합니다.
                                 </p>
                             </div>
-                            <div>
-                                <h4 className="font-semibold text-gray-800 mb-2">O (낙관적) vs E (진지한)</h4>
-                                <p className="text-sm text-gray-600">
+                            <div className="bg-gradient-to-br from-purple-50 to-indigo-50 p-4 rounded-lg">
+                                <h4 className="font-bold text-purple-800 mb-2 flex items-center">
+                                    <span className="text-2xl mr-2">🌟</span>
+                                    O (낙관적) vs E (진지한)
+                                </h4>
+                                <p className="text-sm text-gray-700">
                                     낙관적은 자유롭고 유연한 관계를, 진지한은 신중하고 깊이 있는 관계를 선호합니다.
                                 </p>
                             </div>
                         </div>
                     </div>
+
                 </div>
 
                 {/* CTA */}

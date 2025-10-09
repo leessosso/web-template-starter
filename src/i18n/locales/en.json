@@ -333,14 +333,14 @@
   },
   "loveTypes": {
     "LCRO": {
-      "title": "Cuddly Realistic Leader",
-      "nickname": "Cute Realist",
-      "description": "Leads at own pace but wants to act cute with partner. Seeks realistic and free relationships, occasionally wanting to be adorable in a stable relationship.",
+      "title": "Reliable Cutiepie",
+      "nickname": "Reliable Cutiepie",
+      "description": "Usually leads relationships with realistic judgment, but shows surprising charm by acting cute in front of loved ones. Pursues stable relationships while being optimistic and wanting affection through adorable gestures. A charming type that combines reliability with cuteness.",
       "loveStyle": "Realistic yet cute leadership style",
       "strengths": [
         "Realistic leadership",
         "Cute charm",
-        "Free-spirited",
+        "Optimistic",
         "Seeks stability",
         "Balanced nature"
       ],
@@ -353,9 +353,9 @@
       "advice": "Maintain realistic judgment while not forgetting emotional connection with your partner."
     },
     "LCRP": {
-      "title": "Cuddly Realistic Leader (Earnest)",
-      "nickname": "Cute & Earnest Realist",
-      "description": "Leads at own pace but wants to act cute with partner. Realistic yet passionate, approaching relationships earnestly.",
+      "title": "Thoughtful Sweetie",
+      "nickname": "Thoughtful Sweetie",
+      "description": "Takes relationships seriously and pursues perfection, but becomes completely disarmed showing adorable sides to loved ones. Leads relationships realistically while maintaining passion, a lovely perfectionist who acts cute with sincere heart.",
       "loveStyle": "Realistic, earnest, and cute relationship",
       "strengths": [
         "Realistic leadership",
@@ -373,14 +373,14 @@
       "advice": "Pursue perfection but also learn to relax and enjoy."
     },
     "LCPO": {
-      "title": "Cuddly Passionate Leader",
-      "nickname": "Cute Enthusiast",
-      "description": "Leads at own pace but wants to act cute with partner. Seeks passionate and free relationships with emotional richness.",
+      "title": "Passionate Charmer",
+      "nickname": "Passionate Charmer",
+      "description": "Owns an energetic love style bursting with passion and affection. Leads relationships proactively while expressing emotions freely, optimistically showing abundant love and enjoying acting cute with partner. An enthusiastic romantic who expresses love emotionally and creatively.",
       "loveStyle": "Passionate, cute, and free relationship",
       "strengths": [
         "Passionate leadership",
         "Cute charm",
-        "Free-spirited",
+        "Optimistic",
         "Emotional connection",
         "Creative"
       ],
@@ -393,9 +393,9 @@
       "advice": "Be passionate but also respect your partner's pace and maintain balance."
     },
     "LCPE": {
-      "title": "Cuddly Passionate Leader (Earnest)",
-      "nickname": "Cute & Earnest Enthusiast",
-      "description": "Leads at own pace but wants to act cute with partner. Passionate yet approaches relationships earnestly, seeking deep connections.",
+      "title": "Devoted Kitten",
+      "nickname": "Devoted Kitten",
+      "description": "Like a cat, elegantly leads relationships but pours hot passion and cute affection to those who opened heart to. Seeks serious and deep relationships, devotedly acts cute expressing love to chosen partner. A passionate type with exceptional emotional depth.",
       "loveStyle": "Passionate, earnest, and cute relationship",
       "strengths": [
         "Passionate leadership",
@@ -413,14 +413,14 @@
       "advice": "Earnestness is good, but sometimes enjoy things lightly."
     },
     "LARO": {
-      "title": "Accepting Realistic Leader",
-      "nickname": "Leader Who Wants Care",
-      "description": "Leads at own pace but wants to be accepted and protected by partner. Seeks realistic and free relationships.",
+      "title": "Cool Leader",
+      "nickname": "Cool Leader",
+      "description": "Confidently leads relationships on surface but inwardly wishes partner to understand and accept true self. Creates stable relationships with realistic and optimistic attitude, a balanced type wanting someone who recognizes soft heart behind strong leadership.",
       "loveStyle": "Realistic yet care-seeking relationship",
       "strengths": [
         "Realistic leadership",
         "Accepting charm",
-        "Free-spirited",
+        "Optimistic",
         "Stable",
         "Balanced"
       ],
@@ -433,9 +433,9 @@
       "advice": "Leadership is good, but also be open to your partner's affection."
     },
     "LARE": {
-      "title": "Accepting Realistic Leader (Earnest)",
-      "nickname": "Earnest Leader",
-      "description": "Leads at own pace but wants to be accepted and protected by partner. Approaches relationships realistically and earnestly.",
+      "title": "Charismatic Perfectionist",
+      "nickname": "Charismatic Perfectionist",
+      "description": "Leads relationships with strong charisma and earnest attitude pursuing perfection, yet inwardly yearns for partner's warm understanding and acceptance. Approaches relationships realistically with responsibility, a reliable type wanting trustworthy partner who recognizes sincerity behind perfect exterior.",
       "loveStyle": "Realistic and earnest leadership style",
       "strengths": [
         "Strong leadership",
@@ -453,14 +453,14 @@
       "advice": "Earnestness is important, but sometimes flexibility in accepting your partner is needed."
     },
     "LAPO": {
-      "title": "Accepting Passionate Leader",
-      "nickname": "Passionate Care Leader",
-      "description": "Leads at own pace but wants to be accepted and protected by partner. Seeks passionate and free relationships.",
+      "title": "Free Spirit",
+      "nickname": "Free Spirit",
+      "description": "A creative type who leads relationships freely and passionately while wanting inclusive partner who accepts emotions and individuality as they are. Enjoys new experiences with optimistic and attractive personality, cherishes expressing love in unique ways. Owner of distinctive charm where freedom and passion coexist.",
       "loveStyle": "Passionate yet care-seeking relationship",
       "strengths": [
         "Passionate leadership",
         "Emotionally rich",
-        "Free-spirited",
+        "Optimistic",
         "Creative",
         "Charismatic"
       ],
@@ -473,9 +473,9 @@
       "advice": "Exercise passionate leadership while also accepting your partner's emotions."
     },
     "LAPE": {
-      "title": "Accepting Passionate Leader (Earnest)",
-      "nickname": "Earnest Passionate Leader",
-      "description": "Leads at own pace but wants to be accepted and protected by partner. Passionate yet approaches relationships earnestly.",
+      "title": "Fatalist",
+      "nickname": "Fatalist",
+      "description": "Takes love seriously like destiny, leads relationships with strong leadership while seeking soulmate who understands and accepts deep inner emotions. Devotes earnestly while being passionate, pursues profound love pouring everything to chosen person. Believer of destined love with intense emotions and authenticity.",
       "loveStyle": "Passionate and earnest leadership style",
       "strengths": [
         "Strong leadership",
@@ -493,14 +493,14 @@
       "advice": "Earnest passion is good, but be careful not to overwhelm your partner."
     },
     "FCRO": {
-      "title": "Cuddly Realistic Follower",
-      "nickname": "Cute Supporter",
-      "description": "Matches partner's pace but wants to act cute with them. Seeks realistic and free relationships, providing stable support.",
+      "title": "Gentle Hamster",
+      "nickname": "Gentle Hamster",
+      "description": "Like a hamster, adorable and gentle personality that matches partner's pace well while occasionally acting cute expressing affection. Supports stable relationships with realistic and optimistic attitude, naturally radiates cute charm in harmonious atmosphere. Peaceful love style sharing tender love without being burdensome.",
       "loveStyle": "Realistic yet cute supporter style",
       "strengths": [
         "Accepting",
         "Cute charm",
-        "Free-spirited",
+        "Optimistic",
         "Stable",
         "Harmonious"
       ],
@@ -513,9 +513,9 @@
       "advice": "Follow your partner but also actively express your own opinions."
     },
     "FCRE": {
-      "title": "Cuddly Realistic Follower (Earnest)",
-      "nickname": "Cute & Earnest Supporter",
-      "description": "Matches partner's pace but wants to act cute with them. Approaches relationships realistically and earnestly.",
+      "title": "Diligent Bunny",
+      "nickname": "Diligent Bunny",
+      "description": "Like a bunny, gentle and diligent following partner while cutely acting spoiled expressing love with sincere heart. A devoted type approaching relationships with realistic and trustworthy attitude, adorable when depending on partner with affection. Reliable lover building deep trust with genuine heart and diligence.",
       "loveStyle": "Realistic, earnest, and cute relationship",
       "strengths": [
         "Accepting",
@@ -533,15 +533,15 @@
       "advice": "Earnestness is good, but sometimes enjoy things leisurely."
     },
     "FCPO": {
-      "title": "Cuddly Passionate Follower",
-      "nickname": "Cute Passionate Supporter",
-      "description": "Matches partner's pace but wants to act cute with them. Seeks passionate and free relationships.",
+      "title": "Sparkling Puppy",
+      "nickname": "Sparkling Puppy",
+      "description": "Like a puppy, bright and affectionate personality that passionately expresses love and enjoys acting spoiled. An adorable type matching partner's pace with optimistic and accepting attitude while valuing emotional connection and wanting to be loved with cute charm. Owner of sparkling charm with abundant energy and affection expression.",
       "loveStyle": "Passionate yet cute supporter style",
       "strengths": [
         "Accepting",
         "Cute charm",
         "Passionate",
-        "Free-spirited",
+        "Optimistic",
         "Emotional connection"
       ],
       "challenges": [
@@ -553,9 +553,9 @@
       "advice": "Passion is good, but also have the courage to express your own needs."
     },
     "FCPE": {
-      "title": "Cuddly Passionate Follower (Earnest)",
-      "nickname": "Cute & Earnest Passionate Supporter",
-      "description": "Matches partner's pace but wants to act cute with them. Passionate yet approaches relationships earnestly.",
+      "title": "Devoted Lover",
+      "nickname": "Devoted Lover",
+      "description": "Devotes wholeheartedly to loved one, owner of deep love who passionately acts spoiled and expresses affection. Approaches relationships seriously while respecting partner's pace, creates special relationship with cute affection and deep emotional connection. True lover dreaming of becoming one with sincere devotion and passion.",
       "loveStyle": "Passionate, earnest, and cute relationship",
       "strengths": [
         "Accepting",
@@ -573,14 +573,14 @@
       "advice": "Earnest passion is good, but also take care of your own happiness."
     },
     "FARO": {
-      "title": "Accepting Realistic Follower",
-      "nickname": "Care-Seeking Supporter",
-      "description": "Matches partner's pace but wants to be accepted and protected by them. Seeks realistic and free relationships.",
+      "title": "Comfortable Companion",
+      "nickname": "Comfortable Companion",
+      "description": "A harmonious type pursuing comfortable and natural relationships, following partner's lead while wishing to be accepted as is. Creates stable relationships with realistic and optimistic attitude, accepting yet wanting recognition of own presence. Ideal companion where comfort and stability coexist.",
       "loveStyle": "Realistic yet care-seeking relationship",
       "strengths": [
         "Accepting",
         "Realistic",
-        "Free-spirited",
+        "Optimistic",
         "Stable",
         "Harmonious"
       ],
@@ -593,9 +593,9 @@
       "advice": "Follow your partner while also expressing what you want."
     },
     "FARE": {
-      "title": "Accepting Realistic Follower (Earnest)",
-      "nickname": "Earnest Supporter",
-      "description": "Matches partner's pace but wants to be accepted and protected by them. Approaches relationships realistically and earnestly.",
+      "title": "Cautious Supporter",
+      "nickname": "Cautious Supporter",
+      "description": "A trustworthy type that solidly supports partner with cautious and realistic attitude while wanting partner who recognizes and accepts own sincerity and efforts. Approaches relationships earnestly with responsibility, builds deep trust with partner through quiet but firm support. Reliable supporter proving love with diligence and authenticity.",
       "loveStyle": "Realistic and earnest supporter style",
       "strengths": [
         "Accepting",
@@ -613,14 +613,14 @@
       "advice": "Earnestness is important, but don't forget emotional connection."
     },
     "FAPO": {
-      "title": "Accepting Passionate Follower",
-      "nickname": "Passionate Care Supporter",
-      "description": "Matches partner's pace but wants to be accepted and protected by them. Seeks passionate and free relationships.",
+      "title": "Romantic Dreamer",
+      "nickname": "Romantic Dreamer",
+      "description": "A sensitive type who dreams of passionate and romantic love, following partner's lead while wishing understanding and acceptance of own sensibility and emotions. Values emotional connection with optimistic and attractive personality, accepting yet passionately falling in love as true romantic. Pursues harmony between dreamlike love and reality.",
       "loveStyle": "Passionate yet care-seeking relationship",
       "strengths": [
         "Accepting",
         "Passionate",
-        "Free-spirited",
+        "Optimistic",
         "Emotional connection",
         "Charismatic"
       ],
@@ -633,9 +633,9 @@
       "advice": "Passion is good, but also have the courage to express your needs."
     },
     "FAPE": {
-      "title": "Accepting Passionate Follower (Earnest)",
-      "nickname": "Earnest Passionate Supporter",
-      "description": "Matches partner's pace but wants to be accepted and protected by them. Passionate yet approaches relationships earnestly.",
+      "title": "Pure Heart",
+      "nickname": "Pure Heart",
+      "description": "A sincere type who loves one person deeply and seriously, passionately devoting while wishing partner to recognize and cherish pure heart. Respects partner's pace sharing deep connection, creates destined love with accepting yet earnest attitude. Pure heart dreaming of lifetime love with pure passion and devotion.",
       "loveStyle": "Passionate and earnest supporter style",
       "strengths": [
         "Accepting",

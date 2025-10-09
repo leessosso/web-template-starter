@@ -22,8 +22,7 @@ export function TypeCard({ loveType, onClick, className = '', showDetails = fals
             <div className={`bg-gradient-to-r ${loveType.color} p-6 text-white`}>
                 <div className="text-center">
                     <h3 className="text-2xl font-bold mb-2">{loveType.code}</h3>
-                    <h4 className="text-lg font-semibold mb-1">{localizedType.title}</h4>
-                    <p className="text-sm opacity-90">{localizedType.nickname}</p>
+                    <h4 className="text-xl font-bold">{localizedType.title}</h4>
                 </div>
             </div>
 
