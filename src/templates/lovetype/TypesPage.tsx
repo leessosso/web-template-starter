@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { newLoveTypes } from '../../lovetype/newLoveTypes';
+import { getLoveTypeDetail } from '../../lovetype/loveTypeDetails';
 import { TypeCard } from '../../components/lovetype';
 import { Button } from '../../components/ui';
 
@@ -50,14 +51,19 @@ export function TypesPage() {
 
                 {/* Types Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
-                    {Object.values(newLoveTypes).map((loveType) => (
-                        <TypeCard
-                            key={loveType.code}
-                            loveType={loveType}
-                            onClick={() => handleTypeClick(loveType.code)}
-                            className="hover:shadow-xl transition-all duration-300"
-                        />
-                    ))}
+                    {Object.values(newLoveTypes).map((loveType) => {
+                        const loveTypeDetail = getLoveTypeDetail(loveType.code, t);
+                        return (
+                            <TypeCard
+                                key={loveType.code}
+                                loveType={loveType}
+                                loveTypeDetail={loveTypeDetail}
+                                onClick={() => handleTypeClick(loveType.code)}
+                                className="hover:shadow-xl transition-all duration-300"
+                                showDetails={false}
+                            />
+                        );
+                    })}
                 </div>
 
                 {/* Info Section */}

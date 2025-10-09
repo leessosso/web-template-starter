@@ -2,6 +2,7 @@
 
 // 연애 유형 테스트 결과 (4가지 차원 기반)
 export type LoveTypeCode = string;
+export type { LoveTypeDetail } from './types';
 
 // 연애 유형 차원별 점수 (L/F, C/A, R/P, O/E)
 export interface LoveTypeScore {

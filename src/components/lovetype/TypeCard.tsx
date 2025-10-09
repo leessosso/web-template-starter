@@ -1,21 +1,22 @@
 import { useTranslation } from 'react-i18next';
-import type { LoveType } from '../../lovetype/index';
+import type { LoveType, LoveTypeDetail } from '../../lovetype/index';
 import { getLoveTypeData } from '../../lovetype/newLoveTypes';
 
 interface TypeCardProps {
     loveType: LoveType;
+    loveTypeDetail?: LoveTypeDetail | null;
     onClick?: () => void;
     className?: string;
     showDetails?: boolean;
 }
 
-export function TypeCard({ loveType, onClick, className = '', showDetails = false }: TypeCardProps) {
+export function TypeCard({ loveType, loveTypeDetail, onClick, className = '', showDetails = false }: TypeCardProps) {
     const { t } = useTranslation();
     const localizedType = getLoveTypeData(loveType.code, t) || loveType;
 
     return (
         <div
-            className={`bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer transition-all duration-300 hover:shadow-xl hover:scale-105 ${className}`}
+            className={`bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer transition-all duration-300 ${className}`}
             onClick={onClick}
         >
             {/* 헤더 */}
@@ -28,59 +29,116 @@ export function TypeCard({ loveType, onClick, className = '', showDetails = fals
 
             {/* 내용 */}
             <div className="p-6">
-                <p className="text-gray-700 mb-4 leading-relaxed">
-                    {localizedType.description}
-                </p>
+                {/* 기본 설명 또는 소개글 */}
+                {!showDetails && loveTypeDetail && (
+                    <p className="text-gray-700 mb-4 leading-relaxed text-base">
+                        {loveTypeDetail.introduction}
+                    </p>
+                )}
+
+                {/* 기존 설명 (showDetails가 아닐 때만, loveTypeDetail이 없을 경우) */}
+                {!showDetails && !loveTypeDetail && (
+                    <p className="text-gray-700 mb-4 leading-relaxed text-base">
+                        {localizedType.description}
+                    </p>
+                )}
 
                 {showDetails && (
-                    <div className="space-y-4">
-                        <div>
-                            <h5 className="font-semibold text-gray-800 mb-2">{t('lovetype.loveStyle', '연애 스타일')}</h5>
-                            <p className="text-sm text-gray-600">{localizedType.loveStyle}</p>
-                        </div>
+                    <div className="space-y-6">
+                        {/* 상세 정보들 (loveTypeDetail이 있는 경우) */}
+                        {loveTypeDetail && (
+                            <div className="border-gray-200 space-y-6">
+                                {/* 주요 제목과 소개 */}
+                                <div className="bg-gradient-to-br from-pink-50 to-purple-50 rounded-lg p-4">
+                                    <h5 className="font-bold text-gray-800 mb-3 text-center text-lg">
+                                        {loveTypeDetail.mainTitle}
+                                    </h5>
+                                    <p className="text-gray-600 text-center leading-relaxed text-base">
+                                        {loveTypeDetail.introduction}
+                                    </p>
+                                </div>
 
-                        <div>
-                            <h5 className="font-semibold text-gray-800 mb-2">{t('lovetype.strengths', '장점')}</h5>
-                            <ul className="text-sm text-gray-600 space-y-1">
-                                {localizedType.strengths.map((strength, index) => (
-                                    <li key={index} className="flex items-center">
-                                        <span className="w-1.5 h-1.5 bg-pink-400 rounded-full mr-2"></span>
-                                        {strength}
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
+                                {/* 기본 성향 */}
+                                <div>
+                                    <div className="flex items-center mb-3">
+                                        <span className="text-xl mr-2">💖</span>
+                                        <h5 className="font-semibold text-gray-800 text-lg">
+                                            당신의 마음속 이야기: 기본적인 연애 성향
+                                        </h5>
+                                    </div>
+                                    <div className="bg-gray-50 rounded-lg p-4">
+                                        <p className="text-gray-700 leading-relaxed whitespace-pre-line text-base">
+                                            {loveTypeDetail.basicTendency}
+                                        </p>
+                                    </div>
+                                </div>
 
-                        <div>
-                            <h5 className="font-semibold text-gray-800 mb-2">{t('lovetype.challenges', '주의할 점')}</h5>
-                            <ul className="text-sm text-gray-600 space-y-1">
-                                {localizedType.challenges.map((challenge, index) => (
-                                    <li key={index} className="flex items-center">
-                                        <span className="w-1.5 h-1.5 bg-orange-400 rounded-full mr-2"></span>
-                                        {challenge}
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
+                                {/* 관계에서의 모습 */}
+                                <div>
+                                    <div className="flex items-center mb-3">
+                                        <span className="text-xl mr-2">💌</span>
+                                        <h5 className="font-semibold text-gray-800 text-lg">
+                                            사랑이 피어날 때: 관계에서의 당신의 모습
+                                        </h5>
+                                    </div>
+                                    <div className="bg-gray-50 rounded-lg p-4">
+                                        <p className="text-gray-700 leading-relaxed whitespace-pre-line text-base">
+                                            {loveTypeDetail.inRelationship}
+                                        </p>
+                                    </div>
+                                </div>
 
-                        <div>
-                            <h5 className="font-semibold text-gray-800 mb-2">{t('lovetype.compatibleTypes', '궁합 좋은 유형')}</h5>
-                            <div className="flex flex-wrap gap-2">
-                                {loveType.compatibleTypes.map((type) => (
-                                    <span
-                                        key={type}
-                                        className="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full"
-                                    >
-                                        {type}
-                                    </span>
-                                ))}
+                                {/* 완벽한 짝 */}
+                                <div>
+                                    <div className="flex items-center mb-3">
+                                        <span className="text-xl mr-2">✨</span>
+                                        <h5 className="font-semibold text-gray-800 text-lg">
+                                            당신의 완벽한 짝: 이런 사람과 가장 빛나요
+                                        </h5>
+                                    </div>
+                                    <div className="bg-gray-50 rounded-lg p-4">
+                                        <p className="text-gray-700 leading-relaxed whitespace-pre-line text-base">
+                                            {loveTypeDetail.perfectMatch}
+                                        </p>
+                                    </div>
+                                </div>
+
+                                {/* 마블의 한마디 */}
+                                <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-lg p-6">
+                                    <div className="flex items-center mb-3">
+                                        <span className="text-xl mr-2">💬</span>
+                                        <h5 className="font-semibold text-gray-800 text-lg">
+                                            마블의 따뜻한 한마디
+                                        </h5>
+                                    </div>
+                                    <p className="text-gray-700 leading-relaxed whitespace-pre-line italic text-center text-base">
+                                        {loveTypeDetail.marvelMessage}
+                                    </p>
+                                </div>
+
+                                {/* 추가 정보 */}
+                                <div className="bg-white border border-gray-200 rounded-lg p-4">
+                                    <h5 className="font-semibold text-gray-800 mb-3 text-center text-lg" style={{ color: '#6D28D9' }}>💡 더 알아보기</h5>
+                                    <div className="grid md:grid-cols-2 gap-4">
+                                        <div>
+                                            <h6 className="font-semibold text-gray-800 mb-2 text-base">다른 유형과의 궁합</h6>
+                                            <p className="text-gray-600 mb-2 text-base">
+                                                {loveType.compatibleTypes.join(', ')} 유형과 특히 잘 맞습니다.
+                                            </p>
+                                            <p className="text-gray-500 text-sm">
+                                                * 궁합은 참고용이며, 개인의 성격과 노력에 따라 달라질 수 있습니다.
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <h6 className="font-semibold text-gray-800 mb-2 text-base">연애 성공 팁</h6>
+                                            <p className="text-gray-600 text-base">
+                                                {loveType.advice}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-
-                        <div className="pt-4 border-t border-gray-200">
-                            <h5 className="font-semibold text-gray-800 mb-2">{t('lovetype.advice', '연애 조언')}</h5>
-                            <p className="text-sm text-gray-600 italic">"{localizedType.advice}"</p>
-                        </div>
+                        )}
                     </div>
                 )}
             </div>
