@@ -46,5 +46,7 @@ export const router = createBrowserRouter([
       },
     ],
   },
-])
+], {
+  basename: '/web-template-starter'
+})
 
