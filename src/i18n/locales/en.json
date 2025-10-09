@@ -174,7 +174,7 @@
   "lovetype": {
     "title": "LoveType",
     "subtitle": "Discover your unique love type",
-    "description": "Find out your love style and compatibility through our MBTI-based love type test.",
+    "description": "A love type test that analyzes your romantic style through 4 dimensions: leadership, affection expression, relationship views, and attitude.",
     "startTest": "Start Test",
     "testProgress": "Progress",
     "question": "Question",
@@ -218,13 +218,10 @@
     "shareCancelled": "Share cancelled",
     "clipboardError": "Clipboard copy failed:",
     "copied": "Copied!",
-    "share": "Share Results",
     "progress": "Progress",
     "loadingQuestions": "Loading questions...",
     "testTitle": "LoveType Test",
-    "previous": "Previous",
     "viewResult": "View Result",
-    "next": "Next",
     "answerCompleted": "Answer completed",
     "strongA": "Strong A",
     "moderateA": "Moderate A",
@@ -233,8 +230,6 @@
     "moderateB": "Moderate B",
     "strongB": "Strong B",
     "helpText": "Please select the answer that best fits you. Be honest for accurate results.",
-    "subtitle": "Discover your unique love type",
-    "description": "A love type test that analyzes your romantic style through 4 dimensions: leadership, affection expression, relationship views, and attitude.",
     "features": {
       "mbti": "MBTI Based",
       "mbtiDesc": "Accurate analysis based on scientifically validated MBTI theory",
@@ -337,343 +332,325 @@
     "30.optionB": "It occupies an important part of life and should be nurtured carefully"
   },
   "loveTypes": {
-    "LCAO": {
-      "title": "Leadership Affection Expresser",
-      "nickname": "Active Romantic",
-      "description": "A type that takes the lead in relationships and actively expresses affection. They have a realistic yet optimistic nature, leading their partner while sharing warm love. They enjoy planning dates and surprising their partner, actively working for relationship development.",
-      "loveStyle": "Leading and affection-rich dating",
-      "strengths": [
-        "Active leadership",
-        "Rich affection expression",
-        "Realistic judgment",
-        "Optimistic personality",
-        "Creative date ideas",
-        "Helping partner's growth"
-      ],
-      "challenges": [
-        "Excessive leadership",
-        "Emotional fluctuations",
-        "Lack of realism",
-        "Infringing partner's autonomy"
-      ],
-      "advice": "Lead your partner, but also listen to their opinions sufficiently. Sometimes it's important to let your partner take the lead."
-    },
-    "LCAP": {
-      "title": "Passionate Leader",
-      "nickname": "Passionate Leader",
-      "description": "A type that takes the lead in relationships and passionately expresses affection. They pursue emotional and passionate dating, valuing deep emotional connection with their partner. When in love, they pour everything into it, enjoying preparing romantic surprises for their partner.",
-      "loveStyle": "Passionate and leading dating",
-      "strengths": [
-        "Strong leadership",
-        "Passionate affection expression",
-        "Emotional connection",
-        "Active attitude",
-        "Romantic surprises",
-        "Deep emotional expression"
-      ],
-      "challenges": [
-        "Emotional fluctuations",
-        "Excessive passion",
-        "Lack of realism",
-        "Jealousy",
-        "Emotional exhaustion"
-      ],
-      "advice": "Passion is good, but also consider your partner's emotions to maintain balance. Sometimes calm time is also needed."
-    },
     "LCRO": {
-      "title": "Realistic Affection Expresser",
-      "nickname": "Realistic Romantic",
-      "description": "A type that takes the lead in relationships and realistically expresses affection. They pursue optimistic yet realistic dating, valuing stable and sustainable relationships. They enjoy specifically planning the future with their partner and sharing practical love.",
-      "loveStyle": "Realistic and leading dating",
+      "title": "Cuddly Realistic Leader",
+      "nickname": "Cute Realist",
+      "description": "Leads at own pace but wants to act cute with partner. Seeks realistic and free relationships, occasionally wanting to be adorable in a stable relationship.",
+      "loveStyle": "Realistic yet cute leadership style",
       "strengths": [
         "Realistic leadership",
-        "Stable affection expression",
-        "Optimistic personality",
-        "Systematic planning",
-        "Trustworthy partner",
-        "Long-term relationship vision"
+        "Cute charm",
+        "Free-spirited",
+        "Seeks stability",
+        "Balanced nature"
       ],
       "challenges": [
         "Lack of emotional expression",
-        "Excessive realism",
-        "Lack of flexibility",
-        "Lack of romance"
+        "Excessive cuteness",
+        "Dependency",
+        "Inconsistency"
       ],
-      "advice": "Realistic planning is good, but emotional connection with your partner is also important. Sometimes create spontaneous romantic moments."
+      "advice": "Maintain realistic judgment while not forgetting emotional connection with your partner."
     },
     "LCRP": {
-      "title": "Passionate Realist",
-      "nickname": "Passionate Planner",
-      "description": "A type that takes the lead in relationships and realistically expresses affection. They pursue passionate yet realistic dating, striving to create perfect relationships. They specifically plan the future with their partner while sharing passionate love emotionally - a balanced style.",
-      "loveStyle": "Passionate and realistic dating",
-      "strengths": [
-        "Strong leadership",
-        "Realistic affection expression",
-        "Passionate attitude",
-        "Systematic planning",
-        "Perfect date preparation",
-        "Balanced relationship management"
-      ],
-      "challenges": [
-        "Emotional fluctuations",
-        "Excessive perfectionism",
-        "Lack of flexibility",
-        "Excessive stress",
-        "Lack of spontaneity"
-      ],
-      "advice": "Perfect planning is good, but also cherish spontaneous moments with your partner. Sometimes it's good to abandon plans and enjoy spontaneously."
-    },
-    "LFAO": {
-      "title": "Accepting Leader",
-      "nickname": "Caring Leader",
-      "description": "A type that takes the lead in relationships but accepts their partner. They are optimistic and deeply caring, leading relationships while respecting their partner's opinions. They value harmonious relationships and strive to minimize conflicts with their partner, showing warm leadership.",
-      "loveStyle": "Caring and leading dating",
-      "strengths": [
-        "Caring leadership",
-        "Accepting attitude",
-        "Optimistic personality",
-        "Stable relationship",
-        "Maintaining harmonious relationships",
-        "Respecting partner's opinions"
-      ],
-      "challenges": [
-        "Lack of assertiveness",
-        "Excessive care",
-        "Lack of decisiveness",
-        "Conflict avoidance"
-      ],
-      "advice": "Caring for your partner is good, but also actively express your own opinions. Sometimes it's necessary to show a firm stance."
-    },
-    "LFAP": {
-      "title": "Passionate Accepter",
-      "nickname": "Passionate Carer",
-      "description": "A type that takes the lead in relationships but accepts their partner. They are passionate and deeply caring, leading relationships while valuing emotional connection with their partner. They sensitively respond to their partner's emotions and enjoy sharing warm and passionate love.",
-      "loveStyle": "Passionate and caring dating",
-      "strengths": [
-        "Passionate leadership",
-        "Accepting attitude",
-        "Emotional connection",
-        "Caring nature",
-        "Understanding partner's emotions",
-        "Warm love expression"
-      ],
-      "challenges": [
-        "Emotional fluctuations",
-        "Lack of assertiveness",
-        "Excessive care",
-        "Emotional exhaustion"
-      ],
-      "advice": "Caring for your partner is good, but also honestly express your own emotions. Sometimes it's important to prioritize your own needs."
-    },
-    "LFRO": {
-      "title": "Realistic Accepter",
-      "nickname": "Realistic Carer",
-      "description": "A type that takes the lead in relationships but accepts their partner. They are realistic and deeply caring, respecting their partner's opinions while valuing stable and sustainable relationships. They show balanced leadership that respects their partner's opinions while making realistic plans.",
-      "loveStyle": "Realistic and caring dating",
+      "title": "Cuddly Realistic Leader (Earnest)",
+      "nickname": "Cute & Earnest Realist",
+      "description": "Leads at own pace but wants to act cute with partner. Realistic yet passionate, approaching relationships earnestly.",
+      "loveStyle": "Realistic, earnest, and cute relationship",
       "strengths": [
         "Realistic leadership",
-        "Accepting attitude",
+        "Cute charm",
+        "Earnest attitude",
         "Stable relationship",
-        "Systematic planning",
-        "Trustworthy partner",
-        "Balanced decision-making"
+        "Passionate"
       ],
       "challenges": [
-        "Lack of emotional expression",
-        "Lack of assertiveness",
-        "Excessive realism",
-        "Lack of romance"
+        "Emotional ups and downs",
+        "Excessive perfectionism",
+        "Dependency",
+        "Stress"
       ],
-      "advice": "Realistic planning is good, but emotional connection with your partner is also necessary. Sometimes express emotions and create romantic moments."
+      "advice": "Pursue perfection but also learn to relax and enjoy."
     },
-    "LFRP": {
-      "title": "Passionate Realistic Accepter",
-      "nickname": "Passionate Realistic Carer",
-      "description": "A type that takes the lead in relationships but accepts their partner. They are passionate, realistic, and deeply caring. They show balanced leadership that respects their partner's opinions while striving to create perfect relationships.",
-      "loveStyle": "Passionate, realistic, and caring dating",
+    "LCPO": {
+      "title": "Cuddly Passionate Leader",
+      "nickname": "Cute Enthusiast",
+      "description": "Leads at own pace but wants to act cute with partner. Seeks passionate and free relationships with emotional richness.",
+      "loveStyle": "Passionate, cute, and free relationship",
       "strengths": [
         "Passionate leadership",
-        "Accepting attitude",
-        "Realistic judgment",
-        "Caring nature",
-        "Pursuing perfect relationships",
-        "Balanced love"
-      ],
-      "challenges": [
-        "Emotional fluctuations",
-        "Lack of assertiveness",
-        "Excessive perfectionism",
-        "Excessive stress"
-      ],
-      "advice": "Pursuing perfect relationships is good, but sometimes show your natural self. It's necessary to have a mindset that it's okay not to be perfect."
-    },
-    "FCAO": {
-      "title": "Warm Follower",
-      "nickname": "Affection Expressing Follower",
-      "description": "A type that follows their partner and expresses affection. They have an optimistic and warm nature, enriching relationships with rich affection expression while respecting their partner's leadership. They value harmonious relationships and prioritize making their partner happy.",
-      "loveStyle": "Warm and accepting dating",
-      "strengths": [
-        "Warm affection expression",
-        "Accepting attitude",
-        "Optimistic personality",
-        "Harmonious relationship",
-        "Ability to make partner happy",
-        "Loyalty"
-      ],
-      "challenges": [
-        "Lack of assertiveness",
-        "Excessive acceptance",
-        "Lack of decisiveness",
-        "Dependency"
-      ],
-      "advice": "Following your partner is good, but also actively express your own opinions. Sometimes it's important to show your own personality."
-    },
-    "FCAP": {
-      "title": "Passionate Follower",
-      "nickname": "Passionate Affection Expresser",
-      "description": "A type that follows their partner and passionately expresses affection. They pursue emotional and passionate dating, expressing their own passionate love while respecting their partner's leadership. They value deep emotional connection with their partner and pour everything into love when they fall in love.",
-      "loveStyle": "Passionate and accepting dating",
-      "strengths": [
-        "Passionate affection expression",
-        "Accepting attitude",
+        "Cute charm",
+        "Free-spirited",
         "Emotional connection",
-        "Warm heart",
-        "Deep love expression",
-        "Devotion to partner"
+        "Creative"
       ],
       "challenges": [
-        "Emotional fluctuations",
-        "Lack of assertiveness",
-        "Excessive passion",
-        "Emotional exhaustion"
+        "Emotional ups and downs",
+        "Impulsive",
+        "Dependency",
+        "Lack of realism"
       ],
-      "advice": "Passionate affection expression is good, but also consider your partner's emotions to maintain balance. Sometimes it's necessary to control your own emotions."
+      "advice": "Be passionate but also respect your partner's pace and maintain balance."
+    },
+    "LCPE": {
+      "title": "Cuddly Passionate Leader (Earnest)",
+      "nickname": "Cute & Earnest Enthusiast",
+      "description": "Leads at own pace but wants to act cute with partner. Passionate yet approaches relationships earnestly, seeking deep connections.",
+      "loveStyle": "Passionate, earnest, and cute relationship",
+      "strengths": [
+        "Passionate leadership",
+        "Cute charm",
+        "Earnest attitude",
+        "Deep emotional connection",
+        "Devoted"
+      ],
+      "challenges": [
+        "Emotional ups and downs",
+        "Excessive attachment",
+        "Dependency",
+        "Emotional drain"
+      ],
+      "advice": "Earnestness is good, but sometimes enjoy things lightly."
+    },
+    "LARO": {
+      "title": "Accepting Realistic Leader",
+      "nickname": "Leader Who Wants Care",
+      "description": "Leads at own pace but wants to be accepted and protected by partner. Seeks realistic and free relationships.",
+      "loveStyle": "Realistic yet care-seeking relationship",
+      "strengths": [
+        "Realistic leadership",
+        "Accepting charm",
+        "Free-spirited",
+        "Stable",
+        "Balanced"
+      ],
+      "challenges": [
+        "Excessive self-assertion",
+        "Lack of acceptance",
+        "Distance",
+        "Coldness"
+      ],
+      "advice": "Leadership is good, but also be open to your partner's affection."
+    },
+    "LARE": {
+      "title": "Accepting Realistic Leader (Earnest)",
+      "nickname": "Earnest Leader",
+      "description": "Leads at own pace but wants to be accepted and protected by partner. Approaches relationships realistically and earnestly.",
+      "loveStyle": "Realistic and earnest leadership style",
+      "strengths": [
+        "Strong leadership",
+        "Realistic judgment",
+        "Earnest attitude",
+        "Trustworthy",
+        "Responsible"
+      ],
+      "challenges": [
+        "Excessive self-assertion",
+        "Lack of acceptance",
+        "Inflexibility",
+        "Perfectionism"
+      ],
+      "advice": "Earnestness is important, but sometimes flexibility in accepting your partner is needed."
+    },
+    "LAPO": {
+      "title": "Accepting Passionate Leader",
+      "nickname": "Passionate Care Leader",
+      "description": "Leads at own pace but wants to be accepted and protected by partner. Seeks passionate and free relationships.",
+      "loveStyle": "Passionate yet care-seeking relationship",
+      "strengths": [
+        "Passionate leadership",
+        "Emotionally rich",
+        "Free-spirited",
+        "Creative",
+        "Charismatic"
+      ],
+      "challenges": [
+        "Emotional ups and downs",
+        "Inconsistency",
+        "Distance",
+        "Impulsive"
+      ],
+      "advice": "Exercise passionate leadership while also accepting your partner's emotions."
+    },
+    "LAPE": {
+      "title": "Accepting Passionate Leader (Earnest)",
+      "nickname": "Earnest Passionate Leader",
+      "description": "Leads at own pace but wants to be accepted and protected by partner. Passionate yet approaches relationships earnestly.",
+      "loveStyle": "Passionate and earnest leadership style",
+      "strengths": [
+        "Strong leadership",
+        "Passionate",
+        "Earnest attitude",
+        "Deep connection",
+        "Devoted"
+      ],
+      "challenges": [
+        "Emotional ups and downs",
+        "Excessive attachment",
+        "Distance",
+        "Emotional drain"
+      ],
+      "advice": "Earnest passion is good, but be careful not to overwhelm your partner."
     },
     "FCRO": {
-      "title": "Realistic Follower",
-      "nickname": "Realistic Affection Expresser",
-      "description": "A type that follows their partner and realistically expresses affection. They pursue optimistic yet realistic dating, focusing on creating stable and sustainable relationships while respecting their partner's leadership. They share practical love and enjoy realistically planning the future with their partner.",
-      "loveStyle": "Realistic and accepting dating",
+      "title": "Cuddly Realistic Follower",
+      "nickname": "Cute Supporter",
+      "description": "Matches partner's pace but wants to act cute with them. Seeks realistic and free relationships, providing stable support.",
+      "loveStyle": "Realistic yet cute supporter style",
       "strengths": [
-        "Realistic affection expression",
-        "Accepting attitude",
-        "Stable relationship",
-        "Systematic planning",
-        "Trustworthy partner",
-        "Practical love"
+        "Accepting",
+        "Cute charm",
+        "Free-spirited",
+        "Stable",
+        "Harmonious"
       ],
       "challenges": [
-        "Lack of emotional expression",
-        "Lack of assertiveness",
-        "Excessive realism",
-        "Lack of romance"
-      ],
-      "advice": "Realistic planning is good, but emotional connection with your partner is also necessary. Sometimes express emotions and create romantic moments."
-    },
-    "FCRP": {
-      "title": "Passionate Realistic Follower",
-      "nickname": "Passionate Realist",
-      "description": "A type that follows their partner and realistically expresses affection. They pursue passionate yet realistic dating, striving to create perfect relationships while respecting their partner's leadership. They are passionate emotionally but maintain stable relationships with realistic judgment - a balanced style.",
-      "loveStyle": "Passionate, realistic, and accepting dating",
-      "strengths": [
-        "Passionate affection expression",
-        "Realistic judgment",
-        "Accepting attitude",
-        "Systematic planning",
-        "Pursuing perfect relationships",
-        "Balanced love"
-      ],
-      "challenges": [
-        "Emotional fluctuations",
-        "Lack of assertiveness",
-        "Excessive perfectionism",
-        "Excessive stress"
-      ],
-      "advice": "Pursuing perfect relationships is good, but sometimes show your natural self. It's necessary to have a mindset that it's okay not to be perfect."
-    },
-    "FFAO": {
-      "title": "Warm Accepter",
-      "nickname": "Caring Follower",
-      "description": "A type that follows their partner and accepts them. They are optimistic and deeply caring, striving to accept and understand everything about their partner. They prioritize harmonious relationships and consider making their partner happy as their own joy, having a warm heart.",
-      "loveStyle": "Caring and accepting dating",
-      "strengths": [
-        "Warm acceptance",
-        "Caring nature",
-        "Optimistic personality",
-        "Harmonious relationship",
-        "Ability to make partner happy",
-        "Unconditional love"
-      ],
-      "challenges": [
-        "Lack of assertiveness",
-        "Excessive acceptance",
+        "Lack of self-assertion",
+        "Dependency",
         "Lack of decisiveness",
-        "Self-sacrifice"
+        "Passive"
       ],
-      "advice": "Caring for your partner is good, but also actively express your own opinions. It's important to cherish your own needs."
+      "advice": "Follow your partner but also actively express your own opinions."
     },
-    "FFAP": {
-      "title": "Passionate Accepter",
-      "nickname": "Passionate Carer",
-      "description": "A type that follows their partner and accepts them. They are passionate and deeply caring, expressing their own passionate love while accepting everything about their partner. They value deep emotional connection with their partner and pour everything into love when they fall in love - a devoted style.",
-      "loveStyle": "Passionate, caring, and accepting dating",
+    "FCRE": {
+      "title": "Cuddly Realistic Follower (Earnest)",
+      "nickname": "Cute & Earnest Supporter",
+      "description": "Matches partner's pace but wants to act cute with them. Approaches relationships realistically and earnestly.",
+      "loveStyle": "Realistic, earnest, and cute relationship",
       "strengths": [
-        "Passionate acceptance",
-        "Caring nature",
+        "Accepting",
+        "Cute charm",
+        "Earnest attitude",
+        "Trustworthy",
+        "Devoted"
+      ],
+      "challenges": [
+        "Lack of self-assertion",
+        "Dependency",
+        "Perfectionism",
+        "Stress"
+      ],
+      "advice": "Earnestness is good, but sometimes enjoy things leisurely."
+    },
+    "FCPO": {
+      "title": "Cuddly Passionate Follower",
+      "nickname": "Cute Passionate Supporter",
+      "description": "Matches partner's pace but wants to act cute with them. Seeks passionate and free relationships.",
+      "loveStyle": "Passionate yet cute supporter style",
+      "strengths": [
+        "Accepting",
+        "Cute charm",
+        "Passionate",
+        "Free-spirited",
+        "Emotional connection"
+      ],
+      "challenges": [
+        "Lack of self-assertion",
+        "Dependency",
+        "Emotional ups and downs",
+        "Impulsive"
+      ],
+      "advice": "Passion is good, but also have the courage to express your own needs."
+    },
+    "FCPE": {
+      "title": "Cuddly Passionate Follower (Earnest)",
+      "nickname": "Cute & Earnest Passionate Supporter",
+      "description": "Matches partner's pace but wants to act cute with them. Passionate yet approaches relationships earnestly.",
+      "loveStyle": "Passionate, earnest, and cute relationship",
+      "strengths": [
+        "Accepting",
+        "Cute charm",
+        "Passionate",
+        "Earnest",
+        "Deeply devoted"
+      ],
+      "challenges": [
+        "Lack of self-assertion",
+        "Dependency",
+        "Emotional ups and downs",
+        "Emotional drain"
+      ],
+      "advice": "Earnest passion is good, but also take care of your own happiness."
+    },
+    "FARO": {
+      "title": "Accepting Realistic Follower",
+      "nickname": "Care-Seeking Supporter",
+      "description": "Matches partner's pace but wants to be accepted and protected by them. Seeks realistic and free relationships.",
+      "loveStyle": "Realistic yet care-seeking relationship",
+      "strengths": [
+        "Accepting",
+        "Realistic",
+        "Free-spirited",
+        "Stable",
+        "Harmonious"
+      ],
+      "challenges": [
+        "Lack of self-assertion",
+        "Lack of acceptance",
+        "Distance",
+        "Passive"
+      ],
+      "advice": "Follow your partner while also expressing what you want."
+    },
+    "FARE": {
+      "title": "Accepting Realistic Follower (Earnest)",
+      "nickname": "Earnest Supporter",
+      "description": "Matches partner's pace but wants to be accepted and protected by them. Approaches relationships realistically and earnestly.",
+      "loveStyle": "Realistic and earnest supporter style",
+      "strengths": [
+        "Accepting",
+        "Realistic",
+        "Earnest",
+        "Trustworthy",
+        "Responsible"
+      ],
+      "challenges": [
+        "Lack of self-assertion",
+        "Lack of acceptance",
+        "Inflexibility",
+        "Perfectionism"
+      ],
+      "advice": "Earnestness is important, but don't forget emotional connection."
+    },
+    "FAPO": {
+      "title": "Accepting Passionate Follower",
+      "nickname": "Passionate Care Supporter",
+      "description": "Matches partner's pace but wants to be accepted and protected by them. Seeks passionate and free relationships.",
+      "loveStyle": "Passionate yet care-seeking relationship",
+      "strengths": [
+        "Accepting",
+        "Passionate",
+        "Free-spirited",
         "Emotional connection",
-        "Warm heart",
-        "Unconditional love",
-        "Deep devotion"
+        "Charismatic"
       ],
       "challenges": [
-        "Emotional fluctuations",
-        "Lack of assertiveness",
-        "Excessive care",
-        "Emotional exhaustion"
+        "Lack of self-assertion",
+        "Emotional ups and downs",
+        "Distance",
+        "Impulsive"
       ],
-      "advice": "Caring for your partner is good, but also honestly express your own emotions. Sometimes it's important to prioritize your own needs."
+      "advice": "Passion is good, but also have the courage to express your needs."
     },
-    "FFRO": {
-      "title": "Realistic Accepter",
-      "nickname": "Realistic Carer",
-      "description": "A type that follows their partner and accepts them. They are realistic and deeply caring, focusing on creating stable and sustainable relationships while accepting everything about their partner. They share practical love and enjoy realistically planning the future with their partner.",
-      "loveStyle": "Realistic, caring, and accepting dating",
+    "FAPE": {
+      "title": "Accepting Passionate Follower (Earnest)",
+      "nickname": "Earnest Passionate Supporter",
+      "description": "Matches partner's pace but wants to be accepted and protected by them. Passionate yet approaches relationships earnestly.",
+      "loveStyle": "Passionate and earnest supporter style",
       "strengths": [
-        "Realistic acceptance",
-        "Caring nature",
-        "Stable relationship",
-        "Systematic planning",
-        "Trustworthy partner",
-        "Practical love"
+        "Accepting",
+        "Passionate",
+        "Earnest",
+        "Deep connection",
+        "Devoted"
       ],
       "challenges": [
-        "Lack of emotional expression",
-        "Lack of assertiveness",
-        "Excessive realism",
-        "Lack of romance"
+        "Lack of self-assertion",
+        "Emotional ups and downs",
+        "Distance",
+        "Emotional drain"
       ],
-      "advice": "Realistic planning is good, but emotional connection with your partner is also necessary. Sometimes express emotions and create romantic moments."
-    },
-    "FFRP": {
-      "title": "Passionate Realistic Accepter",
-      "nickname": "Perfect Carer",
-      "description": "A type that follows their partner and accepts them. They are passionate, realistic, and deeply caring, striving to create perfect relationships while accepting everything about their partner. They are passionate emotionally but maintain stable relationships with realistic judgment - a balanced style.",
-      "loveStyle": "Passionate, realistic, and perfect caring dating",
-      "strengths": [
-        "Passionate acceptance",
-        "Realistic judgment",
-        "Caring nature",
-        "Systematic planning",
-        "Pursuing perfect relationships",
-        "Unconditional love"
-      ],
-      "challenges": [
-        "Emotional fluctuations",
-        "Lack of assertiveness",
-        "Excessive perfectionism",
-        "Excessive stress"
-      ],
-      "advice": "Pursuing perfect relationships is good, but sometimes show your natural self. It's necessary to have a mindset that it's okay not to be perfect."
+      "advice": "Earnest passion is good, but also value your own happiness."
     }
   }
 }
