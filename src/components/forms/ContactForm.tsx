@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Input } from '../ui/Input';
-import { Button } from '../ui/Button';
-import { Alert } from '../ui/Alert';
+import { Button } from '../ui/button';
+import { Alert, AlertDescription } from '../ui/Alert';
 import { useTrackFormSubmit, useTrackClarityFormSubmit } from '../../analytics';
 
 interface ContactFormData {
@@ -74,43 +74,50 @@ export function ContactForm({ onSubmit, className = '' }: ContactFormProps) {
     <form onSubmit={handleSubmit} className={`space-y-6 ${className}`}>
       {alert && (
         <Alert
-          type={alert.type}
-          onClose={() => setAlert(null)}
+          variant={alert.type === 'error' ? 'destructive' : 'default'}
           className="mb-4"
         >
-          {alert.message}
+          <AlertDescription>
+            {alert.message}
+          </AlertDescription>
         </Alert>
       )}
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <Input
-          label="이름"
-          name="name"
-          type="text"
-          required
-          value={formData.name}
-          onChange={handleChange}
-          placeholder="이름을 입력하세요"
-        />
-        <Input
-          label="이메일"
-          name="email"
-          type="email"
-          required
-          value={formData.email}
-          onChange={handleChange}
-          placeholder="이메일을 입력하세요"
-        />
+        <div>
+          <label className="block text-sm font-medium mb-2">이름</label>
+          <Input
+            name="name"
+            type="text"
+            required
+            value={formData.name}
+            onChange={handleChange}
+            placeholder="이름을 입력하세요"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium mb-2">이메일</label>
+          <Input
+            name="email"
+            type="email"
+            required
+            value={formData.email}
+            onChange={handleChange}
+            placeholder="이메일을 입력하세요"
+          />
+        </div>
       </div>
 
-      <Input
-        label="회사명 (선택사항)"
-        name="company"
-        type="text"
-        value={formData.company}
-        onChange={handleChange}
-        placeholder="회사명을 입력하세요"
-      />
+      <div>
+        <label className="block text-sm font-medium mb-2">회사명 (선택사항)</label>
+        <Input
+          name="company"
+          type="text"
+          value={formData.company}
+          onChange={handleChange}
+          placeholder="회사명을 입력하세요"
+        />
+      </div>
 
       <div>
         <label className="block text-sm font-medium text-foreground mb-2">

@@ -2,6 +2,40 @@
 
 React + TypeScript + Vite 기반으로 제작된 웹사이트 템플릿 스타터입니다. 주문형 웹 제작 업무에서 빠르게 시안을 제공할 수 있도록 Tailwind CSS 반응형 그리드, 공통 레이아웃, 페이지 템플릿을 포함합니다.
 
+## 📋 프로젝트 표준 (다중 브랜치 아키텍처)
+
+이 저장소는 **main 브랜치를 템플릿**으로 하는 다중 브랜치 아키텍처를 사용합니다. 각 브랜치는 독립적인 프로젝트를 나타내며, 공통된 기술 표준을 따릅니다.
+
+### 📚 중요 문서
+- **[.cursorrules](./.cursorrules)** - 모든 프로젝트 표준 및 규칙 (Cursor AI 자동 적용)
+
+### 🌿 브랜치 구조
+- `main` - 템플릿 브랜치 (수정하지 마세요)
+- `feat/project-name/*` - 기능 개발 브랜치
+- `init/project-name/*` - 프로젝트 초기화 브랜치
+- `fix/project-name/*` - 버그 수정 브랜치
+
+### 🎨 기술 스택 표준
+- **UI**: shadcn/ui + Tailwind CSS
+- **프레임워크**: React 19 + TypeScript
+- **상태관리**: Zustand
+- **라우팅**: React Router v6
+- **빌드**: Vite
+
+### 🚀 새 프로젝트 시작하기
+
+```bash
+# 1. main 브랜치에서 새 브랜치 생성
+git checkout -b init/your-project/setup
+
+# 2. 환경변수 설정
+npm run setup:env
+
+# 3. 개발 시작
+npm install
+npm run dev
+```
+
 ## 목차
 - [주요 특징](#주요-특징)
 - [빠른 시작](#빠른-시작)

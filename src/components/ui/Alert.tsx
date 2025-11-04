@@ -1,80 +1,59 @@
-import React from 'react';
+import * as React from "react"
+import { cva, type VariantProps } from "class-variance-authority"
 
-interface AlertProps {
-  type?: 'info' | 'success' | 'warning' | 'error';
-  title?: string;
-  children: React.ReactNode;
-  className?: string;
-  onClose?: () => void;
-}
+import { cn } from "@/lib/utils"
 
-export function Alert({
-  type = 'info',
-  title,
-  children,
-  className = '',
-  onClose
-}: AlertProps) {
-  const typeStyles = {
-    info: {
-      container: 'bg-blue-50 border-blue-200',
-      icon: 'text-blue-400',
-      title: 'text-blue-800',
-      content: 'text-blue-700',
+const alertVariants = cva(
+  "relative w-full rounded-lg border p-4 [&>svg~*]:pl-7 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-foreground",
+  {
+    variants: {
+      variant: {
+        default: "bg-background text-foreground",
+        destructive:
+          "border-destructive/50 text-destructive dark:border-destructive [&>svg]:text-destructive",
+      },
     },
-    success: {
-      container: 'bg-green-50 border-green-200',
-      icon: 'text-green-400',
-      title: 'text-green-800',
-      content: 'text-green-700',
+    defaultVariants: {
+      variant: "default",
     },
-    warning: {
-      container: 'bg-yellow-50 border-yellow-200',
-      icon: 'text-yellow-400',
-      title: 'text-yellow-800',
-      content: 'text-yellow-700',
-    },
-    error: {
-      container: 'bg-red-50 border-red-200',
-      icon: 'text-red-400',
-      title: 'text-red-800',
-      content: 'text-red-700',
-    },
-  };
+  }
+)
 
-  const styles = typeStyles[type];
+const Alert = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof alertVariants>
+>(({ className, variant, ...props }, ref) => (
+  <div
+    ref={ref}
+    role="alert"
+    className={cn(alertVariants({ variant }), className)}
+    {...props}
+  />
+))
+Alert.displayName = "Alert"
 
-  return (
-    <div className={`border-l-4 p-4 ${styles.container} ${className}`}>
-      <div className="flex">
-        <div className="flex-shrink-0">
-          {type === 'info' && <span className={`text-lg ${styles.icon}`}>ℹ</span>}
-          {type === 'success' && <span className={`text-lg ${styles.icon}`}>✓</span>}
-          {type === 'warning' && <span className={`text-lg ${styles.icon}`}>⚠</span>}
-          {type === 'error' && <span className={`text-lg ${styles.icon}`}>✕</span>}
-        </div>
-        <div className="ml-3 flex-1">
-          {title && (
-            <h3 className={`text-sm font-medium ${styles.title}`}>
-              {title}
-            </h3>
-          )}
-          <div className={`text-sm ${styles.content} ${title ? 'mt-1' : ''}`}>
-            {children}
-          </div>
-        </div>
-        {onClose && (
-          <div className="ml-auto pl-3">
-            <button
-              onClick={onClose}
-              className={`inline-flex text-gray-400 hover:text-gray-600`}
-            >
-              <span className="sr-only">닫기</span>
-              <span>×</span>
-            </button>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
+const AlertTitle = React.forwardRef<
+  HTMLParagraphElement,
+  React.HTMLAttributes<HTMLHeadingElement>
+>(({ className, ...props }, ref) => (
+  <h5
+    ref={ref}
+    className={cn("mb-1 font-medium leading-none tracking-tight", className)}
+    {...props}
+  />
+))
+AlertTitle.displayName = "AlertTitle"
+
+const AlertDescription = React.forwardRef<
+  HTMLParagraphElement,
+  React.HTMLAttributes<HTMLParagraphElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn("text-sm [&_p]:leading-relaxed", className)}
+    {...props}
+  />
+))
+AlertDescription.displayName = "AlertDescription"
+
+export { Alert, AlertTitle, AlertDescription }

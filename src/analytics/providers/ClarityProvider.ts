@@ -8,10 +8,13 @@ export class ClarityProvider {
 
     // Clarity가 활성화되어 있는지 확인
     isEnabled(): boolean {
-        return !!this.projectId &&
-            this.projectId !== 'your_clarity_project_id_here' &&
-            this.projectId !== 'CLARITY_PROJECT_ID' &&
-            typeof window !== 'undefined';
+        // 일시적으로 Clarity 비활성화
+        return false;
+        // 원래 코드:
+        // return !!this.projectId &&
+        //     this.projectId !== 'your_clarity_project_id_here' &&
+        //     this.projectId !== 'CLARITY_PROJECT_ID' &&
+        //     typeof window !== 'undefined';
     }
 
     // Clarity가 로드되었는지 확인

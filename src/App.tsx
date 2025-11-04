@@ -5,7 +5,6 @@ import './styles/global.css'
 import { Footer } from './components/layout/Footer'
 import { Navigation } from './components/layout/Navigation'
 import { ThemeProvider } from './contexts/ThemeContext'
-import MuiThemeProvider from './contexts/MuiThemeProvider'
 import { Toaster } from './components/ui'
 import AuthGuard from './components/auth/AuthGuard'
 import { useAuthStore } from './store/authStore'
@@ -21,22 +20,20 @@ function App() {
 
   return (
     <ThemeProvider>
-      <MuiThemeProvider>
-        <div className="min-h-screen">
-          {isAuthenticated && !isPublicRoute && <Navigation />}
-          <main className="mx-auto w-full max-w-content px-4 py-16">
-            {isPublicRoute ? (
+      <div className="min-h-screen">
+        {isAuthenticated && !isPublicRoute && <Navigation />}
+        <main className="mx-auto w-full max-w-content px-4 py-16">
+          {isPublicRoute ? (
+            <Outlet />
+          ) : (
+            <AuthGuard>
               <Outlet />
-            ) : (
-              <AuthGuard>
-                <Outlet />
-              </AuthGuard>
-            )}
-          </main>
-          {isAuthenticated && !isPublicRoute && <Footer />}
-          <Toaster />
-        </div>
-      </MuiThemeProvider>
+            </AuthGuard>
+          )}
+        </main>
+        {isAuthenticated && !isPublicRoute && <Footer />}
+        <Toaster />
+      </div>
     </ThemeProvider>
   )
 }

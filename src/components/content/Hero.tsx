@@ -1,4 +1,4 @@
-import { Button } from '../ui/Button';
+import { Button } from '../ui/button';
 
 interface HeroProps {
   badge?: string;
@@ -60,7 +60,7 @@ export function Hero({
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             {primaryButton && (
               <Button
-                variant="primary"
+                variant="default"
                 size="lg"
                 onClick={primaryButton.onClick}
                 className="bg-primary text-primary-foreground hover:bg-primary/90"

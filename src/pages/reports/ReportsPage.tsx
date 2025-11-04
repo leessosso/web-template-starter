@@ -1,20 +1,13 @@
 import {
-  Box,
-  Typography,
-  Card,
-  CardContent,
-  CardActions,
-  Button,
-  Chip,
-  Avatar,
-} from '@mui/material';
-import {
-  Assessment as AssessmentIcon,
-  Person as PersonIcon,
-  Group as GroupIcon,
-  School as SchoolIcon,
-  BarChart as BarChartIcon,
-} from '@mui/icons-material';
+  User as PersonIcon,
+  Users as GroupIcon,
+  GraduationCap as SchoolIcon,
+  BarChart3 as BarChartIcon,
+  FileText as AssessmentIcon,
+} from 'lucide-react';
+import { Button } from '../../components/ui/button';
+import { Card, CardContent } from '../../components/ui/Card';
+import { Badge } from '../../components/ui/Badge';
 import { useNavigate } from 'react-router-dom';
 
 interface ReportCard {
@@ -79,91 +72,66 @@ export default function ReportsPage() {
   };
 
   return (
-    <Box>
-      <Typography variant="h4" gutterBottom>
-        보고서 📊
-      </Typography>
-      <Typography variant="body1" color="text.secondary" sx={{ mb: 4 }}>
-        다양한 통계와 분석 보고서를 통해 학생들의 성장과 진도를 효과적으로 관리하세요.
-      </Typography>
+    <div className="space-y-6">
+      <div>
+        <h1 className="text-3xl font-bold mb-2">
+          보고서 📊
+        </h1>
+        <p className="text-muted-foreground">
+          다양한 통계와 분석 보고서를 통해 학생들의 성장과 진도를 효과적으로 관리하세요.
+        </p>
+      </div>
 
-      <Box
-        display="grid"
-        gridTemplateColumns={{ xs: '1fr', sm: '1fr 1fr', md: '1fr 1fr 1fr' }}
-        gap={3}
-      >
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {reportCards.map((report, index) => (
-          <Box key={index}>
-            <Card
-              sx={{
-                height: '100%',
-                display: 'flex',
-                flexDirection: 'column',
-                cursor: report.status === 'available' ? 'pointer' : 'default',
-                transition: 'transform 0.2s',
-                '&:hover': report.status === 'available' ? {
-                  transform: 'translateY(-4px)',
-                  boxShadow: 4,
-                } : {},
-                opacity: report.status === 'coming-soon' ? 0.7 : 1,
-              }}
-              onClick={() => handleReportClick(report)}
-            >
-              <CardContent sx={{ flexGrow: 1 }}>
-                <Box display="flex" alignItems="center" mb={2}>
-                  <Avatar
-                    sx={{
-                      bgcolor: `${report.color}.main`,
-                      mr: 2,
-                    }}
-                  >
-                    {report.icon}
-                  </Avatar>
-                  <Box>
-                    <Typography variant="h6" component="div">
-                      {report.title}
-                    </Typography>
-                    {report.status === 'coming-soon' && (
-                      <Chip
-                        label="준비중"
-                        size="small"
-                        color="default"
-                        variant="outlined"
-                        sx={{ mt: 0.5 }}
-                      />
-                    )}
-                  </Box>
-                </Box>
-                <Typography variant="body2" color="text.secondary">
-                  {report.description}
-                </Typography>
-              </CardContent>
+          <Card
+            key={index}
+            className={`cursor-pointer transition-all hover:shadow-lg ${
+              report.status === 'coming-soon' ? 'opacity-70' : 'hover:-translate-y-1'
+            }`}
+            onClick={() => handleReportClick(report)}
+          >
+            <CardContent className="p-6 flex flex-col h-full">
+              <div className="flex items-center mb-4">
+                <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center mr-3">
+                  {report.icon}
+                </div>
+                <div className="flex-grow">
+                  <h3 className="font-semibold text-lg">
+                    {report.title}
+                  </h3>
+                  {report.status === 'coming-soon' && (
+                    <Badge variant="outline" className="mt-1">
+                      준비중
+                    </Badge>
+                  )}
+                </div>
+              </div>
+              <p className="text-muted-foreground text-sm flex-grow">
+                {report.description}
+              </p>
               {report.status === 'available' && (
-                <CardActions>
-                  <Button size="small" color={report.color}>
+                <div className="mt-4">
+                  <Button size="sm">
                     보기
                   </Button>
-                </CardActions>
+                </div>
               )}
-            </Card>
-          </Box>
+            </CardContent>
+          </Card>
         ))}
-      </Box>
+      </div>
 
-      <Box mt={4} p={3} bgcolor="background.paper" borderRadius={2}>
-        <Typography variant="h6" gutterBottom>
+      <Card className="p-6">
+        <h2 className="text-xl font-semibold mb-4">
           💡 보고서 활용 Tip
-        </Typography>
-        <Typography variant="body2" color="text.secondary" paragraph>
-          • 학생 성취기록카드는 학부모 상담 시 유용하게 활용할 수 있습니다.
-        </Typography>
-        <Typography variant="body2" color="text.secondary" paragraph>
-          • 정기적인 보고서를 통해 학생들의 성장 추이를 파악하고 개선 방향을 설정하세요.
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          • 데이터 기반 의사결정으로 더 효과적인 교육 프로그램을 운영할 수 있습니다.
-        </Typography>
-      </Box>
-    </Box>
+        </h2>
+        <div className="space-y-2 text-muted-foreground">
+          <p>• 학생 성취기록카드는 학부모 상담 시 유용하게 활용할 수 있습니다.</p>
+          <p>• 정기적인 보고서를 통해 학생들의 성장 추이를 파악하고 개선 방향을 설정하세요.</p>
+          <p>• 데이터 기반 의사결정으로 더 효과적인 교육 프로그램을 운영할 수 있습니다.</p>
+        </div>
+      </Card>
+    </div>
   );
 }

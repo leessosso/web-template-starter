@@ -1,28 +1,17 @@
 import { useEffect, useState } from 'react';
 import {
-  Box,
-  Typography,
-  Button,
-  Card,
-  CardContent,
-  Avatar,
-  IconButton,
-  Chip,
-  TextField,
-  InputAdornment,
-  Alert,
-  Fab,
-  useMediaQuery,
-  useTheme,
-} from '@mui/material';
-import {
-  Add as AddIcon,
+  Plus as AddIcon,
   Edit as EditIcon,
-  Delete as DeleteIcon,
+  Trash2 as DeleteIcon,
   Search as SearchIcon,
-  Person as PersonIcon,
-} from '@mui/icons-material';
+  User as PersonIcon,
+} from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { Button } from '../../components/ui/button';
+import { Card, CardContent } from '../../components/ui/Card';
+import { Input } from '../../components/ui/Input';
+import { Alert, AlertDescription } from '../../components/ui/Alert';
+import { Badge } from '../../components/ui/Badge';
 import { useStudentStore } from '../../store/studentStore';
 import { useAuthStore } from '../../store/authStore';
 import { userService } from '../../services/userService';
@@ -32,16 +21,13 @@ import type { User } from '../../models/User';
 
 export default function StudentsPage() {
   const navigate = useNavigate();
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { user } = useAuthStore();
   const {
     students,
     isLoading,
     error,
     fetchStudents,
-    deleteStudent,
-    clearError
+    deleteStudent
   } = useStudentStore();
 
   const [searchTerm, setSearchTerm] = useState('');
@@ -103,229 +89,123 @@ export default function StudentsPage() {
   };
 
   return (
-    <Box>
+    <div className="space-y-6">
       {/* 모바일 우선 헤더 */}
-      <Box sx={{
-        mb: 3,
-        display: 'flex',
-        flexDirection: { xs: 'column', sm: 'row' },
-        justifyContent: 'space-between',
-        alignItems: { xs: 'stretch', sm: 'center' },
-        gap: { xs: 2, sm: 0 }
-      }}>
-        <Typography variant="h4" component="h1" sx={{ fontSize: { xs: '1.75rem', sm: '2.125rem' } }}>
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <h1 className="text-2xl sm:text-3xl font-bold">
           {isAdmin(user) ? '학생 관리' : '학생 조회'}
-        </Typography>
+        </h1>
         {isAdmin(user) && (
           <Button
-            variant="contained"
-            startIcon={<AddIcon />}
             onClick={() => navigate('/students/new')}
-            fullWidth={isMobile}
-            sx={{ alignSelf: { xs: 'stretch', sm: 'auto' } }}
+            className="w-full sm:w-auto"
           >
+            <AddIcon className="w-4 h-4 mr-2" />
             학생 추가
           </Button>
         )}
-      </Box>
+      </div>
 
       {/* 모바일 우선 검색 */}
-      <Box sx={{ mb: 3 }}>
-        <TextField
-          fullWidth
+      <div className="relative">
+        <SearchIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+        <Input
           placeholder={isAdmin(user) ? "학생 이름 또는 담당 선생님으로 검색" : "학생 이름으로 검색"}
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <SearchIcon />
-              </InputAdornment>
-            ),
-          }}
-          sx={{
-            '& .MuiInputBase-root': {
-              fontSize: { xs: '16px', sm: '14px' }, // iOS 줌 방지
-            }
-          }}
+          className="pl-10"
         />
-      </Box>
+      </div>
 
       {error && (
-        <Alert severity="error" sx={{ mb: 2 }} onClose={clearError}>
-          {error}
+        <Alert variant="destructive" className="mb-4">
+          <AlertDescription>
+            {error}
+          </AlertDescription>
         </Alert>
       )}
 
       {/* 모바일 우선 학생 목록 */}
       {isLoading ? (
-        <Box sx={{ textAlign: 'center', py: 4 }}>
-          <Typography>로딩 중...</Typography>
-        </Box>
+        <div className="text-center py-8">
+          <p>로딩 중...</p>
+        </div>
       ) : filteredStudents.length === 0 ? (
-        <Box sx={{ textAlign: 'center', py: 4 }}>
-          <Typography color="text.secondary">
+        <div className="text-center py-8">
+          <p className="text-muted-foreground">
             {searchTerm ? '검색 결과가 없습니다.' : '등록된 학생이 없습니다.'}
-          </Typography>
-        </Box>
-      ) : isMobile ? (
-        // 모바일: 카드 형태
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+          </p>
+        </div>
+      ) : (
+        // 카드 형태
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {filteredStudents.map((student) => (
-            <Card key={student.id} sx={{ '&:hover': { boxShadow: 2 } }}>
-              <CardContent sx={{ p: 2 }}>
-                <Box display="flex" alignItems="center" justifyContent="space-between">
-                  <Box display="flex" alignItems="center" flexGrow={1}>
-                    <Avatar sx={{ bgcolor: 'primary.main', mr: 2 }}>
-                      <PersonIcon />
-                    </Avatar>
-                    <Box>
-                      <Typography variant="h6" component="div">
+            <Card key={student.id} className="hover:shadow-lg transition-shadow">
+              <CardContent className="p-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center flex-grow">
+                    <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center mr-3">
+                      <PersonIcon className="w-5 h-5 text-primary-foreground" />
+                    </div>
+                    <div className="flex-grow">
+                      <h3 className="font-semibold text-lg">
                         {student.name}
-                      </Typography>
-                      <Box display="flex" gap={1} mt={0.5}>
-                        <Chip
-                          label={getGradeText(student.grade)}
-                          size="small"
-                          color="primary"
-                          variant="outlined"
-                        />
-                        <Chip
-                          label={getGenderText(student.gender)}
-                          size="small"
-                          color="secondary"
-                          variant="outlined"
-                        />
-                      </Box>
-                      <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
+                      </h3>
+                      <div className="flex gap-2 mt-1">
+                        <Badge variant="outline">
+                          {getGradeText(student.grade)}
+                        </Badge>
+                        <Badge variant="outline">
+                          {getGenderText(student.gender)}
+                        </Badge>
+                      </div>
+                      <p className="text-sm text-muted-foreground mt-1">
                         담당: {getTeacherName(student.assignedTeacherId) || '미배정'}
-                      </Typography>
-                    </Box>
-                  </Box>
+                      </p>
+                    </div>
+                  </div>
                   {isAdmin(user) && (
-                    <Box display="flex" gap={1}>
-                      <IconButton
-                        size="small"
+                    <div className="flex gap-2">
+                      <Button
+                        variant="ghost"
+                        size="icon"
                         onClick={() => navigate(`/students/${student.id}/edit`)}
-                        color="primary"
                       >
-                        <EditIcon />
-                      </IconButton>
-                      <IconButton
-                        size="small"
+                        <EditIcon className="w-4 h-4" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="icon"
                         onClick={() => handleDeleteStudent(student.id)}
-                        color="error"
+                        className="text-destructive hover:text-destructive"
                       >
-                        <DeleteIcon />
-                      </IconButton>
-                    </Box>
+                        <DeleteIcon className="w-4 h-4" />
+                      </Button>
+                    </div>
                   )}
-                </Box>
+                </div>
               </CardContent>
             </Card>
           ))}
-        </Box>
-      ) : (
-        // 데스크톱: 테이블 형태
-        <Box sx={{ overflowX: 'auto' }}>
-          <Box component="table" sx={{
-            width: '100%',
-            borderCollapse: 'collapse',
-            '& th, & td': {
-              border: '1px solid',
-              borderColor: 'divider',
-              px: 2,
-              py: 1.5,
-            },
-            '& th': {
-              bgcolor: 'background.paper',
-              fontWeight: 'bold',
-            },
-          }}>
-            <Box component="thead">
-              <Box component="tr">
-                <Box component="th">이름</Box>
-                <Box component="th">학년</Box>
-                <Box component="th">성별</Box>
-                <Box component="th">담당 선생님</Box>
-                <Box component="th">등록일</Box>
-                {isAdmin(user) && <Box component="th" sx={{ textAlign: 'center' }}>작업</Box>}
-              </Box>
-            </Box>
-            <Box component="tbody">
-              {filteredStudents.map((student) => (
-                <Box component="tr" key={student.id} sx={{
-                  '&:hover': { bgcolor: 'action.hover' },
-                  cursor: 'pointer'
-                }}>
-                  <Box component="td">
-                    <Typography variant="body1" fontWeight="medium">
-                      {student.name}
-                    </Typography>
-                  </Box>
-                  <Box component="td">
-                    <Chip
-                      label={getGradeText(student.grade)}
-                      size="small"
-                      color="primary"
-                      variant="outlined"
-                    />
-                  </Box>
-                  <Box component="td">{getGenderText(student.gender)}</Box>
-                  <Box component="td">{getTeacherName(student.assignedTeacherId)}</Box>
-                  <Box component="td">
-                    {student.createdAt?.toLocaleDateString('ko-KR')}
-                  </Box>
-                  {isAdmin(user) && (
-                    <Box component="td" sx={{ textAlign: 'center' }}>
-                      <IconButton
-                        size="small"
-                        onClick={() => navigate(`/students/${student.id}/edit`)}
-                        title="수정"
-                      >
-                        <EditIcon />
-                      </IconButton>
-                      <IconButton
-                        size="small"
-                        onClick={() => handleDeleteStudent(student.id)}
-                        color="error"
-                        title="삭제"
-                      >
-                        <DeleteIcon />
-                      </IconButton>
-                    </Box>
-                  )}
-                </Box>
-              ))}
-            </Box>
-          </Box>
-        </Box>
+        </div>
       )}
 
       {filteredStudents.length > 0 && (
-        <Box mt={2}>
-          <Typography variant="body2" color="text.secondary">
-            총 {filteredStudents.length}명의 학생
-          </Typography>
-        </Box>
+        <div className="mt-4 text-sm text-muted-foreground">
+          총 {filteredStudents.length}명의 학생
+        </div>
       )}
 
       {/* 모바일 FAB 버튼 */}
-      {isAdmin(user) && isMobile && (
-        <Fab
-          color="primary"
-          aria-label="학생 추가"
-          sx={{
-            position: 'fixed',
-            bottom: 16,
-            right: 16,
-            zIndex: 1000,
-          }}
+      {isAdmin(user) && (
+        <Button
+          className="fixed bottom-4 right-4 rounded-full w-14 h-14 shadow-lg md:hidden"
+          size="icon"
           onClick={() => navigate('/students/new')}
         >
-          <AddIcon />
-        </Fab>
+          <AddIcon className="w-6 h-6" />
+        </Button>
       )}
-    </Box>
+    </div>
   );
 }

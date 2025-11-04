@@ -18,10 +18,10 @@ export function FeatureCard({
   className = '',
 }: FeatureCardProps) {
   return (
-    <Card hover className={`text-center ${className}`}>
+    <Card className={`text-center hover:shadow-lg transition-shadow ${className}`}>
       {badge && (
         <div className="mb-4">
-          <Badge variant="primary">{badge}</Badge>
+          <Badge variant="default">{badge}</Badge>
         </div>
       )}
       {icon && (

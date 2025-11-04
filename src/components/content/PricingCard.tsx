@@ -1,5 +1,5 @@
 import { Card } from '../ui/Card';
-import { Button } from '../ui/Button';
+import { Button } from '../ui/button';
 import { Badge } from '../ui/Badge';
 
 interface PricingFeature {
@@ -36,7 +36,7 @@ export function PricingCard({
     >
       {popular && (
         <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-          <Badge variant="primary">인기</Badge>
+          <Badge variant="default">인기</Badge>
         </div>
       )}
 
@@ -81,7 +81,7 @@ export function PricingCard({
       </div>
 
       <Button
-        variant={popular ? 'primary' : 'outline'}
+        variant={popular ? 'default' : 'outline'}
         className="w-full"
         onClick={onButtonClick}
       >
