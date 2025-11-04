@@ -43,12 +43,20 @@ export const trackEvent = (params: PartialEventParams): void => {
 
     const { category, action, label, value, customParameters } = params;
 
-    window.gtag('event', action, {
+    const eventParams: Record<string, any> = {
         event_category: category,
-        event_label: label,
-        value: value,
         ...customParameters,
-    });
+    };
+
+    if (label !== undefined) {
+        eventParams.event_label = label;
+    }
+
+    if (value !== undefined) {
+        eventParams.value = value;
+    }
+
+    (window as any).gtag('event', action, eventParams);
 };
 
 // 사용자 정의 이벤트 추적 헬퍼 함수들

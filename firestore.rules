@@ -1,0 +1,42 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // 헬퍼 함수: 인증된 사용자인지 확인
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // 사용자 컬렉션
+    match /users/{userId} {
+      // 인증된 사용자는 모두 읽기/쓰기 가능 (권한 체크는 애플리케이션 레벨에서 처리)
+      allow read, write: if isAuthenticated();
+    }
+
+    // 교회 컬렉션
+    match /churches/{churchId} {
+      allow read, write: if isAuthenticated();
+    }
+
+    // 학생 컬렉션
+    match /students/{studentId} {
+      allow read, write: if isAuthenticated();
+    }
+
+    // 출결 컬렉션
+    match /attendance/{attendanceId} {
+      allow read, write: if isAuthenticated();
+    }
+
+    // 핸드북 진도 컬렉션
+    match /handbook-progress/{progressId} {
+      allow read, write: if isAuthenticated();
+    }
+
+    // SPARKS 핸드북 진도 컬렉션
+    match /sparksHandbookProgress/{progressId} {
+      // allow read, write: if isAuthenticated(); // 임시로 모든 권한 허용 (테스트용)
+      allow read, write: if true;
+    }
+  }
+}
