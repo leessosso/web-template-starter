@@ -1,0 +1,181 @@
+# Cursor AI Rules for Web Template Starter
+
+## 🎯 프로젝트 표준 준수
+
+이 프로젝트는 main 브랜치를 템플릿으로 하는 다중 브랜치 아키텍처입니다.
+
+## 🛠️ 기술 스택 규칙
+
+### UI 라이브러리
+- **필수**: shadcn/ui 컴포넌트만 사용
+- **금지**: Material-UI, Ant Design 등 다른 UI 라이브러리
+- **예외**: 특별한 사유로 승인된 경우에만
+
+### 스타일링
+- **필수**: Tailwind CSS 클래스 사용
+- **권장**: 컴포넌트별 CSS 변수 활용
+- **다크모드**: 자동 지원 필수
+
+### 상태 관리
+- **권장**: Zustand 사용
+- **대안**: Context API (간단한 경우)
+- **금지**: Redux, MobX 등
+
+### 폴더 구조
+```
+src/
+├── components/
+│   ├── ui/           # shadcn/ui 컴포넌트들 (수정 금지)
+│   ├── [project]/    # 프로젝트별 컴포넌트
+│   └── layout/       # 레이아웃 컴포넌트
+├── pages/
+│   └── [project]/    # 프로젝트별 페이지
+├── hooks/           # 커스텀 훅
+├── store/           # Zustand 스토어
+├── services/        # API 서비스
+├── utils/           # 유틸리티 함수
+└── constants/       # 상수
+```
+
+## 📝 코딩 컨벤션
+
+### 파일명
+- 컴포넌트: `PascalCase.tsx`
+- 유틸리티: `camelCase.ts`
+- 폴더: `kebab-case/`
+
+### 컴포넌트 작성
+- 함수형 컴포넌트 + TypeScript
+- 명시적 Props 인터페이스
+- 의미있는 변수/함수명
+
+### Import 순서
+```typescript
+// 1. React 및 외부 라이브러리
+import React from 'react';
+import { useState } from 'react';
+
+// 2. 내부 모듈
+import { Button } from '@/components/ui/button';
+import { useCustomHook } from '@/hooks/useCustomHook';
+
+// 3. 유틸리티 및 상수
+import { formatDate } from '@/utils/date';
+import { API_ENDPOINTS } from '@/constants/api';
+```
+
+## 🚀 개발 워크플로우
+
+### 새 브랜치 생성 시
+1. `BRANCH_NAMING.md`의 네이밍 규칙 준수
+2. `PROJECT_START_PROMPT.md`의 프롬프트 템플릿 사용
+3. `ARCHITECTURE.md`의 기술 스택 검증
+
+### 커밋 메시지
+```
+feat: 새로운 기능 추가
+fix: 버그 수정
+docs: 문서 업데이트
+refactor: 코드 리팩토링
+```
+
+### PR 생성 시
+- `CONTRIBUTING.md`의 PR 템플릿 사용
+- 최소 1명의 리뷰어 지정
+- CI/CD 통과 확인
+
+## ⚠️ 금지사항
+
+### 절대 금지
+- main 브랜치 직접 커밋
+- UI 라이브러리 변경
+- 코어 아키텍처 수정
+- 브랜치 강제 푸시
+
+### 제한적 허용
+- 새로운 패키지 추가 시 팀 승인 필요
+- 외부 API 연동 시 보안 검토 필수
+- 큰 구조 변경 시 아키텍처 리뷰 필요
+
+## 🔍 코드 품질 체크
+
+### 자동 검증
+- ESLint 규칙 준수
+- TypeScript 엄격 모드
+- Prettier 포맷팅
+
+### 수동 검증
+- 컴포넌트 스토리북 테스트
+- 크로스 브라우저 호환성
+- 접근성 검사
+
+## 📞 지원 및 문의
+
+규칙 위반이나 개선 제안은 다음을 통해:
+1. GitHub Issue 생성
+2. 팀 슬랙 채널
+3. 코드 리뷰 시 의견 제시
+
+---
+
+## 🌿 브랜치 네이밍 및 관리 규칙
+
+### 브랜치 포맷
+```
+[prefix]/[project-name]/[feature-description]
+```
+
+### 접두어 종류
+- `feat/` - 기능 개발
+- `fix/` - 버그 수정
+- `init/` - 프로젝트 초기화
+- `refactor/` - 코드 리팩토링
+
+### 예시
+```
+feat/ecommerce/payment-system
+init/portfolio/base-structure
+fix/dashboard/mobile-layout
+```
+
+### 브랜치 생성 시 체크리스트
+- [ ] 올바른 네이밍 컨벤션 적용
+- [ ] main 브랜치 최신 상태 확인
+- [ ] 기술 스택 표준 준수 확인
+
+## 🤝 기여 가이드라인
+
+### 새 프로젝트 시작하기
+```bash
+git checkout -b init/your-project/setup
+npm run setup:env
+npm install
+npm run dev
+```
+
+### PR 템플릿
+```markdown
+## 변경사항 요약
+- [ ] 새로운 기능
+- [ ] 버그 수정
+- [ ] 리팩토링
+
+## 확인사항
+- [ ] shadcn/ui 컴포넌트 사용
+- [ ] TypeScript 타입 안전성
+- [ ] 표준 폴더 구조 준수
+- [ ] 테스트 코드 작성
+```
+
+### 커밋 메시지 규칙
+```
+feat: 새로운 기능 추가
+fix: 버그 수정
+docs: 문서 업데이트
+refactor: 코드 리팩토링
+```
+
+---
+
+**적용 방법**: 이 파일을 프로젝트 루트에 두면 Cursor AI가 자동으로 규칙을 인식합니다.
+**마지막 업데이트**: 2025년 11월 4일
