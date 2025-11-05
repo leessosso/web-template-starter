@@ -6,16 +6,16 @@
 
 @layer base {
   :root {
-    /* Base color system */
-    --color-background: 15 23 42; /* slate-950 */
-    --color-foreground: 241 245 249; /* slate-100 */
-    --color-muted: 30 41 59; /* slate-800 */
-    --color-muted-foreground: 148 163 184; /* slate-400 */
-    --color-accent: 59 130 246; /* blue-500 */
+    /* Base color system - Light theme as default */
+    --color-background: 255 255 255;
+    --color-foreground: 15 23 42;
+    --color-muted: 241 245 249;
+    --color-muted-foreground: 51 65 85;
+    --color-accent: 59 130 246;
     --color-accent-foreground: 255 255 255;
-    --color-border: 71 85 105; /* slate-600 */
-    --color-card: 30 41 59; /* slate-800 */
-    --color-card-foreground: 241 245 249; /* slate-100 */
+    --color-border: 226 232 240;
+    --color-card: 255 255 255; /* 라이트 모드에서 카드/테이블 헤더 배경 */
+    --color-card-foreground: 15 23 42; /* 라이트 모드에서 카드/테이블 헤더 텍스트 */
 
     /* Brand colors - Blue theme as default */
     --color-primary: 59 130 246; /* blue-500 */
@@ -25,6 +25,20 @@
 
     /* Theme variants */
     --radius: 0.75rem;
+    color-scheme: light;
+  }
+
+  /* Dark mode explicit */
+  :root[data-theme="dark"] {
+    --color-background: 15 23 42; /* slate-950 */
+    --color-foreground: 241 245 249; /* slate-100 */
+    --color-muted: 30 41 59; /* slate-800 */
+    --color-muted-foreground: 148 163 184; /* slate-400 */
+    --color-accent: 59 130 246; /* blue-500 */
+    --color-accent-foreground: 255 255 255;
+    --color-border: 71 85 105; /* slate-600 */
+    --color-card: 30 41 59; /* slate-800 - 다크 모드에서 카드/테이블 헤더 배경 */
+    --color-card-foreground: 241 245 249; /* slate-100 - 다크 모드에서 카드/테이블 헤더 텍스트 */
     color-scheme: dark;
   }
 
@@ -37,8 +51,8 @@
     --color-accent: 59 130 246;
     --color-accent-foreground: 255 255 255;
     --color-border: 226 232 240;
-    --color-card: 255 255 255;
-    --color-card-foreground: 15 23 42;
+    --color-card: 255 255 255; /* 라이트 모드에서 카드/테이블 헤더 배경 */
+    --color-card-foreground: 15 23 42; /* 라이트 모드에서 카드/테이블 헤더 텍스트 */
     color-scheme: light;
   }
 

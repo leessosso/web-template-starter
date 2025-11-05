@@ -1,41 +1,42 @@
 import { useEffect, useState } from 'react';
-import {
-  Box,
-  Typography,
-  Button,
-  Chip,
-  TextField,
-  Alert,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Checkbox,
-  FormControlLabel,
-  Card,
-  CardContent,
-  Avatar,
-  useMediaQuery,
-  useTheme,
-  Fab,
-} from '@mui/material';
-import {
-  EventAvailable as EventAvailableIcon,
-  Person as PersonIcon,
-  CheckCircle as CheckCircleIcon,
-  RadioButtonUnchecked as RadioButtonUncheckedIcon,
-  Save as SaveIcon,
-} from '@mui/icons-material';
+import { Calendar, User as UserIcon, CheckCircle2, Circle, Save } from 'lucide-react';
 import { useAttendanceStore } from '../../store/attendanceStore';
 import { useStudentStore } from '../../store/studentStore';
 import { useAuthStore } from '../../store/authStore';
 import { userService } from '../../services/userService';
 import { AttendanceStatus } from '../../models/Attendance';
 import type { User } from '../../models/User';
+import { Button } from '../../components/ui';
+import { Input } from '../../components/ui';
+import { Card, CardContent } from '../../components/ui';
+import { Badge } from '../../components/ui';
+import { Alert, AlertDescription } from '../../components/ui';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from '../../components/ui';
+import { Checkbox } from '../../components/ui';
+import { Avatar, AvatarFallback } from '../../components/ui';
+import { DataTable } from '../../components/data-visualization/DataTable';
+import type { ColumnDef } from '@tanstack/react-table';
+
+type StudentWithAttendance = {
+  id: string;
+  name: string;
+  grade: number;
+  assignedTeacherId?: string;
+  tempAssignedTeacherId?: string;
+  tempAssignedUntil?: Date;
+  attendance?: AttendanceStatus;
+  teacherName: string;
+};
 
 export default function AttendancePage() {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const [isMobile, setIsMobile] = useState(false);
   const { user } = useAuthStore();
   const {
     attendances,
@@ -54,6 +55,16 @@ export default function AttendancePage() {
   const [attendanceDialogOpen, setAttendanceDialogOpen] = useState(false);
   const [selectedAttendances, setSelectedAttendances] = useState<Set<string>>(new Set());
   const [teachers, setTeachers] = useState<User[]>([]);
+
+  // 모바일 감지
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   // 선생님 목록 가져오기
   useEffect(() => {
@@ -153,7 +164,7 @@ export default function AttendancePage() {
   };
 
   // 학생의 현재 담당 선생님 ID를 가져오는 함수
-  const getCurrentTeacherId = (student: any) => {
+  const getCurrentTeacherId = (student: { tempAssignedTeacherId?: string; tempAssignedUntil?: Date | string; assignedTeacherId?: string }) => {
     // 임시 담당 선생님이 있고, 임시 담당 종료일이 아직 지나지 않은 경우
     if (student.tempAssignedTeacherId && student.tempAssignedUntil) {
       const now = new Date();
@@ -182,99 +193,126 @@ export default function AttendancePage() {
 
   const stats = getAttendanceStats();
 
+  // 테이블 데이터 준비
+  const tableData: StudentWithAttendance[] = (students || []).map(student => {
+    const attendance = attendances?.find(a =>
+      a.studentId === student.id &&
+      a.date.toISOString().split('T')[0] === selectedDate
+    );
+    return {
+      id: student.id,
+      name: student.name,
+      grade: student.grade,
+      assignedTeacherId: student.assignedTeacherId,
+      tempAssignedTeacherId: student.tempAssignedTeacherId,
+      tempAssignedUntil: student.tempAssignedUntil,
+      attendance: attendance?.status,
+      teacherName: getTeacherName(getCurrentTeacherId(student)),
+    };
+  });
+
+  const columns: ColumnDef<StudentWithAttendance>[] = [
+    {
+      accessorKey: 'name',
+      header: '학생 이름',
+      cell: ({ row }) => (
+        <div className="font-medium">{row.original.name}</div>
+      ),
+    },
+    {
+      accessorKey: 'grade',
+      header: '학년',
+      cell: ({ row }) => (
+        <Badge variant="outline">
+          {['Puggles', 'Cubbies', 'Sparks', 'T&T'][row.original.grade - 1]}
+        </Badge>
+      ),
+    },
+    {
+      accessorKey: 'teacherName',
+      header: '담당 선생님',
+    },
+    {
+      accessorKey: 'attendance',
+      header: '출결 상태',
+      cell: ({ row }) => {
+        const attendance = row.original.attendance;
+        if (!attendance) {
+          return <Badge variant="outline">미등록</Badge>;
+        }
+        return (
+          <Badge
+            variant={attendance === AttendanceStatus.PRESENT ? 'default' : 'destructive'}
+          >
+            {attendance === AttendanceStatus.PRESENT ? '출석' : '결석'}
+          </Badge>
+        );
+      },
+    },
+  ];
+
   return (
-    <Box>
+    <div className="space-y-6">
       {/* 모바일 우선 헤더 */}
-      <Box sx={{
-        mb: 3,
-        display: 'flex',
-        flexDirection: { xs: 'column', sm: 'row' },
-        justifyContent: 'space-between',
-        alignItems: { xs: 'stretch', sm: 'center' },
-        gap: { xs: 2, sm: 0 }
-      }}>
-        <Typography variant="h4" component="h1" sx={{ fontSize: { xs: '1.75rem', sm: '2.125rem' } }}>
-          출결 관리
-        </Typography>
+      <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-4">
+        <h1 className="text-2xl sm:text-3xl font-bold">출결 관리</h1>
         <Button
-          variant="contained"
-          startIcon={<EventAvailableIcon />}
           onClick={handleOpenAttendanceDialog}
-          fullWidth={isMobile}
+          className="w-full sm:w-auto"
         >
+          <Calendar className="mr-2 h-4 w-4" />
           출결 체크
         </Button>
-      </Box>
+      </div>
 
       {/* 모바일 우선 날짜 선택 및 통계 */}
-      <Box sx={{
-        mb: 3,
-        display: 'flex',
-        flexDirection: { xs: 'column', sm: 'row' },
-        gap: 2,
-        alignItems: { xs: 'stretch', sm: 'center' }
-      }}>
-        <TextField
+      <div className="flex flex-col sm:flex-row gap-4 items-stretch sm:items-center">
+        <Input
           type="date"
-          label="날짜 선택"
           value={selectedDate}
           onChange={(e) => setSelectedDate(e.target.value)}
-          InputLabelProps={{ shrink: true }}
-          fullWidth={isMobile}
-          sx={{
-            '& .MuiInputBase-root': {
-              fontSize: { xs: '16px', sm: '14px' }, // iOS 줌 방지
-            }
-          }}
+          className="w-full sm:w-auto"
         />
 
-        <Box sx={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          gap: 1,
-          justifyContent: { xs: 'center', sm: 'flex-start' }
-        }}>
-          <Chip
-            label={`출석: ${stats.present}`}
-            color="success"
-            variant="outlined"
-            size={isMobile ? "small" : "medium"}
-          />
-          <Chip
-            label={`결석: ${stats.absent}`}
-            color="error"
-            variant="outlined"
-            size={isMobile ? "small" : "medium"}
-          />
-          <Chip
-            label={`총원: ${stats.total}`}
-            color="default"
-            variant="outlined"
-            size={isMobile ? "small" : "medium"}
-          />
-        </Box>
-      </Box>
+        <div className="flex flex-wrap gap-2 justify-center sm:justify-start">
+          <Badge variant="outline" className="bg-green-500/10 text-green-500 border-green-500">
+            출석: {stats.present}
+          </Badge>
+          <Badge variant="outline" className="bg-red-500/10 text-red-500 border-red-500">
+            결석: {stats.absent}
+          </Badge>
+          <Badge variant="outline">
+            총원: {stats.total}
+          </Badge>
+        </div>
+      </div>
 
       {error && (
-        <Alert severity="error" sx={{ mb: 2 }} onClose={clearError}>
-          {error}
+        <Alert variant="destructive">
+          <AlertDescription className="flex items-center justify-between">
+            <span>{error}</span>
+            <button
+              onClick={clearError}
+              className="ml-4 text-sm underline"
+            >
+              닫기
+            </button>
+          </AlertDescription>
         </Alert>
       )}
 
       {/* 모바일 우선 학생 출결 목록 */}
       {isLoading ? (
-        <Box sx={{ textAlign: 'center', py: 4 }}>
-          <Typography>로딩 중...</Typography>
-        </Box>
+        <div className="text-center py-8">
+          <p>로딩 중...</p>
+        </div>
       ) : students && students.length === 0 ? (
-        <Box sx={{ textAlign: 'center', py: 4 }}>
-          <Typography color="text.secondary">
-            등록된 학생이 없습니다.
-          </Typography>
-        </Box>
+        <div className="text-center py-8">
+          <p className="text-muted-foreground">등록된 학생이 없습니다.</p>
+        </div>
       ) : isMobile ? (
         // 모바일: 카드 형태
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+        <div className="flex flex-col gap-4">
           {students?.map((student) => {
             const attendance = attendances?.find(a =>
               a.studentId === student.id &&
@@ -282,223 +320,158 @@ export default function AttendancePage() {
             );
 
             return (
-              <Card key={student.id} sx={{ '&:hover': { boxShadow: 2 } }}>
-                <CardContent sx={{ p: 2 }}>
-                  <Box display="flex" alignItems="center" justifyContent="space-between">
-                    <Box display="flex" alignItems="center" flexGrow={1}>
-                      <Avatar sx={{ bgcolor: 'primary.main', mr: 2 }}>
-                        <PersonIcon />
+              <Card key={student.id} className="hover:shadow-md transition-shadow">
+                <CardContent className="p-4">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-4 flex-1">
+                      <Avatar className="h-10 w-10 bg-primary">
+                        <AvatarFallback className="bg-primary text-primary-foreground">
+                          <UserIcon className="h-5 w-5" />
+                        </AvatarFallback>
                       </Avatar>
-                      <Box>
-                        <Typography variant="h6" component="div">
-                          {student.name}
-                        </Typography>
-                        <Box display="flex" gap={1} mt={0.5}>
-                          <Chip
-                            label={['Puggles', 'Cubbies', 'Sparks', 'T&T'][student.grade - 1]}
-                            size="small"
-                            color="primary"
-                            variant="outlined"
-                          />
-                          <Typography variant="body2" color="text.secondary">
+                      <div>
+                        <div className="font-semibold">{student.name}</div>
+                        <div className="flex items-center gap-2 mt-1">
+                          <Badge variant="outline" className="text-xs">
+                            {['Puggles', 'Cubbies', 'Sparks', 'T&T'][student.grade - 1]}
+                          </Badge>
+                          <span className="text-xs text-muted-foreground">
                             담당: {getTeacherName(getCurrentTeacherId(student))}
-                          </Typography>
-                        </Box>
-                      </Box>
-                    </Box>
-                    <Box sx={{ ml: 2 }}>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="ml-4">
                       {attendance ? (
-                        <Box display="flex" alignItems="center" gap={1}>
+                        <div className="flex items-center gap-2">
                           {attendance.status === AttendanceStatus.PRESENT ? (
-                            <CheckCircleIcon color="success" />
+                            <CheckCircle2 className="h-5 w-5 text-green-500" />
                           ) : (
-                            <RadioButtonUncheckedIcon color="error" />
+                            <Circle className="h-5 w-5 text-red-500" />
                           )}
-                          <Typography variant="body2" color={
-                            attendance.status === AttendanceStatus.PRESENT ? 'success.main' : 'error.main'
-                          }>
+                          <span className={`text-sm ${
+                            attendance.status === AttendanceStatus.PRESENT
+                              ? 'text-green-500'
+                              : 'text-red-500'
+                          }`}>
                             {attendance.status === AttendanceStatus.PRESENT ? '출석' : '결석'}
-                          </Typography>
-                        </Box>
+                          </span>
+                        </div>
                       ) : (
-                        <Chip label="미등록" color="default" size="small" variant="outlined" />
+                        <Badge variant="outline">미등록</Badge>
                       )}
-                    </Box>
-                  </Box>
+                    </div>
+                  </div>
                 </CardContent>
               </Card>
             );
           })}
-        </Box>
+        </div>
       ) : (
         // 데스크톱: 테이블 형태
-        <Box sx={{ overflowX: 'auto' }}>
-          <Box component="table" sx={{
-            width: '100%',
-            borderCollapse: 'collapse',
-            '& th, & td': {
-              border: '1px solid',
-              borderColor: 'divider',
-              px: 2,
-              py: 1.5,
-            },
-            '& th': {
-              bgcolor: 'background.paper',
-              fontWeight: 'bold',
-            },
-          }}>
-            <Box component="thead">
-              <Box component="tr">
-                <Box component="th">학생 이름</Box>
-                <Box component="th">학년</Box>
-                <Box component="th">담당 선생님</Box>
-                <Box component="th">출결 상태</Box>
-              </Box>
-            </Box>
-            <Box component="tbody">
-              {students?.map((student) => {
-                const attendance = attendances?.find(a =>
-                  a.studentId === student.id &&
-                  a.date.toISOString().split('T')[0] === selectedDate
-                );
-
-                return (
-                  <Box component="tr" key={student.id} sx={{
-                    '&:hover': { bgcolor: 'action.hover' },
-                  }}>
-                    <Box component="td">
-                      <Typography variant="body1" fontWeight="medium">
-                        {student.name}
-                      </Typography>
-                    </Box>
-                    <Box component="td">
-                      {['Puggles', 'Cubbies', 'Sparks', 'T&T'][student.grade - 1]}
-                    </Box>
-                    <Box component="td">{getTeacherName(getCurrentTeacherId(student))}</Box>
-                    <Box component="td">
-                      {attendance ? (
-                        <Chip
-                          label={attendance.status === AttendanceStatus.PRESENT ? '출석' : '결석'}
-                          color={attendance.status === AttendanceStatus.PRESENT ? 'success' : 'error'}
-                          size="small"
-                        />
-                      ) : (
-                        <Chip label="미등록" color="default" size="small" variant="outlined" />
-                      )}
-                    </Box>
-                  </Box>
-                );
-              })}
-            </Box>
-          </Box>
-        </Box>
+        <DataTable
+          data={tableData}
+          columns={columns}
+          searchable={false}
+        />
       )}
 
       {/* 모바일 출결 체크 FAB */}
       {isMobile && (
-        <Fab
-          color="primary"
-          aria-label="출결 체크"
-          sx={{
-            position: 'fixed',
-            bottom: 16,
-            right: 16,
-            zIndex: 1000,
-          }}
+        <Button
+          className="fixed bottom-4 right-4 h-14 w-14 rounded-full shadow-lg z-50"
           onClick={handleOpenAttendanceDialog}
         >
-          <EventAvailableIcon />
-        </Fab>
+          <Calendar className="h-6 w-6" />
+        </Button>
       )}
 
       {/* 출결 체크 다이얼로그 */}
-      <Dialog
-        open={attendanceDialogOpen}
-        onClose={() => setAttendanceDialogOpen(false)}
-        maxWidth="md"
-        fullWidth
-        fullScreen={isMobile}
-      >
-        <DialogTitle>
-          {selectedDate} 출결 체크
-        </DialogTitle>
-        <DialogContent sx={{ pb: { xs: 2, sm: 3 } }}>
-          <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-            출석한 학생을 선택해주세요.
-          </Typography>
+      <Dialog open={attendanceDialogOpen} onOpenChange={setAttendanceDialogOpen}>
+        <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>{selectedDate} 출결 체크</DialogTitle>
+            <DialogDescription>
+              출석한 학생을 선택해주세요.
+            </DialogDescription>
+          </DialogHeader>
 
           {isMobile ? (
             // 모바일: 카드 형태로 학생 선택
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+            <div className="flex flex-col gap-2">
               {students?.map((student) => (
                 <Card
                   key={student.id}
-                  sx={{
-                    cursor: 'pointer',
-                    border: selectedAttendances.has(student.id) ? 2 : 1,
-                    borderColor: selectedAttendances.has(student.id) ? 'primary.main' : 'divider',
-                    bgcolor: selectedAttendances.has(student.id) ? 'primary.light' : 'background.paper',
-                  }}
+                  className={`cursor-pointer transition-colors ${
+                    selectedAttendances.has(student.id)
+                      ? 'border-primary bg-primary/10'
+                      : ''
+                  }`}
                   onClick={() => handleStudentToggle(student.id)}
                 >
-                  <CardContent sx={{ p: 2, '&:last-child': { pb: 2 } }}>
-                    <Box display="flex" alignItems="center" justifyContent="space-between">
-                      <Box display="flex" alignItems="center">
-                        <Avatar sx={{ bgcolor: 'primary.main', mr: 2 }}>
-                          <PersonIcon />
+                  <CardContent className="p-4">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <Avatar className="h-10 w-10 bg-primary">
+                          <AvatarFallback className="bg-primary text-primary-foreground">
+                            <UserIcon className="h-5 w-5" />
+                          </AvatarFallback>
                         </Avatar>
-                        <Box>
-                          <Typography variant="h6">{student.name}</Typography>
-                          <Typography variant="body2" color="text.secondary">
+                        <div>
+                          <div className="font-semibold">{student.name}</div>
+                          <div className="text-sm text-muted-foreground">
                             {['Puggles', 'Cubbies', 'Sparks', 'T&T'][student.grade - 1]}
-                          </Typography>
-                        </Box>
-                      </Box>
+                          </div>
+                        </div>
+                      </div>
                       <Checkbox
                         checked={selectedAttendances.has(student.id)}
-                        onChange={() => handleStudentToggle(student.id)}
-                        sx={{ mr: -1 }}
+                        onCheckedChange={() => handleStudentToggle(student.id)}
                       />
-                    </Box>
+                    </div>
                   </CardContent>
                 </Card>
               ))}
-            </Box>
+            </div>
           ) : (
             // 데스크톱: 그리드 형태
-            <Box display="grid" gridTemplateColumns="repeat(auto-fill, minmax(250px, 1fr))" gap={1}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
               {students?.map((student) => (
-                <FormControlLabel
+                <div
                   key={student.id}
-                  control={
-                    <Checkbox
-                      checked={selectedAttendances.has(student.id)}
-                      onChange={() => handleStudentToggle(student.id)}
-                    />
-                  }
-                  label={`${student.name} (${['Puggles', 'Cubbies', 'Sparks', 'T&T'][student.grade - 1]})`}
-                />
+                  className="flex items-center space-x-2 p-3 rounded-lg border hover:bg-accent cursor-pointer"
+                  onClick={() => handleStudentToggle(student.id)}
+                >
+                  <Checkbox
+                    checked={selectedAttendances.has(student.id)}
+                    onCheckedChange={() => handleStudentToggle(student.id)}
+                  />
+                  <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer">
+                    {student.name} ({['Puggles', 'Cubbies', 'Sparks', 'T&T'][student.grade - 1]})
+                  </label>
+                </div>
               ))}
-            </Box>
+            </div>
           )}
+
+          <DialogFooter className="flex-col sm:flex-row gap-2">
+            <Button
+              variant="outline"
+              onClick={() => setAttendanceDialogOpen(false)}
+              className="w-full sm:w-auto"
+            >
+              취소
+            </Button>
+            <Button
+              onClick={handleSaveAttendance}
+              className="w-full sm:w-auto"
+            >
+              <Save className="mr-2 h-4 w-4" />
+              저장
+            </Button>
+          </DialogFooter>
         </DialogContent>
-        <DialogActions sx={{ p: { xs: 2, sm: 3 }, gap: 1 }}>
-          <Button
-            onClick={() => setAttendanceDialogOpen(false)}
-            fullWidth={isMobile}
-          >
-            취소
-          </Button>
-          <Button
-            onClick={handleSaveAttendance}
-            variant="contained"
-            fullWidth={isMobile}
-            startIcon={<SaveIcon />}
-          >
-            저장
-          </Button>
-        </DialogActions>
       </Dialog>
-    </Box>
+    </div>
   );
 }

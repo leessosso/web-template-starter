@@ -15,6 +15,7 @@ import StudentHandbookDetailPage from '../pages/handbook/StudentHandbookDetailPa
 import ReportsPage from '../pages/reports/ReportsPage'
 import StudentProgressReportPage from '../pages/reports/StudentProgressReportPage'
 import ChurchStatisticsPage from '../pages/reports/ChurchStatisticsPage'
+import SettingsPage from '../pages/SettingsPage'
 
 export const router = createBrowserRouter([
   {
@@ -80,6 +81,10 @@ export const router = createBrowserRouter([
       {
         path: 'reports/church-statistics',
         element: <ChurchStatisticsPage />,
+      },
+      {
+        path: 'settings',
+        element: <SettingsPage />,
       },
     ],
   },

@@ -29,15 +29,17 @@ export const ThemeSelector: React.FC = () => {
                     <span className="text-muted-foreground">{themeOptions.find(t => t.value === 'light')?.icon}</span>
                     <button
                         onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
-                        className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 ${theme === 'light'
-                            ? 'bg-primary'
-                            : 'bg-muted-foreground'
-                            }`}
+                        className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 ${
+                            theme === 'dark'
+                                ? 'bg-primary'
+                                : 'bg-muted'
+                        }`}
                         aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
                     >
                         <span
-                            className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-200 ${theme === 'light' ? 'translate-x-1' : 'translate-x-6'
-                                }`}
+                            className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-200 ${
+                                theme === 'dark' ? 'translate-x-6' : 'translate-x-1'
+                            }`}
                         />
                     </button>
                     <span className="text-muted-foreground">{themeOptions.find(t => t.value === 'dark')?.icon}</span>

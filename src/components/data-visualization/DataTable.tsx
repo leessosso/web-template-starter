@@ -6,7 +6,6 @@ import {
   getPaginationRowModel,
   getFilteredRowModel,
   flexRender,
-  createColumnHelper,
   type SortingState,
   type ColumnFiltersState,
   type ColumnDef,
@@ -83,13 +82,13 @@ export function DataTable<T extends TableData>({
       {/* Table */}
       <div className="overflow-x-auto border border-border rounded-lg">
         <table className="min-w-full divide-y divide-border">
-          <thead className="bg-muted">
+          <thead className="bg-card">
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
                   <th
                     key={header.id}
-                    className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider cursor-pointer hover:bg-background"
+                    className="px-6 py-3 text-left text-xs font-semibold text-card-foreground uppercase tracking-wider cursor-pointer hover:bg-muted transition-colors"
                     onClick={header.column.getToggleSortingHandler()}
                   >
                     <div className="flex items-center gap-2">
@@ -112,13 +111,13 @@ export function DataTable<T extends TableData>({
               </tr>
             ))}
           </thead>
-          <tbody className="bg-card divide-y divide-border">
+          <tbody className="bg-background divide-y divide-border">
             {table.getRowModel().rows.map((row) => (
               <tr key={row.id} className="hover:bg-muted">
                 {row.getVisibleCells().map((cell) => (
                   <td
                     key={cell.id}
-                    className="px-6 py-4 whitespace-nowrap text-sm text-card-foreground"
+                    className="px-6 py-4 whitespace-nowrap text-sm text-foreground"
                   >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
@@ -131,7 +130,7 @@ export function DataTable<T extends TableData>({
 
       {/* Pagination */}
       {paginated && (
-        <div className="flex items-center justify-between mt-4 px-4 py-3 bg-card border-t border-border">
+        <div className="flex items-center justify-between mt-4 px-4 py-3 bg-background border-t border-border">
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <span>
               {table.getState().pagination.pageIndex + 1} / {table.getPageCount()} 페이지
@@ -142,14 +141,14 @@ export function DataTable<T extends TableData>({
           </div>
           <div className="flex items-center gap-2">
             <button
-              className="px-3 py-1 text-sm border border-border rounded-md hover:bg-muted disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-3 py-1 text-sm border border-border rounded-md hover:bg-muted disabled:opacity-50 disabled:cursor-not-allowed text-foreground"
               onClick={() => table.previousPage()}
               disabled={!table.getCanPreviousPage()}
             >
               이전
             </button>
             <button
-              className="px-3 py-1 text-sm border border-border rounded-md hover:bg-muted disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-3 py-1 text-sm border border-border rounded-md hover:bg-muted disabled:opacity-50 disabled:cursor-not-allowed text-foreground"
               onClick={() => table.nextPage()}
               disabled={!table.getCanNextPage()}
             >
@@ -162,7 +161,3 @@ export function DataTable<T extends TableData>({
   );
 }
 
-// 타입 정의 헬퍼 함수
-export function createTableColumnHelper<T extends TableData>() {
-  return createColumnHelper<T>();
-}

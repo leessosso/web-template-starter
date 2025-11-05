@@ -1,9 +1,10 @@
-export { Button } from './button';
-export { Card } from './Card';
+export { Button } from './Button';
+export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent } from './Card';
 export { Input } from './Input';
 export { Badge } from './Badge';
-export { Alert } from './Alert';
+export { Alert, AlertTitle, AlertDescription } from './Alert';
 export { ThemeSelector } from './ThemeSelector';
+export { Avatar, AvatarImage, AvatarFallback } from './avatar';
 
 // Shadcn/ui 컴포넌트들
 export {
