@@ -20,9 +20,9 @@ function App() {
 
   return (
     <ThemeProvider>
-      <div className="min-h-screen">
+      <div className="flex min-h-screen flex-col">
         {isAuthenticated && !isPublicRoute && <Navigation />}
-        <main className="mx-auto w-full max-w-content px-4 py-4">
+        <main className="mx-auto w-full max-w-content flex-1 px-4 pb-4">
           {isPublicRoute ? (
             <Outlet />
           ) : (

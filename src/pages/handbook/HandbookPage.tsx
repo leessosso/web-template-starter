@@ -130,7 +130,12 @@ export default function HandbookPage() {
 
     try {
       const nextSection = await fetchNextSectionToComplete(student.id, user.churchId);
-      
+
+      if (!nextSection) {
+        console.log('완료할 다음 섹션이 없습니다.');
+        return;
+      }
+
       // 바로 완료 처리
       await createJewelSectionProgress({
         studentId: student.id,
@@ -303,14 +308,14 @@ export default function HandbookPage() {
   ];
 
   return (
-    <div className="px-4 sm:px-8 py-4 sm:py-6">
-      <div className="mb-6">
+    <div className="space-y-6">
+      <div>
         <h1 className="text-2xl sm:text-3xl font-bold mb-2">
           SPARKS 핸드북 진도
         </h1>
       </div>
 
-      <div className="mb-6">
+      <div>
         <div className="relative">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
           <Input
@@ -323,7 +328,7 @@ export default function HandbookPage() {
       </div>
 
       {error && (
-        <Alert variant="destructive" className="mb-4">
+        <Alert variant="destructive">
           <AlertDescription>{error}</AlertDescription>
         </Alert>
       )}
@@ -341,7 +346,7 @@ export default function HandbookPage() {
             </p>
           </div>
         ) : (
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-3 max-h-[calc(100vh-280px)] overflow-y-auto pr-1">
             {filteredStudents.map((student) => {
               const summary = studentSummaries.get(student.id);
               return (
@@ -450,19 +455,17 @@ export default function HandbookPage() {
               <div
                 key={student.id}
                 onClick={() => handleStudentToggle(student.id)}
-                className={`flex items-center justify-between p-3 rounded-lg border cursor-pointer ${
-                  selectedAttendances.has(student.id)
-                    ? 'bg-blue-500 text-white border-blue-500'
-                    : 'bg-white border-gray-300'
-                }`}
+                className={`flex items-center justify-between p-3 rounded-lg border cursor-pointer ${selectedAttendances.has(student.id)
+                  ? 'bg-blue-500 text-white border-blue-500'
+                  : 'bg-white border-gray-300'
+                  }`}
               >
                 <span className="font-medium">
                   {student.name}
                 </span>
                 <CheckCircle
-                  className={`h-5 w-5 ${
-                    selectedAttendances.has(student.id) ? 'text-white' : 'text-gray-400'
-                  }`}
+                  className={`h-5 w-5 ${selectedAttendances.has(student.id) ? 'text-white' : 'text-gray-400'
+                    }`}
                 />
               </div>
             ))}

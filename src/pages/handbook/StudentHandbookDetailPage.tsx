@@ -219,7 +219,7 @@ export default function StudentHandbookDetailPage() {
   }
 
   return (
-    <div className="px-4 sm:px-8 py-4 sm:py-6">
+    <div className="space-y-6">
       {/* 헤더 */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-6">
         <Button
