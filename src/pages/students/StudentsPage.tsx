@@ -1,16 +1,11 @@
 import { useEffect, useState } from 'react';
 import {
   Plus as AddIcon,
-  Edit as EditIcon,
-  Trash2 as DeleteIcon,
   Search as SearchIcon,
-  User as PersonIcon,
   Users as UsersIcon,
   Clock as ClockIcon,
 } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
 import { Button } from '../../components/ui/Button';
-import { Card, CardContent } from '../../components/ui/Card';
 import { Input } from '../../components/ui/Input';
 import { Alert, AlertDescription } from '../../components/ui/Alert';
 import { Badge } from '../../components/ui/Badge';
@@ -18,8 +13,10 @@ import { useStudentStore } from '../../store/studentStore';
 import { useAuthStore } from '../../store/authStore';
 import { userService } from '../../services/userService';
 import { isAdmin } from '../../utils/permissions';
-import type { Student } from '../../models/Student';
+import type { Student, StudentFormData } from '../../models/Student';
 import type { User } from '../../models/User';
+import { StudentFormDialog } from '../../components/forms';
+import { StudentCard } from '../../components/students';
 import {
   Dialog,
   DialogContent,
@@ -37,14 +34,14 @@ import {
 import { Checkbox } from '../../components/ui/checkbox';
 
 export default function StudentsPage() {
-  const navigate = useNavigate();
   const { user } = useAuthStore();
   const {
     students,
     isLoading,
     error,
     fetchStudents,
-    deleteStudent
+    deleteStudent,
+    createStudent
   } = useStudentStore();
 
   const [searchTerm, setSearchTerm] = useState('');
@@ -53,12 +50,15 @@ export default function StudentsPage() {
   const [selectedStudents, setSelectedStudents] = useState<Set<string>>(new Set());
   const [tempAssignmentDialogOpen, setTempAssignmentDialogOpen] = useState(false);
   const [studentTransferDialogOpen, setStudentTransferDialogOpen] = useState(false);
+  const [studentDialogOpen, setStudentDialogOpen] = useState(false);
   const [tempTeacherId, setTempTeacherId] = useState('');
   const [tempEndDate, setTempEndDate] = useState('');
   const [fromTeacherId, setFromTeacherId] = useState('');
   const [toTeacherId, setToTeacherId] = useState('');
   const [transferStudents, setTransferStudents] = useState<Set<string>>(new Set());
   const [transferEndDate, setTransferEndDate] = useState('');
+  const [editStudent, setEditStudent] = useState<Student | null>(null);
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
 
   // 선생님 목록 가져오기
   useEffect(() => {
@@ -116,6 +116,27 @@ export default function StudentsPage() {
   const handleDeleteStudent = async (studentId: string) => {
     if (window.confirm('정말로 이 학생을 삭제하시겠습니까?')) {
       await deleteStudent(studentId);
+    }
+  };
+
+  const handleEditStudent = (student: Student) => {
+    setEditStudent(student);
+    setEditDialogOpen(true);
+  };
+
+  const handleUpdateStudent = async (formData: StudentFormData) => {
+    if (!editStudent) return;
+
+    try {
+      await useStudentStore.getState().updateStudent(editStudent.id, formData);
+      setEditDialogOpen(false);
+      setEditStudent(null);
+      alert('학생 정보가 수정되었습니다.');
+      fetchStudents(); // 목록 새로고침
+    } catch (error) {
+      console.error('학생 수정 실패:', error);
+      alert('학생 수정에 실패했습니다.');
+      throw error;
     }
   };
 
@@ -248,10 +269,6 @@ export default function StudentsPage() {
     return grades[grade - 1] || '알 수 없음';
   };
 
-  const getGenderText = (gender: 'male' | 'female') => {
-    return gender === 'male' ? '남자' : '여자';
-  };
-
   return (
     <div className="space-y-6">
       {/* 모바일 우선 헤더 */}
@@ -266,7 +283,7 @@ export default function StudentsPage() {
             </p>
           )}
         </div>
-        <div className="flex gap-2 flex-wrap">
+        <div className="flex gap-2 flex-wrap sm:flex-nowrap w-full sm:w-auto">
           {isAdmin(user) && selectedStudents.size > 0 && (
             <>
               <Button
@@ -292,14 +309,14 @@ export default function StudentsPage() {
               <Button
                 onClick={() => setStudentTransferDialogOpen(true)}
                 variant="default"
-                className="w-full sm:w-auto"
+                className="flex-1 sm:w-auto"
               >
                 <UsersIcon className="w-4 h-4 mr-2" />
                 학생 이동
               </Button>
               <Button
-                onClick={() => navigate('/students/new')}
-                className="w-full sm:w-auto"
+                onClick={() => setStudentDialogOpen(true)}
+                className="flex-1 sm:w-auto"
               >
                 <AddIcon className="w-4 h-4 mr-2" />
                 학생 추가
@@ -357,90 +374,17 @@ export default function StudentsPage() {
         // 카드 형태
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {filteredStudents.map((student) => (
-            <Card key={student.id} className={`hover:shadow-lg transition-shadow ${selectedStudents.has(student.id) ? 'ring-2 ring-primary' : ''}`}>
-              <CardContent className="p-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center flex-grow">
-                    {isAdmin(user) && (
-                      <Checkbox
-                        checked={selectedStudents.has(student.id)}
-                        onCheckedChange={() => handleStudentSelect(student.id)}
-                        className="mr-3"
-                      />
-                    )}
-                    <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center mr-3">
-                      <PersonIcon className="w-5 h-5 text-primary-foreground" />
-                    </div>
-                    <div className="flex-grow">
-                      <h3 className="font-semibold text-lg">
-                        {student.name}
-                      </h3>
-                      <div className="flex gap-2 mt-1">
-                        <Badge variant="outline">
-                          {getGradeText(student.grade)}
-                        </Badge>
-                        <Badge variant="outline">
-                          {getGenderText(student.gender)}
-                        </Badge>
-                      </div>
-                      <div className="mt-1">
-                        <p className="text-sm text-muted-foreground">
-                          담당: {getTeacherName(student.assignedTeacherId) || '미배정'}
-                        </p>
-                        {student.tempAssignedTeacherId && student.tempAssignedUntil && (
-                          <div className="flex items-center justify-between">
-                            <p className="text-sm text-orange-600">
-                              임시: {getTeacherName(student.tempAssignedTeacherId)}
-                              ({student.tempAssignedUntil.toLocaleDateString()}까지)
-                            </p>
-                            {isAdmin(user) && (
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                onClick={async () => {
-                                  try {
-                                    await useStudentStore.getState().updateStudent(student.id, {
-                                      tempAssignedTeacherId: undefined,
-                                      tempAssignedUntil: undefined,
-                                    });
-                                    alert('임시 담당이 취소되었습니다.');
-                                  } catch (error) {
-                                    console.error('임시 담당 취소 실패:', error);
-                                    alert('임시 담당 취소에 실패했습니다.');
-                                  }
-                                }}
-                                className="text-xs h-6 px-2 text-orange-600 hover:text-orange-700"
-                              >
-                                취소
-                              </Button>
-                            )}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                  {isAdmin(user) && (
-                    <div className="flex gap-2">
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        onClick={() => navigate(`/students/${student.id}/edit`)}
-                      >
-                        <EditIcon className="w-4 h-4" />
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        onClick={() => handleDeleteStudent(student.id)}
-                        className="text-destructive hover:text-destructive"
-                      >
-                        <DeleteIcon className="w-4 h-4" />
-                      </Button>
-                    </div>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
+            <StudentCard
+              key={student.id}
+              student={student}
+              teachers={teachers}
+              isAdmin={isAdmin(user)}
+              isSelected={selectedStudents.has(student.id)}
+              onSelect={handleStudentSelect}
+              onDelete={handleDeleteStudent}
+              onEdit={handleEditStudent}
+              onUpdate={fetchStudents}
+            />
           ))}
         </div>
       )}
@@ -456,7 +400,7 @@ export default function StudentsPage() {
         <Button
           className="fixed bottom-4 right-4 rounded-full w-14 h-14 shadow-lg md:hidden"
           size="icon"
-          onClick={() => navigate('/students/new')}
+          onClick={() => setStudentDialogOpen(true)}
         >
           <AddIcon className="w-6 h-6" />
         </Button>
@@ -680,6 +624,25 @@ export default function StudentsPage() {
           </div>
         </DialogContent>
       </Dialog>
+
+      {/* 학생 추가 다이얼로그 */}
+      <StudentFormDialog
+        open={studentDialogOpen}
+        onOpenChange={setStudentDialogOpen}
+        onSubmit={async (formData) => {
+          await createStudent(formData);
+        }}
+        isLoading={isLoading}
+      />
+
+      {/* 학생 수정 다이얼로그 */}
+      <StudentFormDialog
+        open={editDialogOpen}
+        onOpenChange={setEditDialogOpen}
+        onSubmit={handleUpdateStudent}
+        isLoading={isLoading}
+        student={editStudent || undefined}
+      />
     </div>
   );
 }

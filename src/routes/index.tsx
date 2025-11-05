@@ -16,6 +16,7 @@ import ReportsPage from '../pages/reports/ReportsPage'
 import StudentProgressReportPage from '../pages/reports/StudentProgressReportPage'
 import ChurchStatisticsPage from '../pages/reports/ChurchStatisticsPage'
 import SettingsPage from '../pages/SettingsPage'
+import NotFoundPage from '../pages/NotFoundPage'
 
 export const router = createBrowserRouter([
   {
@@ -89,6 +90,10 @@ export const router = createBrowserRouter([
       {
         path: 'settings',
         element: <SettingsPage />,
+      },
+      {
+        path: '*',
+        element: <NotFoundPage />,
       },
     ],
   },

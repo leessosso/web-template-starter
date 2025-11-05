@@ -9,6 +9,7 @@ import {
   query,
   where,
   Timestamp,
+  deleteField,
 } from 'firebase/firestore';
 import { db, isFirebaseConfigured } from '../config/firebase';
 import type { Student, StudentFormData } from '../models/Student';
@@ -139,25 +140,25 @@ export class StudentService {
         updateData.photoURL = studentData.photoURL;
       }
       if (studentData.assignedTeacherId !== undefined) {
-        updateData.assignedTeacherId = studentData.assignedTeacherId;
+        updateData.assignedTeacherId = studentData.assignedTeacherId || deleteField();
       }
-      if (studentData.tempAssignedTeacherId !== undefined) {
-        updateData.tempAssignedTeacherId = studentData.tempAssignedTeacherId;
+      if ('tempAssignedTeacherId' in studentData) {
+        updateData.tempAssignedTeacherId = studentData.tempAssignedTeacherId || deleteField();
       }
       if (studentData.birthDate !== undefined) {
-        updateData.birthDate = studentData.birthDate ? Timestamp.fromDate(studentData.birthDate) : null;
+        updateData.birthDate = studentData.birthDate ? Timestamp.fromDate(studentData.birthDate) : deleteField();
       }
-      if (studentData.tempAssignedUntil !== undefined) {
-        updateData.tempAssignedUntil = studentData.tempAssignedUntil ? Timestamp.fromDate(studentData.tempAssignedUntil) : null;
+      if ('tempAssignedUntil' in studentData) {
+        updateData.tempAssignedUntil = studentData.tempAssignedUntil ? Timestamp.fromDate(studentData.tempAssignedUntil) : deleteField();
       }
       if (studentData.parentName !== undefined) {
-        updateData.parentName = studentData.parentName;
+        updateData.parentName = studentData.parentName || deleteField();
       }
       if (studentData.parentPhone !== undefined) {
-        updateData.parentPhone = studentData.parentPhone;
+        updateData.parentPhone = studentData.parentPhone || deleteField();
       }
       if (studentData.address !== undefined) {
-        updateData.address = studentData.address;
+        updateData.address = studentData.address || deleteField();
       }
 
       await updateDoc(doc(db, 'students', studentId), updateData);

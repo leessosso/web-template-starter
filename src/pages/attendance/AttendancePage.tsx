@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react';
-import { User as UserIcon, CheckCircle2, Circle, CheckCircle, Calendar } from 'lucide-react';
+import { User as UserIcon, CheckCircle2, Circle, CheckCircle, Calendar, Plus } from 'lucide-react';
 import { useAttendanceStore } from '../../store/attendanceStore';
 import { useStudentStore } from '../../store/studentStore';
 import { useAuthStore } from '../../store/authStore';
 import { userService } from '../../services/userService';
+import { studentService } from '../../services/studentService';
 import { AttendanceStatus } from '../../models/Attendance';
+import { canManageAttendance } from '../../utils/permissions';
 import type { User } from '../../models/User';
+import type { Student } from '../../models/Student';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui';
 import {
@@ -20,6 +23,7 @@ import { Badge } from '../../components/ui';
 import { Alert, AlertDescription } from '../../components/ui';
 import { Avatar, AvatarFallback } from '../../components/ui';
 import { DataTable } from '../../components/data-visualization/DataTable';
+import { StudentFormDialog } from '../../components/forms';
 import type { ColumnDef } from '@tanstack/react-table';
 
 type StudentWithAttendance = {
@@ -45,14 +49,24 @@ export default function AttendancePage() {
     updateAttendance,
     clearError
   } = useAttendanceStore();
-  const { students, fetchStudents } = useStudentStore();
+  const { createStudent } = useStudentStore();
 
-  const [selectedDate, setSelectedDate] = useState(
-    new Date().toISOString().split('T')[0]
-  );
+  const [students, setStudents] = useState<Student[]>([]);
+  const [isStudentLoading, setIsStudentLoading] = useState(false);
+
+  // 한국 시간 기준 오늘 날짜 계산
+  const getKoreanDateString = () => {
+    const now = new Date();
+    // 한국 시간으로 변환 (UTC+9)
+    const koreanTime = new Date(now.getTime() + (9 * 60 * 60 * 1000));
+    return koreanTime.toISOString().split('T')[0];
+  };
+
+  const [selectedDate, setSelectedDate] = useState(getKoreanDateString());
   const [attendanceDialogOpen, setAttendanceDialogOpen] = useState(false);
   const [selectedAttendances, setSelectedAttendances] = useState<Set<string>>(new Set());
   const [teachers, setTeachers] = useState<User[]>([]);
+  const [studentDialogOpen, setStudentDialogOpen] = useState(false);
 
   // 모바일 감지
   useEffect(() => {
@@ -79,12 +93,29 @@ export default function AttendancePage() {
     fetchTeachers();
   }, [user?.churchId]);
 
+  // 학생 목록 가져오기 (출석관리 권한에 따라 전체/담당 학생만 조회)
+  const fetchStudentsForAttendance = async () => {
+    if (!user?.churchId) return;
+
+    setIsStudentLoading(true);
+    try {
+      // 출석관리 권한이 있으면 전체 학생 조회, 없으면 담당 학생만 조회
+      const teacherId = canManageAttendance(user) ? undefined : user.uid;
+      const studentList = await studentService.getStudentsByChurch(user.churchId, teacherId);
+      setStudents(studentList);
+    } catch (error) {
+      console.error('학생 목록 가져오기 실패:', error);
+    } finally {
+      setIsStudentLoading(false);
+    }
+  };
+
   useEffect(() => {
     if (user?.churchId) {
-      fetchStudents();
+      fetchStudentsForAttendance();
       fetchAttendances(user.churchId, selectedDate);
     }
-  }, [user?.churchId, selectedDate, fetchStudents, fetchAttendances]);
+  }, [user?.churchId, selectedDate, fetchAttendances]);
 
   const handleOpenAttendanceDialog = () => {
     // 해당 날짜의 기존 출결 데이터를 로드
@@ -255,25 +286,40 @@ export default function AttendancePage() {
       <div className="flex flex-col gap-4">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <h1 className="text-2xl sm:text-3xl font-bold">출결 관리</h1>
-          <Button
-            onClick={handleOpenAttendanceDialog}
-            className="w-full sm:w-auto"
-          >
-            <Calendar className="mr-2 h-4 w-4" />
-            출결 체크
-          </Button>
+          <div className="flex gap-2 w-full sm:w-auto">
+            <Button
+              onClick={() => setStudentDialogOpen(true)}
+              variant="outline"
+              className="w-full sm:w-auto"
+            >
+              <Plus className="mr-2 h-4 w-4" />
+              학생 추가
+            </Button>
+            <Button
+              onClick={handleOpenAttendanceDialog}
+              className="w-full sm:w-auto"
+            >
+              <Calendar className="mr-2 h-4 w-4" />
+              출결 체크
+            </Button>
+          </div>
         </div>
 
         {/* 날짜 표시 및 통계 배지들 */}
         <div className="flex gap-2 items-center justify-between overflow-x-auto">
           <div className="flex items-center gap-2 text-sm text-muted-foreground whitespace-nowrap">
             <Calendar className="h-4 w-4" />
-            <span className="font-medium">
-              {new Date(selectedDate).toLocaleDateString('ko-KR', { 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
+            <span className={`font-medium ${selectedDate === getKoreanDateString() ? 'text-primary font-semibold' : ''}`}>
+              {new Date(selectedDate).toLocaleDateString('ko-KR', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
               })}
+              {selectedDate === new Date().toISOString().split('T')[0] && (
+                <span className="ml-1 text-xs bg-primary text-primary-foreground px-1.5 py-0.5 rounded">
+                  오늘
+                </span>
+              )}
             </span>
           </div>
 
@@ -382,12 +428,21 @@ export default function AttendancePage() {
 
       {/* 모바일 출결 체크 FAB */}
       {isMobile && (
-        <Button
-          className="fixed bottom-4 right-4 h-14 w-14 rounded-full shadow-lg z-40"
-          onClick={handleOpenAttendanceDialog}
-        >
-          <Calendar className="h-6 w-6" />
-        </Button>
+        <>
+          <Button
+            className="fixed bottom-20 right-4 h-14 w-14 rounded-full shadow-lg z-40"
+            onClick={() => setStudentDialogOpen(true)}
+            variant="outline"
+          >
+            <Plus className="h-6 w-6" />
+          </Button>
+          <Button
+            className="fixed bottom-4 right-4 h-14 w-14 rounded-full shadow-lg z-40"
+            onClick={handleOpenAttendanceDialog}
+          >
+            <Calendar className="h-6 w-6" />
+          </Button>
+        </>
       )}
 
       {/* 출결 체크 다이얼로그 */}
@@ -402,6 +457,9 @@ export default function AttendancePage() {
 
           {/* 날짜 선택 */}
           <div className="mb-4">
+            <label className="text-sm font-medium mb-2 block">
+              📅 출결 날짜 선택
+            </label>
             <Input
               type="date"
               value={selectedDate}
@@ -409,6 +467,12 @@ export default function AttendancePage() {
               className="w-full"
               style={{ colorScheme: 'light dark' }}
             />
+            <p className="text-xs text-muted-foreground mt-1">
+              {selectedDate === getKoreanDateString()
+                ? "오늘의 출결을 확인하고 있습니다."
+                : `${new Date(selectedDate).toLocaleDateString('ko-KR')}의 출결을 확인하고 있습니다.`
+              }
+            </p>
           </div>
 
           {/* 학생 선택 리스트 */}
@@ -457,6 +521,17 @@ export default function AttendancePage() {
           </div>
         </DialogContent>
       </Dialog>
+
+      {/* 학생 추가 다이얼로그 */}
+      <StudentFormDialog
+        open={studentDialogOpen}
+        onOpenChange={setStudentDialogOpen}
+        onSubmit={async (formData) => {
+          await createStudent(formData);
+          await fetchStudentsForAttendance(); // 학생 목록 새로고침
+        }}
+        isLoading={isStudentLoading}
+      />
     </div>
   );
 }
