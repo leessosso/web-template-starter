@@ -72,7 +72,7 @@ export function StudentCard({
   const hasTempAssignment = student.tempAssignedTeacherId && student.tempAssignedUntil;
 
   return (
-    <Card className={`hover:shadow-lg transition-shadow min-h-[160px] ${isSelected ? 'ring-2 ring-primary' : ''}`}>
+    <Card className={`hover:shadow-lg transition-shadow min-h-[150px] ${isSelected ? 'ring-2 ring-primary' : ''}`}>
       <CardContent className="p-4">
         <div className="space-y-2">
           {/* 상단: 학생 기본 정보 */}
