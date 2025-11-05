@@ -70,4 +70,4 @@ Thumbs.db
 
 ## 📝 Cursor AI 관련 (분석 제외)
 .cursor/
-!**/rules/**
+!.cursor/rules/**

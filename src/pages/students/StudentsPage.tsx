@@ -7,7 +7,7 @@ import {
   User as PersonIcon,
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { Button } from '../../components/ui/button';
+import { Button } from '../../components/ui/Button';
 import { Card, CardContent } from '../../components/ui/Card';
 import { Input } from '../../components/ui/Input';
 import { Alert, AlertDescription } from '../../components/ui/Alert';

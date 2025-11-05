@@ -1,25 +1,23 @@
 import { useEffect, useState } from 'react';
-import { Calendar, User as UserIcon, CheckCircle2, Circle, Save } from 'lucide-react';
+import { User as UserIcon, CheckCircle2, Circle, CheckCircle, Calendar } from 'lucide-react';
 import { useAttendanceStore } from '../../store/attendanceStore';
 import { useStudentStore } from '../../store/studentStore';
 import { useAuthStore } from '../../store/authStore';
 import { userService } from '../../services/userService';
 import { AttendanceStatus } from '../../models/Attendance';
 import type { User } from '../../models/User';
-import { Button } from '../../components/ui';
+import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui';
-import { Card, CardContent } from '../../components/ui';
-import { Badge } from '../../components/ui';
-import { Alert, AlertDescription } from '../../components/ui';
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogDescription,
-  DialogFooter,
-} from '../../components/ui';
-import { Checkbox } from '../../components/ui';
+} from '../../components/ui/dialog';
+import { Card, CardContent } from '../../components/ui';
+import { Badge } from '../../components/ui';
+import { Alert, AlertDescription } from '../../components/ui';
 import { Avatar, AvatarFallback } from '../../components/ui';
 import { DataTable } from '../../components/data-visualization/DataTable';
 import type { ColumnDef } from '@tanstack/react-table';
@@ -388,88 +386,68 @@ export default function AttendancePage() {
 
       {/* 출결 체크 다이얼로그 */}
       <Dialog open={attendanceDialogOpen} onOpenChange={setAttendanceDialogOpen}>
-        <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle>{selectedDate} 출결 체크</DialogTitle>
-            <DialogDescription>
-              출석한 학생을 선택해주세요.
+        <DialogContent className="max-w-md max-h-[80vh] overflow-y-auto">
+          <DialogHeader className="text-center pb-2">
+            <DialogTitle className="text-xl font-bold">📅 출결 체크</DialogTitle>
+            <DialogDescription className="text-base">
+              {selectedDate} 출결 현황
             </DialogDescription>
           </DialogHeader>
 
-          {isMobile ? (
-            // 모바일: 카드 형태로 학생 선택
-            <div className="flex flex-col gap-2">
-              {students?.map((student) => (
-                <Card
-                  key={student.id}
-                  className={`cursor-pointer transition-colors ${
-                    selectedAttendances.has(student.id)
-                      ? 'border-primary bg-primary/10'
-                      : ''
-                  }`}
-                  onClick={() => handleStudentToggle(student.id)}
-                >
-                  <CardContent className="p-4">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <Avatar className="h-10 w-10 bg-primary">
-                          <AvatarFallback className="bg-primary text-primary-foreground">
-                            <UserIcon className="h-5 w-5" />
-                          </AvatarFallback>
-                        </Avatar>
-                        <div>
-                          <div className="font-semibold">{student.name}</div>
-                          <div className="text-sm text-muted-foreground">
-                            {['Puggles', 'Cubbies', 'Sparks', 'T&T'][student.grade - 1]}
-                          </div>
-                        </div>
-                      </div>
-                      <Checkbox
-                        checked={selectedAttendances.has(student.id)}
-                        onCheckedChange={() => handleStudentToggle(student.id)}
-                      />
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          ) : (
-            // 데스크톱: 그리드 형태
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-              {students?.map((student) => (
-                <div
-                  key={student.id}
-                  className="flex items-center space-x-2 p-3 rounded-lg border hover:bg-accent cursor-pointer"
-                  onClick={() => handleStudentToggle(student.id)}
-                >
-                  <Checkbox
-                    checked={selectedAttendances.has(student.id)}
-                    onCheckedChange={() => handleStudentToggle(student.id)}
-                  />
-                  <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer">
-                    {student.name} ({['Puggles', 'Cubbies', 'Sparks', 'T&T'][student.grade - 1]})
-                  </label>
-                </div>
-              ))}
-            </div>
-          )}
+          {/* 날짜 선택 */}
+          <div className="mb-4">
+            <Input
+              type="date"
+              value={selectedDate}
+              onChange={(e) => setSelectedDate(e.target.value)}
+              className="w-full"
+            />
+          </div>
 
-          <DialogFooter className="flex-col sm:flex-row gap-2">
+          {/* 학생 선택 리스트 */}
+          <div className="max-h-60 overflow-y-auto space-y-2">
+            {students?.map((student) => (
+              <div
+                key={student.id}
+                onClick={() => handleStudentToggle(student.id)}
+                className={`flex items-center justify-between p-3 rounded-lg border cursor-pointer ${
+                  selectedAttendances.has(student.id)
+                    ? 'bg-blue-500 text-white border-blue-500'
+                    : 'bg-white border-gray-300'
+                }`}
+              >
+                <span className="font-medium">
+                  {student.name} ({['Puggles', 'Cubbies', 'Sparks', 'T&T'][student.grade - 1]})
+                </span>
+                <CheckCircle
+                  className={`h-5 w-5 ${
+                    selectedAttendances.has(student.id) ? 'text-white' : 'text-gray-400'
+                  }`}
+                />
+              </div>
+            ))}
+          </div>
+
+          <p className="text-sm text-muted-foreground text-center mt-4 mb-6">
+            출석한 학생을 선택해주세요
+          </p>
+
+          <div className="flex justify-center gap-3">
             <Button
               variant="outline"
               onClick={() => setAttendanceDialogOpen(false)}
-              className="w-full sm:w-auto"
+              className="px-6 py-2"
             >
               취소
             </Button>
             <Button
               onClick={handleSaveAttendance}
-              className="w-full sm:w-auto"
+              className="px-6 py-2 shadow-md hover:shadow-lg transition-all"
             >
-              <Save className="mr-2 h-4 w-4" />
-              저장
+              <CheckCircle className="w-4 h-4 mr-2" />
+              저장하기
             </Button>
-          </DialogFooter>
+          </div>
         </DialogContent>
       </Dialog>
     </div>

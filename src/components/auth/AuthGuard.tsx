@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuthStore } from '../../store/authStore';
-import { Box, CircularProgress } from '@mui/material';
 
 interface AuthGuardProps {
   children: React.ReactNode;
@@ -28,16 +27,9 @@ export default function AuthGuard({ children }: AuthGuardProps) {
   // 로딩 중일 때는 로딩 표시
   if (isLoading) {
     return (
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          minHeight: '50vh',
-        }}
-      >
-        <CircularProgress />
-      </Box>
+    <div className="flex justify-center items-center min-h-screen">
+      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+    </div>
     );
   }
 

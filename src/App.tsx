@@ -22,7 +22,7 @@ function App() {
     <ThemeProvider>
       <div className="min-h-screen">
         {isAuthenticated && !isPublicRoute && <Navigation />}
-        <main className="mx-auto w-full max-w-content px-4 py-16">
+        <main className="mx-auto w-full max-w-content px-4 py-4">
           {isPublicRoute ? (
             <Outlet />
           ) : (

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Input } from '../ui/Input';
-import { Button } from '../ui/button';
+import { Button } from '../ui/Button';
 import { Alert, AlertDescription } from '../ui/Alert';
 import { useTrackFormSubmit, useTrackClarityFormSubmit } from '../../analytics';
 

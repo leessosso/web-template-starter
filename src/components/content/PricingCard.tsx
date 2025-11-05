@@ -1,5 +1,5 @@
 import { Card } from '../ui/Card';
-import { Button } from '../ui/button';
+import { Button } from '../ui/Button';
 import { Badge } from '../ui/Badge';
 
 interface PricingFeature {

@@ -1,28 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-  Box,
-  Typography,
-  Card,
-  CardContent,
-  Button,
-  CircularProgress,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  Chip,
-} from '@mui/material';
-import {
-  ArrowBack as ArrowBackIcon,
-  People as PeopleIcon,
-  CheckCircle as CheckCircleIcon,
-  TrendingUp as TrendingUpIcon,
-  School as SchoolIcon,
-} from '@mui/icons-material';
+import { ArrowLeft, Users, CheckCircle, TrendingUp, GraduationCap } from 'lucide-react';
+import { Button } from '../../components/ui/Button';
+import { Card, CardContent } from '../../components/ui/Card';
+import { Badge } from '../../components/ui/Badge';
 import { useStudentStore } from '../../store/studentStore';
 import { useAuthStore } from '../../store/authStore';
 import { useAttendanceStore } from '../../store/attendanceStore';
@@ -38,28 +19,28 @@ interface StatCardProps {
   color: 'primary' | 'secondary' | 'success' | 'warning' | 'info';
 }
 
-function StatCard({ title, value, subtitle, icon, color }: StatCardProps) {
+function StatCard({ title, value, subtitle, icon }: StatCardProps) {
   return (
     <Card>
-      <CardContent>
-        <Box display="flex" alignItems="center" justifyContent="space-between">
-          <Box>
-            <Typography color="text.secondary" gutterBottom variant="body2">
+      <CardContent className="p-6">
+        <div className="flex items-center justify-between">
+          <div>
+            <p className="text-sm text-muted-foreground mb-1">
               {title}
-            </Typography>
-            <Typography variant="h4" component="div" fontWeight="bold">
+            </p>
+            <h3 className="text-3xl font-bold">
               {value}
-            </Typography>
+            </h3>
             {subtitle && (
-              <Typography variant="body2" color="text.secondary">
+              <p className="text-sm text-muted-foreground mt-1">
                 {subtitle}
-              </Typography>
+              </p>
             )}
-          </Box>
-          <Box color={`${color}.main`}>
+          </div>
+          <div className="text-primary">
             {icon}
-          </Box>
-        </Box>
+          </div>
+        </div>
       </CardContent>
     </Card>
   );
@@ -86,9 +67,9 @@ export default function ChurchStatisticsPage() {
 
   if (loading) {
     return (
-      <Box display="flex" justifyContent="center" alignItems="center" minHeight="400px">
-        <CircularProgress />
-      </Box>
+      <div className="flex justify-center items-center min-h-96">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+      </div>
     );
   }
 
@@ -147,193 +128,193 @@ export default function ChurchStatisticsPage() {
   }
 
   return (
-    <Box>
-      <Box display="flex" alignItems="center" gap={2} mb={3}>
-        <Button startIcon={<ArrowBackIcon />} onClick={() => navigate('/reports')}>
+    <div className="space-y-6">
+      <div className="flex items-center gap-4">
+        <Button variant="outline" onClick={() => navigate('/reports')}>
+          <ArrowLeft className="w-4 h-4 mr-2" />
           뒤로가기
         </Button>
-        <Typography variant="h4">
+        <h1 className="text-3xl font-bold">
           교회 통계 대시보드 📊
-        </Typography>
-      </Box>
+        </h1>
+      </div>
 
       {/* 주요 통계 카드 */}
-      <Box
-        display="grid"
-        gridTemplateColumns={{ xs: '1fr', sm: '1fr 1fr', md: '1fr 1fr 1fr 1fr' }}
-        gap={3}
-        mb={4}
-      >
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         <StatCard
           title="총 학생 수"
           value={totalStudents}
           subtitle={`${activeStudents}명 활동중`}
-          icon={<PeopleIcon fontSize="large" />}
+          icon={<Users className="w-8 h-8" />}
           color="primary"
         />
         <StatCard
           title="최근 출석률"
           value={`${attendanceRate}%`}
           subtitle="지난 30일 기준"
-          icon={<CheckCircleIcon fontSize="large" />}
+          icon={<CheckCircle className="w-8 h-8" />}
           color="success"
         />
         <StatCard
           title="SPARKS 진도율"
           value={`${progressRate}%`}
           subtitle={`${completedSections}/${totalSparksSections} 섹션 완료`}
-          icon={<TrendingUpIcon fontSize="large" />}
+          icon={<TrendingUp className="w-8 h-8" />}
           color="warning"
         />
         <StatCard
           title="활동 클럽"
           value={clubStats.filter(c => c.count > 0).length}
           subtitle="개 운영중"
-          icon={<SchoolIcon fontSize="large" />}
+          icon={<GraduationCap className="w-8 h-8" />}
           color="info"
         />
-      </Box>
+      </div>
 
       {/* 클럽별 현황 */}
-      <Typography variant="h6" gutterBottom sx={{ mt: 4 }}>
-        클럽별 학생 현황
-      </Typography>
-      <TableContainer component={Paper} sx={{ mb: 4 }}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>클럽</TableCell>
-              <TableCell align="right">학생 수</TableCell>
-              <TableCell align="right">비율</TableCell>
-              <TableCell>상태</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {clubStats.map((stat) => (
-              <TableRow key={stat.club}>
-                <TableCell>{stat.club}</TableCell>
-                <TableCell align="right">{stat.count}</TableCell>
-                <TableCell align="right">
-                  {totalStudents > 0 ? `${Math.round((stat.count / totalStudents) * 100)}%` : '0%'}
-                </TableCell>
-                <TableCell>
-                  {stat.count > 0 ? (
-                    <Chip label="운영중" color="success" size="small" />
-                  ) : (
-                    <Chip label="미운영" color="default" size="small" variant="outlined" />
-                  )}
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <div className="space-y-4">
+        <h2 className="text-xl font-semibold">클럽별 학생 현황</h2>
+        <Card>
+          <CardContent className="p-0">
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead className="bg-muted">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-sm font-semibold">클럽</th>
+                    <th className="px-6 py-3 text-right text-sm font-semibold">학생 수</th>
+                    <th className="px-6 py-3 text-right text-sm font-semibold">비율</th>
+                    <th className="px-6 py-3 text-left text-sm font-semibold">상태</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-border">
+                  {clubStats.map((stat) => (
+                    <tr key={stat.club}>
+                      <td className="px-6 py-4 text-sm">{stat.club}</td>
+                      <td className="px-6 py-4 text-sm text-right">{stat.count}</td>
+                      <td className="px-6 py-4 text-sm text-right">
+                        {totalStudents > 0 ? `${Math.round((stat.count / totalStudents) * 100)}%` : '0%'}
+                      </td>
+                      <td className="px-6 py-4 text-sm">
+                        {stat.count > 0 ? (
+                          <Badge>운영중</Badge>
+                        ) : (
+                          <Badge variant="outline">미운영</Badge>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
 
       {/* 월별 출석 추이 */}
-      <Typography variant="h6" gutterBottom>
-        월별 출석 추이 (최근 6개월)
-      </Typography>
-      <TableContainer component={Paper} sx={{ mb: 4 }}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>월</TableCell>
-              <TableCell align="right">출석</TableCell>
-              <TableCell align="right">총 기록</TableCell>
-              <TableCell align="right">출석률</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {monthlyAttendance.map((month) => (
-              <TableRow key={month.month}>
-                <TableCell>{month.month}</TableCell>
-                <TableCell align="right">{month.attendance}</TableCell>
-                <TableCell align="right">{month.total}</TableCell>
-                <TableCell align="right">
-                  <Box display="flex" alignItems="center" gap={1}>
-                    <Typography>{month.rate}%</Typography>
-                    <Box
-                      sx={{
-                        width: 60,
-                        height: 8,
-                        bgcolor: 'grey.300',
-                        borderRadius: 1,
-                        overflow: 'hidden',
-                      }}
-                    >
-                      <Box
-                        sx={{
-                          width: `${month.rate}%`,
-                          height: '100%',
-                          bgcolor: month.rate >= 80 ? 'success.main' :
-                                   month.rate >= 60 ? 'warning.main' : 'error.main',
-                        }}
-                      />
-                    </Box>
-                  </Box>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <div className="space-y-4">
+        <h2 className="text-xl font-semibold">월별 출석 추이 (최근 6개월)</h2>
+        <Card>
+          <CardContent className="p-0">
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead className="bg-muted">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-sm font-semibold">월</th>
+                    <th className="px-6 py-3 text-right text-sm font-semibold">출석</th>
+                    <th className="px-6 py-3 text-right text-sm font-semibold">총 기록</th>
+                    <th className="px-6 py-3 text-right text-sm font-semibold">출석률</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-border">
+                  {monthlyAttendance.map((month) => (
+                    <tr key={month.month}>
+                      <td className="px-6 py-4 text-sm">{month.month}</td>
+                      <td className="px-6 py-4 text-sm text-right">{month.attendance}</td>
+                      <td className="px-6 py-4 text-sm text-right">{month.total}</td>
+                      <td className="px-6 py-4 text-sm text-right">
+                        <div className="flex items-center justify-end gap-2">
+                          <span>{month.rate}%</span>
+                          <div className="w-16 h-2 bg-gray-200 rounded-full overflow-hidden">
+                            <div
+                              className={`h-full ${
+                                month.rate >= 80
+                                  ? 'bg-green-500'
+                                  : month.rate >= 60
+                                  ? 'bg-yellow-500'
+                                  : 'bg-red-500'
+                              }`}
+                              style={{ width: `${month.rate}%` }}
+                            />
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
 
       {/* SPARKS 진도 상세 */}
-      <Typography variant="h6" gutterBottom>
-        SPARKS 핸드북 진도 현황
-      </Typography>
-      <TableContainer component={Paper}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>학생 이름</TableCell>
-              <TableCell align="right">완료 섹션</TableCell>
-              <TableCell align="right">총 섹션</TableCell>
-              <TableCell align="right">진도율</TableCell>
-              <TableCell>최근 활동</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {sparksSummaries.slice(0, 10).map((student) => {
-              const totalCompleted = student.hangGliderProgress.redCompleted +
-                student.hangGliderProgress.greenCompleted +
-                student.wingRunnerProgress.redCompleted +
-                student.wingRunnerProgress.greenCompleted +
-                student.skyStormerProgress.redCompleted +
-                student.skyStormerProgress.greenCompleted;
+      <div className="space-y-4">
+        <h2 className="text-xl font-semibold">SPARKS 핸드북 진도 현황</h2>
+        <Card>
+          <CardContent className="p-0">
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead className="bg-muted">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-sm font-semibold">학생 이름</th>
+                    <th className="px-6 py-3 text-right text-sm font-semibold">완료 섹션</th>
+                    <th className="px-6 py-3 text-right text-sm font-semibold">총 섹션</th>
+                    <th className="px-6 py-3 text-right text-sm font-semibold">진도율</th>
+                    <th className="px-6 py-3 text-left text-sm font-semibold">최근 활동</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-border">
+                  {sparksSummaries.slice(0, 10).map((student) => {
+                    const totalCompleted = student.hangGliderProgress.redCompleted +
+                      student.hangGliderProgress.greenCompleted +
+                      student.wingRunnerProgress.redCompleted +
+                      student.wingRunnerProgress.greenCompleted +
+                      student.skyStormerProgress.redCompleted +
+                      student.skyStormerProgress.greenCompleted;
 
-              return (
-                <TableRow key={student.studentId}>
-                  <TableCell>{student.studentId}</TableCell>
-                  <TableCell align="right">{totalCompleted}</TableCell>
-                  <TableCell align="right">16</TableCell>
-                  <TableCell align="right">
-                    {Math.round((totalCompleted / 16) * 100)}%
-                  </TableCell>
-                  <TableCell>
-                    {student.lastCompletedDate ? new Date(student.lastCompletedDate).toLocaleDateString('ko-KR') : '-'}
-                  </TableCell>
-                </TableRow>
-              );
-            })}
-            {sparksSummaries.length === 0 && (
-              <TableRow>
-                <TableCell colSpan={5} align="center" sx={{ py: 3 }}>
-                  <Typography color="text.secondary">
-                    SPARKS 학생 데이터가 없습니다.
-                  </Typography>
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </TableContainer>
+                    return (
+                      <tr key={student.studentId}>
+                        <td className="px-6 py-4 text-sm">{student.studentId}</td>
+                        <td className="px-6 py-4 text-sm text-right">{totalCompleted}</td>
+                        <td className="px-6 py-4 text-sm text-right">16</td>
+                        <td className="px-6 py-4 text-sm text-right">
+                          {Math.round((totalCompleted / 16) * 100)}%
+                        </td>
+                        <td className="px-6 py-4 text-sm">
+                          {student.lastCompletedDate ? new Date(student.lastCompletedDate).toLocaleDateString('ko-KR') : '-'}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                  {sparksSummaries.length === 0 && (
+                    <tr>
+                      <td colSpan={5} className="px-6 py-8 text-center text-muted-foreground">
+                        SPARKS 학생 데이터가 없습니다.
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
 
-      <Box mt={3} p={2} bgcolor="background.paper" borderRadius={1}>
-        <Typography variant="body2" color="text.secondary">
+      <Card className="p-4 bg-muted/50">
+        <p className="text-sm text-muted-foreground">
           📊 이 통계는 실시간으로 업데이트됩니다. 데이터는 매일 자정에 갱신됩니다.
-        </Typography>
-      </Box>
-    </Box>
+        </p>
+      </Card>
+    </div>
   );
 }

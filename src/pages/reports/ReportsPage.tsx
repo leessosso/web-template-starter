@@ -5,7 +5,7 @@ import {
   BarChart3 as BarChartIcon,
   FileText as AssessmentIcon,
 } from 'lucide-react';
-import { Button } from '../../components/ui/button';
+import { Button } from '../../components/ui/Button';
 import { Card, CardContent } from '../../components/ui/Card';
 import { Badge } from '../../components/ui/Badge';
 import { useNavigate } from 'react-router-dom';

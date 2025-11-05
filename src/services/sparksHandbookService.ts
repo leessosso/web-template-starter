@@ -279,6 +279,78 @@ export class SparksHandbookService {
   }
 
   /**
+   * 다음에 완료해야 할 섹션 조회
+   */
+  async getNextSectionToComplete(
+    studentId: string,
+    churchId: string
+  ): Promise<{ handbook: SparksHandbook; jewelType: JewelType; section: { major: number; minor: number } } | null> {
+    try {
+      // 학생의 현재 요약 정보 조회
+      const summary = await this.getStudentHandbookSummary(studentId, churchId);
+
+      if (!summary.currentHandbook || !summary.currentJewelType) {
+        // 아직 시작하지 않은 경우 첫 번째 핸드북의 첫 번째 섹션 추천
+        return {
+          handbook: SparksHandbook.HANG_GLIDER,
+          jewelType: JewelType.RED,
+          section: { major: 1, minor: 1 }
+        };
+      }
+
+      // 현재 진행중인 핸드북의 완료 상태 조회
+      const completionStatus = await this.getHandbookCompletionStatus(studentId, summary.currentHandbook, churchId);
+
+      // 다음 완료할 섹션 찾기 (현재 보석 타입부터)
+      const allSections = generateJewelSections();
+
+      // 현재 보석 타입에서 완료되지 않은 첫 번째 섹션 찾기
+      for (const section of allSections) {
+        const key = `${summary.currentJewelType}-${section.major}-${section.minor}`;
+        if (!completionStatus.get(key)) {
+          return {
+            handbook: summary.currentHandbook,
+            jewelType: summary.currentJewelType,
+            section
+          };
+        }
+      }
+
+      // 현재 보석 타입이 모두 완료된 경우, 다른 보석 타입으로 넘어감
+      const otherJewelType = summary.currentJewelType === JewelType.RED ? JewelType.GREEN : JewelType.RED;
+      for (const section of allSections) {
+        const key = `${otherJewelType}-${section.major}-${section.minor}`;
+        if (!completionStatus.get(key)) {
+          return {
+            handbook: summary.currentHandbook,
+            jewelType: otherJewelType,
+            section
+          };
+        }
+      }
+
+      // 현재 핸드북이 모두 완료된 경우, 다음 핸드북으로 넘어감
+      const handbookOrder = [SparksHandbook.HANG_GLIDER, SparksHandbook.WING_RUNNER, SparksHandbook.SKY_STORMER];
+      const currentIndex = handbookOrder.indexOf(summary.currentHandbook);
+
+      if (currentIndex < handbookOrder.length - 1) {
+        const nextHandbook = handbookOrder[currentIndex + 1];
+        return {
+          handbook: nextHandbook,
+          jewelType: JewelType.RED,
+          section: { major: 1, minor: 1 }
+        };
+      }
+
+      // 모든 핸드북이 완료된 경우
+      return null;
+    } catch (error) {
+      console.error('다음 섹션 조회 실패:', error);
+      return null;
+    }
+  }
+
+  /**
    * 교회 내 모든 SPARKS 학생들의 진도 요약 조회
    */
   async getAllStudentSummaries(churchId: string): Promise<StudentHandbookSummary[]> {

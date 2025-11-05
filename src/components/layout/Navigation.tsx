@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { Menu as MenuIcon } from 'lucide-react'
 import { useAuthStore } from '../../store/authStore'
@@ -20,19 +21,25 @@ import {
 } from '../ui/sheet'
 
 const navItems = [
-  { to: '/', label: '대시보드' },
-  { to: '/students', label: '학생 관리' },
+  { to: '/dashboard', label: '대시보드' },
   { to: '/attendance', label: '출석 관리' },
   { to: '/handbook', label: '핸드북' },
+  { to: '/students', label: '학생 관리' },
   { to: '/reports', label: '보고서' },
 ]
 
 export function Navigation() {
   const { user, signOut } = useAuthStore()
   const navigate = useNavigate()
+  const [isOpen, setIsOpen] = useState(false)
 
   const handleLogout = async () => {
     await signOut()
+    setIsOpen(false)
+  }
+
+  const handleNavClick = () => {
+    setIsOpen(false)
   }
 
   // 사용자 이름의 첫 글자로 아바타 초기 설정
@@ -114,7 +121,7 @@ export function Navigation() {
           </div>
 
           {/* 모바일 햄버거 메뉴 */}
-          <Sheet>
+          <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild>
               <Button
                 variant="ghost"
@@ -153,6 +160,7 @@ export function Navigation() {
                   <NavLink
                     key={item.to}
                     to={item.to}
+                    onClick={handleNavClick}
                     className={({ isActive }) =>
                       [
                         'px-3 py-2 rounded-md text-sm font-medium transition-colors',
@@ -175,13 +183,19 @@ export function Navigation() {
                   <div className="mt-6 pt-6 border-t">
                     <nav className="flex flex-col gap-1">
                       <button
-                        onClick={() => navigate('/settings')}
+                        onClick={() => {
+                          navigate('/settings')
+                          handleNavClick()
+                        }}
                         className="px-3 py-2 rounded-md text-sm font-medium text-left text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
                       >
                         프로필
                       </button>
                       <button
-                        onClick={() => navigate('/settings')}
+                        onClick={() => {
+                          navigate('/settings')
+                          handleNavClick()
+                        }}
                         className="px-3 py-2 rounded-md text-sm font-medium text-left text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
                       >
                         설정

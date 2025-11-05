@@ -27,6 +27,8 @@ interface SparksHandbookState {
   updateJewelSectionProgress: () => Promise<void>;
   // 보석 섹션 통과 기록 삭제
   deleteJewelSectionProgress: (progressId: string) => Promise<void>;
+  // 다음 완료할 섹션 조회
+  getNextSectionToComplete: (studentId: string, churchId: string) => Promise<{ handbook: string; jewelType: string; section: { major: number; minor: number } } | null>;
   clearError: () => void;
 }
 
@@ -125,6 +127,21 @@ export const useSparksHandbookStore = create<SparksHandbookState>((set, get) => 
     } catch (error) {
       set({
         error: error instanceof Error ? error.message : '보석 섹션 진도 삭제에 실패했습니다.',
+        isLoading: false,
+      });
+      throw error;
+    }
+  },
+
+  getNextSectionToComplete: async (studentId: string, churchId: string) => {
+    set({ isLoading: true, error: null });
+    try {
+      const nextSection = await sparksHandbookService.getNextSectionToComplete(studentId, churchId);
+      set({ isLoading: false });
+      return nextSection;
+    } catch (error) {
+      set({
+        error: error instanceof Error ? error.message : '다음 섹션 조회에 실패했습니다.',
         isLoading: false,
       });
       throw error;

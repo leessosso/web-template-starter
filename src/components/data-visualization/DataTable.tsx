@@ -24,6 +24,7 @@ interface DataTableProps<T extends TableData> {
   paginated?: boolean;
   pageSize?: number;
   className?: string;
+  onRowClick?: (row: T) => void;
 }
 
 export function DataTable<T extends TableData>({
@@ -34,6 +35,7 @@ export function DataTable<T extends TableData>({
   paginated = true,
   pageSize = 10,
   className = '',
+  onRowClick,
 }: DataTableProps<T>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
@@ -113,7 +115,11 @@ export function DataTable<T extends TableData>({
           </thead>
           <tbody className="bg-background divide-y divide-border">
             {table.getRowModel().rows.map((row) => (
-              <tr key={row.id} className="hover:bg-muted">
+              <tr
+                key={row.id}
+                className={`hover:bg-muted ${onRowClick ? 'cursor-pointer' : ''}`}
+                onClick={() => onRowClick && onRowClick(row.original)}
+              >
                 {row.getVisibleCells().map((cell) => (
                   <td
                     key={cell.id}
