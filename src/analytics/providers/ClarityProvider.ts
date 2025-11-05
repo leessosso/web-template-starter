@@ -1,20 +1,9 @@
 // Microsoft Clarity 분석 도구 Provider
 export class ClarityProvider {
-    private projectId: string | undefined;
-
-    constructor() {
-        this.projectId = import.meta.env.VITE_CLARITY_PROJECT_ID;
-    }
-
     // Clarity가 활성화되어 있는지 확인
     isEnabled(): boolean {
         // 일시적으로 Clarity 비활성화
         return false;
-        // 원래 코드:
-        // return !!this.projectId &&
-        //     this.projectId !== 'your_clarity_project_id_here' &&
-        //     this.projectId !== 'CLARITY_PROJECT_ID' &&
-        //     typeof window !== 'undefined';
     }
 
     // Clarity가 로드되었는지 확인

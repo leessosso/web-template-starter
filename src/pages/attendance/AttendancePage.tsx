@@ -252,36 +252,42 @@ export default function AttendancePage() {
   return (
     <div className="space-y-6">
       {/* 모바일 우선 헤더 */}
-      <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-4">
-        <h1 className="text-2xl sm:text-3xl font-bold">출결 관리</h1>
-        <Button
-          onClick={handleOpenAttendanceDialog}
-          className="w-full sm:w-auto"
-        >
-          <Calendar className="mr-2 h-4 w-4" />
-          출결 체크
-        </Button>
-      </div>
+      <div className="flex flex-col gap-4">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+          <h1 className="text-2xl sm:text-3xl font-bold">출결 관리</h1>
+          <Button
+            onClick={handleOpenAttendanceDialog}
+            className="w-full sm:w-auto"
+          >
+            <Calendar className="mr-2 h-4 w-4" />
+            출결 체크
+          </Button>
+        </div>
 
-      {/* 모바일 우선 날짜 선택 및 통계 */}
-      <div className="flex flex-col sm:flex-row gap-4 items-stretch sm:items-center">
-        <Input
-          type="date"
-          value={selectedDate}
-          onChange={(e) => setSelectedDate(e.target.value)}
-          className="w-full sm:w-auto"
-        />
+        {/* 날짜 표시 및 통계 배지들 */}
+        <div className="flex gap-2 items-center justify-between overflow-x-auto">
+          <div className="flex items-center gap-2 text-sm text-muted-foreground whitespace-nowrap">
+            <Calendar className="h-4 w-4" />
+            <span className="font-medium">
+              {new Date(selectedDate).toLocaleDateString('ko-KR', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+              })}
+            </span>
+          </div>
 
-        <div className="flex flex-wrap gap-2 justify-center sm:justify-start">
-          <Badge variant="outline" className="bg-green-500/10 text-green-500 border-green-500">
-            출석: {stats.present}
-          </Badge>
-          <Badge variant="outline" className="bg-red-500/10 text-red-500 border-red-500">
-            결석: {stats.absent}
-          </Badge>
-          <Badge variant="outline">
-            총원: {stats.total}
-          </Badge>
+          <div className="flex gap-2 whitespace-nowrap">
+            <Badge variant="outline" className="bg-green-500/10 text-green-500 border-green-500">
+              출석: {stats.present}
+            </Badge>
+            <Badge variant="outline" className="bg-red-500/10 text-red-500 border-red-500">
+              결석: {stats.absent}
+            </Badge>
+            <Badge variant="outline">
+              총원: {stats.total}
+            </Badge>
+          </div>
         </div>
       </div>
 
@@ -401,6 +407,7 @@ export default function AttendancePage() {
               value={selectedDate}
               onChange={(e) => setSelectedDate(e.target.value)}
               className="w-full"
+              style={{ colorScheme: 'light dark' }}
             />
           </div>
 
