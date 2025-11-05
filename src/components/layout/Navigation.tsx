@@ -50,7 +50,7 @@ export function Navigation() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 border-b border-border/5 bg-background/90 backdrop-blur">
+      <header className="sticky top-0 z-40 border-b border-border/5 bg-background/90 backdrop-blur">
         <div className="container-section flex h-16 items-center justify-between">
           <NavLink to="/" className="text-lg font-semibold text-foreground">
             AWANA LMS
