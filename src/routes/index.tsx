@@ -18,6 +18,8 @@ import ChurchStatisticsPage from '../pages/reports/ChurchStatisticsPage'
 import SettingsPage from '../pages/SettingsPage'
 import NotFoundPage from '../pages/NotFoundPage'
 
+const basePath = import.meta.env.VITE_BASE_PATH || '/'
+
 export const router = createBrowserRouter([
   {
     path: '/login',
@@ -97,5 +99,7 @@ export const router = createBrowserRouter([
       },
     ],
   },
-])
+], {
+  basename: basePath.endsWith('/') ? basePath.slice(0, -1) : basePath,
+})
 
