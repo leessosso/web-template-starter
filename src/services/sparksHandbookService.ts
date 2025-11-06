@@ -301,6 +301,29 @@ export class SparksHandbookService {
       // 현재 진행중인 핸드북의 완료 상태 조회
       const completionStatus = await this.getHandbookCompletionStatus(studentId, summary.currentHandbook, churchId);
 
+      // 초록보석 4:4가 완료되었는지 확인
+      const green44Key = `${JewelType.GREEN}-4-4`;
+      const isGreen44Completed = completionStatus.get(green44Key) || false;
+
+      // 초록보석 4:4가 완료된 경우, 다음 핸드북의 빨강보석 1:1로 이동
+      if (isGreen44Completed) {
+        const handbookOrder = [SparksHandbook.HANG_GLIDER, SparksHandbook.WING_RUNNER, SparksHandbook.SKY_STORMER];
+        const currentIndex = handbookOrder.indexOf(summary.currentHandbook);
+
+        if (currentIndex < handbookOrder.length - 1) {
+          // 다음 핸드북이 있는 경우
+          const nextHandbook = handbookOrder[currentIndex + 1];
+          return {
+            handbook: nextHandbook,
+            jewelType: JewelType.RED,
+            section: { major: 1, minor: 1 }
+          };
+        } else {
+          // SKY_STORMER의 초록보석 4:4를 완료한 경우, 모든 핸드북 완료
+          return null;
+        }
+      }
+
       // 다음 완료할 섹션 찾기 (현재 보석 타입부터)
       const allSections = generateJewelSections();
 
