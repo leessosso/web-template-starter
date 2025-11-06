@@ -546,7 +546,7 @@ export default function StudentsPage() {
                 <label className="text-sm font-medium mb-3 block">
                   👥 이동할 학생 선택 ({transferStudents.size}명 선택됨)
                 </label>
-                <div className="border rounded-lg p-4 max-h-60 overflow-y-auto bg-gray-50">
+                <div className="border rounded-lg p-4 max-h-60 overflow-y-auto bg-muted">
                   {getStudentsByTeacher(fromTeacherId).length === 0 ? (
                     <p className="text-sm text-muted-foreground text-center py-4">
                       해당 선생님의 학생이 없습니다.
@@ -572,7 +572,7 @@ export default function StudentsPage() {
                       {getStudentsByTeacher(fromTeacherId).map((student) => (
                         <div
                           key={student.id}
-                          className={`flex items-center gap-3 p-2 rounded ${transferStudents.has(student.id) ? 'bg-blue-50 border-blue-200' : 'bg-white'
+                          className={`flex items-center gap-3 p-2 rounded border ${transferStudents.has(student.id) ? 'bg-primary/10 border-primary' : 'bg-card border-border'
                             }`}
                         >
                           <Checkbox

@@ -80,7 +80,7 @@ export function Navigation() {
           <div className="hidden items-center gap-4 md:flex">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <button className="flex items-center gap-3 rounded-md px-2 py-1.5 hover:bg-accent transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
+                <button className="flex items-center gap-3 rounded-md px-2 py-1.5 hover:bg-muted transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
                   <Avatar className="h-8 w-8">
                     <AvatarFallback className="bg-primary text-primary-foreground text-sm">
                       {getInitials(user?.displayName)}
@@ -165,8 +165,8 @@ export function Navigation() {
                       [
                         'px-3 py-2 rounded-md text-sm font-medium transition-colors',
                         isActive
-                          ? 'bg-accent text-accent-foreground'
-                          : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground',
+                          ? 'bg-primary text-primary-foreground'
+                          : 'text-muted-foreground hover:bg-muted hover:text-foreground',
                       ]
                         .filter(Boolean)
                         .join(' ')
@@ -187,7 +187,7 @@ export function Navigation() {
                           navigate('/settings')
                           handleNavClick()
                         }}
-                        className="px-3 py-2 rounded-md text-sm font-medium text-left text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
+                        className="px-3 py-2 rounded-md text-sm font-medium text-left text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
                       >
                         프로필
                       </button>
@@ -196,13 +196,13 @@ export function Navigation() {
                           navigate('/settings')
                           handleNavClick()
                         }}
-                        className="px-3 py-2 rounded-md text-sm font-medium text-left text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
+                        className="px-3 py-2 rounded-md text-sm font-medium text-left text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
                       >
                         설정
                       </button>
                       <button
                         onClick={handleLogout}
-                        className="px-3 py-2 rounded-md text-sm font-medium text-left text-destructive hover:bg-accent transition-colors"
+                        className="px-3 py-2 rounded-md text-sm font-medium text-left text-destructive hover:bg-muted transition-colors"
                       >
                         로그아웃
                       </button>

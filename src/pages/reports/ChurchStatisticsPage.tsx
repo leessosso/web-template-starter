@@ -234,7 +234,7 @@ export default function ChurchStatisticsPage() {
                       <td className="px-6 py-4 text-sm text-right">
                         <div className="flex items-center justify-end gap-2">
                           <span>{month.rate}%</span>
-                          <div className="w-16 h-2 bg-gray-200 rounded-full overflow-hidden">
+                          <div className="w-16 h-2 bg-muted rounded-full overflow-hidden">
                             <div
                               className={`h-full ${
                                 month.rate >= 80

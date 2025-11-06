@@ -457,15 +457,15 @@ export default function HandbookPage() {
                 key={student.id}
                 onClick={() => handleStudentToggle(student.id)}
                 className={`flex items-center justify-between p-3 rounded-lg border cursor-pointer ${selectedAttendances.has(student.id)
-                  ? 'bg-blue-500 text-white border-blue-500'
-                  : 'bg-white border-gray-300'
+                  ? 'bg-primary text-primary-foreground border-primary'
+                  : 'bg-card border-border'
                   }`}
               >
                 <span className="font-medium">
                   {student.name}
                 </span>
                 <CheckCircle
-                  className={`h-5 w-5 ${selectedAttendances.has(student.id) ? 'text-white' : 'text-gray-400'
+                  className={`h-5 w-5 ${selectedAttendances.has(student.id) ? 'text-white' : 'text-muted-foreground'
                     }`}
                 />
               </div>

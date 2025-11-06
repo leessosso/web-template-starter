@@ -117,8 +117,8 @@ export default function DashboardPage() {
         <Card className="min-h-[120px]">
           <CardContent className="p-4 sm:p-6">
             <div className="flex items-center gap-4">
-              <Avatar className="h-12 w-12 bg-accent">
-                <AvatarFallback className="bg-accent text-accent-foreground">
+              <Avatar className="h-12 w-12 bg-primary">
+                <AvatarFallback className="bg-primary text-primary-foreground">
                   <CheckCircle2 className="h-6 w-6" />
                 </AvatarFallback>
               </Avatar>
@@ -151,19 +151,19 @@ export default function DashboardPage() {
       <div>
         <h2 className="text-xl font-semibold mb-4">빠른 액션</h2>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <Card className="cursor-pointer hover:bg-accent transition-colors">
+          <Card className="cursor-pointer hover:bg-muted transition-colors">
             <CardContent className="p-4 text-center">
               <Users className="h-8 w-8 mx-auto mb-2 text-primary" />
               <p className="text-sm">학생 관리</p>
             </CardContent>
           </Card>
-          <Card className="cursor-pointer hover:bg-accent transition-colors">
+          <Card className="cursor-pointer hover:bg-muted transition-colors">
             <CardContent className="p-4 text-center">
-              <CheckCircle2 className="h-8 w-8 mx-auto mb-2 text-accent-foreground" />
+              <CheckCircle2 className="h-8 w-8 mx-auto mb-2 text-primary" />
               <p className="text-sm">출석 체크</p>
             </CardContent>
           </Card>
-          <Card className="cursor-pointer hover:bg-accent transition-colors">
+          <Card className="cursor-pointer hover:bg-muted transition-colors">
             <CardContent className="p-4 text-center">
               <Book className="h-8 w-8 mx-auto mb-2 text-green-500" />
               <p className="text-sm">핸드북</p>

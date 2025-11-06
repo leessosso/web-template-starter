@@ -304,7 +304,7 @@ export default function StudentHandbookDetailPage() {
                       className={`cursor-pointer border-2 h-12 sm:h-16 flex flex-col transition-shadow hover:shadow-md ${
                         isCompleted
                           ? 'border-green-500 bg-red-50'
-                          : 'border-gray-200 bg-white'
+                          : 'border-border bg-card'
                       }`}
                       onClick={() => handleSectionClick(section, JewelType.RED)}
                     >
@@ -350,7 +350,7 @@ export default function StudentHandbookDetailPage() {
                       className={`cursor-pointer border-2 h-12 sm:h-16 flex flex-col transition-shadow hover:shadow-md ${
                         isCompleted
                           ? 'border-green-500 bg-green-50'
-                          : 'border-gray-200 bg-white'
+                          : 'border-border bg-card'
                       }`}
                       onClick={() => handleSectionClick(section, JewelType.GREEN)}
                     >
