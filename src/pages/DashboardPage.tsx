@@ -79,7 +79,7 @@ export default function DashboardPage() {
   // 핸드북 완료 수 계산
   useEffect(() => {
     const completedCount = handbookProgresses.filter(progress =>
-      progress.completed
+      progress.completedDate
     ).length;
     setCompletedHandbooks(completedCount);
   }, [handbookProgresses]);
