@@ -270,11 +270,20 @@ export default function AttendancePage() {
           return <Badge variant="outline">미등록</Badge>;
         }
         return (
-          <Badge
-            variant={attendance === AttendanceStatus.PRESENT ? 'default' : 'destructive'}
-          >
-            {attendance === AttendanceStatus.PRESENT ? '출석' : '결석'}
-          </Badge>
+          <div className="flex items-center gap-2">
+            {attendance === AttendanceStatus.PRESENT ? (
+              <CheckCircle2 className="h-5 w-5 text-green-500" />
+            ) : (
+              <Circle className="h-5 w-5 text-red-500" />
+            )}
+            <span className={`text-sm ${
+              attendance === AttendanceStatus.PRESENT
+                ? 'text-green-500'
+                : 'text-red-500'
+            }`}>
+              {attendance === AttendanceStatus.PRESENT ? '출석' : '결석'}
+            </span>
+          </div>
         );
       },
     },
