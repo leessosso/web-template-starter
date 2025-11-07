@@ -1,5 +1,8 @@
 import type { Theme, ThemeColor } from '../contexts/ThemeContext';
 
+// Re-export theme types for use in other modules
+export type { Theme, ThemeColor };
+
 export enum UserRole {
   ADMIN = 'admin',      // 사이트 전체 관리자
   LEADER = 'leader',    // 교회 리더 (교회 전체 관리)
