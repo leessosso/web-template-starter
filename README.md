@@ -8,6 +8,11 @@ React + TypeScript + Vite 기반으로 제작된 웹사이트 템플릿 스타�
 
 ### 📚 중요 문서
 - **[.cursorrules](./.cursorrules)** - 모든 프로젝트 표준 및 규칙 (Cursor AI 자동 적용)
+- **[.cursor/rules/](./.cursor/rules/)** - 프로젝트 구성 및 코드 구현 가이드
+  - `component-development.md` - 컴포넌트 개발 가이드
+  - `firebase-setup.md` - Firebase 설정
+  - `analytics-*.md` - 분석 도구 설정 가이드
+  - 기타 프로젝트 구성 문서들
 
 ### 🌿 브랜치 구조
 - `main` - 템플릿 브랜치 (수정하지 마세요)
@@ -43,8 +48,11 @@ npm run dev
 - [🎨 테마 변경 가이드](#-테마-변경-가이드)
 - [🚀 권장 워크플로우](#-권장-워크플로우)
 - [📋 주문 제작 실전 예시](#-주문-제작-실전-예시)
+- [🧩 컴포넌트 개발 가이드](#-컴포넌트-개발-가이드)
 - [🛠️ 문제 해결 가이드](#️-문제-해결-가이드)
 - [🔮 향후 확장 아이디어](#-향후-확장-아이디어)
+
+> 💡 **새 컴포넌트를 만들기 전에 [.cursor/rules/component-development.md](./.cursor/rules/component-development.md)를 먼저 읽어주세요!**
 
 ## 주요 특징
 
@@ -205,6 +213,7 @@ npm run dev
 - **분석 도구 설정**: GA, Clarity 등 설정 (초보자 가이드 참고)
 - **다국어 지원**: `src/i18n/locales/`에서 언어 추가
 - **새 컴포넌트 개발**: `src/components/`에 추가
+  - 📖 **중요**: [.cursor/rules/component-development.md](./.cursor/rules/component-development.md) 참고 (상세 가이드)
 
 ### 5. 최종 QA 및 배포
 - **반응형 확인**: 모바일/태블릿/데스크톱 테스트
@@ -240,6 +249,31 @@ npm run preview
 3. 페이지: 홈, 메뉴, 예약, 연락처
 4. 결과: 2시간 내 완성
 ```
+
+## 🧩 컴포넌트 개발 가이드
+
+> 📖 **상세 가이드는 [.cursor/rules/component-development.md](./.cursor/rules/component-development.md)를 참고하세요.**
+
+### 빠른 요약
+
+이 프로젝트는 **`data-theme="dark"` 속성 기반의 CSS 변수 테마 시스템**을 사용합니다.
+**Tailwind의 `dark:` 클래스는 작동하지 않으므로** 하드코딩된 색상을 사용하지 마세요.
+
+**✅ 올바른 방법:**
+```tsx
+<div className="bg-card text-card-foreground">
+  {/* CSS 변수 기반 클래스 사용 */}
+</div>
+```
+
+**❌ 피해야 할 방법:**
+```tsx
+<div className="bg-white dark:bg-gray-900">
+  {/* 작동하지 않습니다! */}
+</div>
+```
+
+자세한 내용, 예시 코드, 체크리스트는 [.cursor/rules/component-development.md](./.cursor/rules/component-development.md)를 확인하세요.
 
 ### 예시 2: 스타트업 랜딩페이지
 ```
