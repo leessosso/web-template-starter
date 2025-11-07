@@ -1,6 +1,7 @@
 import { create } from 'zustand';
-import type { User } from '../models/User';
+import type { User, Theme, ThemeColor } from '../models/User';
 import { signIn, signUp, signOut, onAuthStateChange, getCurrentUser } from '../services/authService';
+import { userService } from '../services/userService';
 import { logger } from '../utils/logger';
 
 interface AuthState {
@@ -18,6 +19,7 @@ interface AuthState {
   ) => Promise<void>;
   signOut: () => Promise<void>;
   updateUser: (updates: Partial<User>) => void;
+  updateUserTheme: (theme?: Theme, themeColor?: ThemeColor) => Promise<void>;
   checkAuth: () => Promise<void>;
   initializeAuth: () => void;
   clearError: () => void;
@@ -94,6 +96,29 @@ export const useAuthStore = create<AuthState>((set) => ({
     set((state) => ({
       user: state.user ? { ...state.user, ...updates } : null,
     })),
+
+  updateUserTheme: async (theme?: Theme, themeColor?: ThemeColor) => {
+    const state = useAuthStore.getState();
+    if (!state.user) {
+      throw new Error('로그인이 필요합니다.');
+    }
+
+    try {
+      await userService.updateUserTheme(state.user.uid, theme, themeColor);
+
+      // 로컬 상태 업데이트
+      set((currentState) => ({
+        user: currentState.user ? {
+          ...currentState.user,
+          theme: theme ?? currentState.user.theme,
+          themeColor: themeColor ?? currentState.user.themeColor,
+        } : null,
+      }));
+    } catch (error) {
+      logger.error('테마 설정 업데이트 실패', error);
+      throw error;
+    }
+  },
 
   initializeAuth: () => {
     // 인증 상태 변경 리스너 설정

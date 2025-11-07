@@ -1,3 +1,5 @@
+import type { Theme, ThemeColor } from '../contexts/ThemeContext';
+
 export enum UserRole {
   ADMIN = 'admin',      // 사이트 전체 관리자
   LEADER = 'leader',    // 교회 리더 (교회 전체 관리)
@@ -19,6 +21,10 @@ export interface User {
   churchName: string;
   churchId?: string;
   createdAt: Date;
+
+  // 테마 설정
+  theme?: Theme;               // 라이트/다크 모드 설정
+  themeColor?: ThemeColor;     // 테마 색상 설정
 
   // 개인정보 (선택적)
   phoneNumber?: string;        // 전화번호

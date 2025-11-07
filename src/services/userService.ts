@@ -4,9 +4,11 @@ import {
   query,
   where,
   Timestamp,
+  doc,
+  updateDoc,
 } from 'firebase/firestore';
 import { db, isFirebaseConfigured } from '../config/firebase';
-import type { User } from '../models/User';
+import type { User, Theme, ThemeColor } from '../models/User';
 
 export class UserService {
   async getTeachersByChurch(churchId: string): Promise<User[]> {
@@ -36,6 +38,33 @@ export class UserService {
       });
     } catch (error) {
       console.error('선생님 목록 가져오기 실패:', error);
+      throw error;
+    }
+  }
+
+  async updateUserTheme(
+    userId: string,
+    theme?: Theme,
+    themeColor?: ThemeColor
+  ): Promise<void> {
+    if (!isFirebaseConfigured() || !db) {
+      throw new Error('Firebase가 설정되지 않았습니다.');
+    }
+
+    try {
+      const userRef = doc(db, 'users', userId);
+      const updates: Partial<Pick<User, 'theme' | 'themeColor'>> = {};
+
+      if (theme !== undefined) {
+        updates.theme = theme;
+      }
+      if (themeColor !== undefined) {
+        updates.themeColor = themeColor;
+      }
+
+      await updateDoc(userRef, updates);
+    } catch (error) {
+      console.error('사용자 테마 설정 업데이트 실패:', error);
       throw error;
     }
   }
