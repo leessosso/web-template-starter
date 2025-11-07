@@ -7,6 +7,7 @@ import { userService } from '../../services/userService';
 import { studentService } from '../../services/studentService';
 import { AttendanceStatus } from '../../models/Attendance';
 import { canManageAttendance } from '../../utils/permissions';
+import { Club } from '../../constants/clubs';
 import type { User } from '../../models/User';
 import type { Student } from '../../models/Student';
 import { Button } from '../../components/ui/Button';
@@ -29,7 +30,7 @@ import type { ColumnDef } from '@tanstack/react-table';
 type StudentWithAttendance = {
   id: string;
   name: string;
-  grade: number;
+  club: Club;
   assignedTeacherId?: string;
   tempAssignedTeacherId?: string;
   tempAssignedUntil?: Date;
@@ -192,6 +193,18 @@ export default function AttendancePage() {
     return teacher?.displayName || '알 수 없음';
   };
 
+  // 클럽을 텍스트로 변환하는 함수
+  const getClubText = (club: Club): string => {
+    const clubMap: Record<Club, string> = {
+      [Club.CUBBIES]: 'Cubbies',
+      [Club.SPARKS]: 'Sparks',
+      [Club.TNT]: 'T&T',
+      [Club.JOURNEY]: 'Journey',
+      [Club.TREK]: 'Trek',
+    };
+    return clubMap[club] || club;
+  };
+
   // 학생의 현재 담당 선생님 ID를 가져오는 함수
   const getCurrentTeacherId = (student: { tempAssignedTeacherId?: string; tempAssignedUntil?: Date | string; assignedTeacherId?: string }) => {
     // 임시 담당 선생님이 있고, 임시 담당 종료일이 아직 지나지 않은 경우
@@ -231,7 +244,7 @@ export default function AttendancePage() {
     return {
       id: student.id,
       name: student.name,
-      grade: student.grade,
+      club: student.club,
       assignedTeacherId: student.assignedTeacherId,
       tempAssignedTeacherId: student.tempAssignedTeacherId,
       tempAssignedUntil: student.tempAssignedUntil,
@@ -249,11 +262,11 @@ export default function AttendancePage() {
       ),
     },
     {
-      accessorKey: 'grade',
-      header: '학년',
+      accessorKey: 'club',
+      header: '클럽',
       cell: ({ row }) => (
         <Badge variant="outline">
-          {['Puggles', 'Cubbies', 'Sparks', 'T&T'][row.original.grade - 1]}
+          {getClubText(row.original.club)}
         </Badge>
       ),
     },
@@ -387,7 +400,7 @@ export default function AttendancePage() {
                         <div className="font-semibold">{student.name}</div>
                         <div className="flex items-center gap-2 mt-1">
                           <Badge variant="outline" className="text-xs">
-                            {['Puggles', 'Cubbies', 'Sparks', 'T&T'][student.grade - 1]}
+                            {getClubText(student.club)}
                           </Badge>
                           <span className="text-xs text-muted-foreground">
                             담당: {getTeacherName(getCurrentTeacherId(student))}
@@ -492,7 +505,7 @@ export default function AttendancePage() {
                 }`}
               >
                 <span className="font-medium">
-                  {student.name} ({['Puggles', 'Cubbies', 'Sparks', 'T&T'][student.grade - 1]})
+                  {student.name} ({getClubText(student.club)})
                 </span>
                 <CheckCircle
                   className={`h-5 w-5 ${

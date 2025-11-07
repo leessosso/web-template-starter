@@ -264,9 +264,15 @@ export default function StudentsPage() {
     setToTeacherId(''); // 받는 선생님 초기화
   };
 
-  const getGradeText = (grade: number) => {
-    const grades = ['Puggles', 'Cubbies', 'Sparks', 'T&T'];
-    return grades[grade - 1] || '알 수 없음';
+  const getClubText = (club: string) => {
+    const clubMap: Record<string, string> = {
+      [Club.CUBBIES]: 'Cubbies',
+      [Club.SPARKS]: 'Sparks',
+      [Club.TNT]: 'T&T',
+      [Club.JOURNEY]: 'Journey',
+      [Club.TREK]: 'Trek',
+    };
+    return clubMap[club] || club;
   };
 
   return (
@@ -590,7 +596,7 @@ export default function StudentsPage() {
                           <div className="flex items-center gap-2">
                             <span className="font-medium">{student.name}</span>
                             <Badge variant="outline" className="text-xs">
-                              {getGradeText(student.grade)}
+                              {getClubText(student.club)}
                             </Badge>
                           </div>
                         </div>

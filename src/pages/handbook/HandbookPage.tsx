@@ -12,11 +12,21 @@ import {
 } from '../../components/ui/dialog';
 import { Card, CardContent } from '../../components/ui/Card';
 import { Alert, AlertDescription } from '../../components/ui/Alert';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '../../components/ui/select';
 import { DataTable } from '../../components/data-visualization/DataTable';
 import type { ColumnDef } from '@tanstack/react-table';
-import { useStudentStore } from '../../store/studentStore';
 import { useAuthStore } from '../../store/authStore';
-import { Club } from '../../constants';
+import { Club, CLUB_OPTIONS } from '../../constants';
+import { canManageHandbook, isAdmin, isLeader } from '../../utils/permissions';
+import { studentService } from '../../services/studentService';
+import { userService } from '../../services/userService';
+import type { User } from '../../models/User';
 import { useSparksHandbookStore } from '../../store/sparksHandbookStore';
 import { SPARKS_HANDBOOKS } from '../../constants/sparksHandbooks';
 import { SparksHandbook } from '../../models/SparksHandbookProgress';
@@ -27,7 +37,7 @@ import type { Student } from '../../models/Student';
 export default function HandbookPage() {
   const navigate = useNavigate();
   const { user } = useAuthStore();
-  const { students, fetchStudents } = useStudentStore();
+  const [students, setStudents] = useState<Student[]>([]);
   const {
     studentSummaries,
     studentProgresses,
@@ -47,7 +57,10 @@ export default function HandbookPage() {
   } = useAttendanceStore();
 
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedClub, setSelectedClub] = useState<Club>(Club.SPARKS);
   const [filteredStudents, setFilteredStudents] = useState<Student[]>([]);
+  const [studentsByTeacher, setStudentsByTeacher] = useState<Map<string, Student[]>>(new Map());
+  const [teachers, setTeachers] = useState<User[]>([]);
   const [isMobile, setIsMobile] = useState(false);
   const [attendanceDialogOpen, setAttendanceDialogOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
@@ -63,11 +76,41 @@ export default function HandbookPage() {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
+  // 선생님 목록 가져오기
   useEffect(() => {
-    if (user?.churchId) {
-      fetchStudents();
+    const fetchTeachers = async () => {
+      if (user?.churchId) {
+        try {
+          const teacherList = await userService.getTeachersByChurch(user.churchId);
+          setTeachers(teacherList);
+        } catch (error) {
+          console.error('선생님 목록 가져오기 실패:', error);
+        }
+      }
+    };
+    fetchTeachers();
+  }, [user?.churchId]);
+
+  // 핸드북 페이지용 학생 목록 가져오기
+  const fetchHandbookStudents = async () => {
+    if (!user?.churchId) return;
+
+    try {
+      // 관리자나 교회 리더는 항상 모든 학생 조회, 클럽 리더 이상은 핸드북 관리 권한에 따라 결정
+      const canViewAllStudents = isAdmin(user) || isLeader(user) || canManageHandbook(user);
+      const teacherId = canViewAllStudents ? undefined : user.uid;
+
+      const allStudents = await studentService.getStudentsByChurch(user.churchId, teacherId);
+
+      setStudents(allStudents);
+    } catch (error) {
+      console.error('학생 목록 가져오기 실패:', error);
     }
-  }, [user?.churchId, fetchStudents]);
+  };
+
+  useEffect(() => {
+    fetchHandbookStudents();
+  }, [user?.churchId, user?.uid]);
 
   // 출결 데이터 가져오기
   useEffect(() => {
@@ -76,27 +119,55 @@ export default function HandbookPage() {
     }
   }, [user?.churchId, selectedDate, fetchAttendances]);
 
-  // SPARKS 학생들의 진도 요약 가져오기
+  // 선택된 클럽 학생들의 진도 요약 가져오기
   useEffect(() => {
-    if (students && user?.churchId) {
-      const sparksStudents = students.filter(student => student.club === Club.SPARKS);
-      sparksStudents.forEach(student => {
+    if (students && user?.churchId && selectedClub === Club.SPARKS) {
+      const clubStudents = students.filter(student => student.club === selectedClub);
+      clubStudents.forEach(student => {
         fetchStudentSummary(student.id, user.churchId!);
         fetchStudentProgress(student.id, user.churchId!);
       });
     }
-  }, [students, user?.churchId, fetchStudentSummary, fetchStudentProgress]);
+  }, [students, user?.churchId, selectedClub, fetchStudentSummary, fetchStudentProgress]);
 
+  // 선생님별로 학생들 그룹화
   useEffect(() => {
-    if (students) {
-      // SPARKS 클럽 학생만 필터링
-      const sparksStudents = students.filter(student => student.club === Club.SPARKS);
-      const filtered = sparksStudents.filter(student =>
-        student.name.toLowerCase().includes(searchTerm.toLowerCase())
+    if (students && teachers.length > 0) {
+      const clubStudents = students.filter(student => student.club === selectedClub);
+      const teacherMap = new Map<string, Student[]>();
+
+      // 각 선생님별로 학생들 그룹화
+      teachers.forEach(teacher => {
+        const teacherStudents = clubStudents.filter(student =>
+          student.assignedTeacherId === teacher.uid
+        );
+        if (teacherStudents.length > 0) {
+          teacherMap.set(teacher.uid, teacherStudents);
+        }
+      });
+
+      // 미배정 학생들
+      const unassignedStudents = clubStudents.filter(student =>
+        !student.assignedTeacherId
       );
-      setFilteredStudents(filtered);
+      if (unassignedStudents.length > 0) {
+        teacherMap.set('unassigned', unassignedStudents);
+      }
+
+      setStudentsByTeacher(teacherMap);
+
+      // 검색 필터링
+      let allFilteredStudents: Student[] = [];
+      teacherMap.forEach(students => {
+        const filtered = students.filter(student =>
+          student.name.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        allFilteredStudents = [...allFilteredStudents, ...filtered];
+      });
+
+      setFilteredStudents(allFilteredStudents);
     }
-  }, [students, searchTerm]);
+  }, [students, teachers, searchTerm, selectedClub]);
 
   const getHandbookLabel = (handbook: SparksHandbook | null): string => {
     if (!handbook) return '미시작';
@@ -105,6 +176,11 @@ export default function HandbookPage() {
   };
 
   const getProgressText = (summary: any): string => {
+    // SPARKS 클럽이 아니면 아직 핸드북 시스템이 준비되지 않음
+    if (selectedClub !== Club.SPARKS) {
+      return '준비 중';
+    }
+
     if (!summary) return '진도 없음';
     if (!summary.currentHandbook) return '-';
 
@@ -241,9 +317,13 @@ export default function HandbookPage() {
   // 데스크톱 테이블용 데이터 준비
   const tableData = filteredStudents.map(student => {
     const summary = studentSummaries.get(student.id);
+    const teacher = teachers.find(t => t.uid === student.assignedTeacherId);
+    const teacherName = !student.assignedTeacherId ? '미배정' : teacher?.displayName || '알 수 없음';
+
     return {
       id: student.id,
       name: student.name,
+      teacher: teacherName,
       quickComplete: student,
       todayCompleted: getTodayCompletedCount(student.id),
       currentProgress: getProgressText(summary),
@@ -254,16 +334,23 @@ export default function HandbookPage() {
   // 데스크톱 테이블 컬럼 정의
   const columns: ColumnDef<typeof tableData[0]>[] = [
     {
+      accessorKey: 'teacher',
+      header: '담당 선생님',
+      cell: ({ row }) => (
+        <div className="text-sm text-muted-foreground">{row.original.teacher}</div>
+      ),
+    },
+    {
       accessorKey: 'name',
       header: '학생 이름',
       cell: ({ row }) => (
         <div className="font-medium">{row.original.name}</div>
       ),
     },
-    {
+    ...(selectedClub === Club.SPARKS ? [{
       accessorKey: 'quickComplete',
       header: '빠른 완료',
-      cell: ({ row }) => (
+      cell: ({ row }: any) => (
         <Button
           size="sm"
           variant="outline"
@@ -277,16 +364,16 @@ export default function HandbookPage() {
           완료
         </Button>
       ),
-    },
-    {
+    }] : []),
+    ...(selectedClub === Club.SPARKS ? [{
       accessorKey: 'todayCompleted',
       header: '오늘 완료',
-      cell: ({ row }) => (
+      cell: ({ row }: any) => (
         <div className="text-sm text-muted-foreground">
           {row.original.todayCompleted}개
         </div>
       ),
-    },
+    }] : []),
     {
       accessorKey: 'currentProgress',
       header: '현재 진도',
@@ -296,23 +383,46 @@ export default function HandbookPage() {
         </div>
       ),
     },
-    {
+    ...(selectedClub === Club.SPARKS ? [{
       accessorKey: 'lastCompleted',
       header: '마지막 완료',
-      cell: ({ row }) => (
+      cell: ({ row }: any) => (
         <div className="text-sm text-muted-foreground">
           {row.original.lastCompleted}
         </div>
       ),
-    },
+    }] : []),
   ];
 
   return (
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl sm:text-3xl font-bold mb-2">
-          SPARKS 핸드북 진도
+          핸드북 진도
         </h1>
+        <p className="text-muted-foreground">
+          클럽별로 학생들의 핸드북 진도를 확인하고 관리할 수 있습니다.
+        </p>
+      </div>
+
+      {/* 클럽 선택 */}
+      <div className="flex items-center gap-4">
+        <label className="text-sm font-medium">클럽 선택:</label>
+        <Select
+          value={selectedClub}
+          onValueChange={(value) => setSelectedClub(value as Club)}
+        >
+          <SelectTrigger className="w-48">
+            <SelectValue placeholder="클럽을 선택하세요" />
+          </SelectTrigger>
+          <SelectContent>
+            {CLUB_OPTIONS.map((option) => (
+              <SelectItem key={option.value} value={option.value}>
+                {option.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </div>
 
       <div>
@@ -333,62 +443,84 @@ export default function HandbookPage() {
         </Alert>
       )}
 
-      {/* 모바일: 카드 형태, 데스크톱: 테이블 */}
+      {/* 모바일: 선생님별 카드 형태 */}
       <div className="block md:hidden">
-        {sparksLoading ? (
+        {selectedClub === Club.SPARKS && sparksLoading ? (
           <div className="text-center py-8">
             <p>로딩 중...</p>
           </div>
-        ) : filteredStudents.length === 0 ? (
+        ) : studentsByTeacher.size === 0 ? (
           <div className="text-center py-8">
             <p className="text-muted-foreground">
-              {searchTerm ? '검색 결과가 없습니다.' : '등록된 SPARKS 학생이 없습니다.'}
+              {searchTerm ? '검색 결과가 없습니다.' : `등록된 ${CLUB_OPTIONS.find(c => c.value === selectedClub)?.label} 학생이 없습니다.`}
             </p>
           </div>
         ) : (
-          <div className="flex flex-col gap-3 max-h-[calc(100vh-280px)] overflow-y-auto pr-1">
-            {filteredStudents.map((student) => {
-              const summary = studentSummaries.get(student.id);
+          <div className="flex flex-col gap-6 max-h-[calc(100vh-280px)] overflow-y-auto pr-1">
+            {Array.from(studentsByTeacher.entries()).map(([teacherId, teacherStudents]) => {
+              const teacher = teachers.find(t => t.uid === teacherId);
+              const teacherName = teacherId === 'unassigned' ? '미배정' : teacher?.displayName || '알 수 없음';
+
+              const filteredTeacherStudents = teacherStudents.filter(student =>
+                student.name.toLowerCase().includes(searchTerm.toLowerCase())
+              );
+
+              if (filteredTeacherStudents.length === 0) return null;
+
               return (
-                <Card
-                  key={student.id}
-                  className="cursor-pointer hover:shadow-md transition-shadow"
-                  onClick={() => handleStudentClick(student.id)}
-                >
-                  <CardContent className="p-4">
-                    <div className="flex items-center justify-between mb-2">
-                      <h3 className="text-lg font-semibold">{student.name}</h3>
-                      <Button
-                        size="sm"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleQuickCompleteClick(student);
-                        }}
-                        className="text-xs px-3 py-1"
-                      >
-                        <Play className="w-3 h-3 mr-1" />
-                        완료
-                      </Button>
-                    </div>
+                <div key={teacherId} className="space-y-3">
+                  <h3 className="text-lg font-semibold text-primary border-b pb-2">
+                    {teacherName} 선생님 ({filteredTeacherStudents.length}명)
+                  </h3>
+                  <div className="flex flex-col gap-3">
+                    {filteredTeacherStudents.map((student) => {
+                      const summary = studentSummaries.get(student.id);
+                      return (
+                        <Card
+                          key={student.id}
+                          className="cursor-pointer hover:shadow-md transition-shadow"
+                          onClick={() => handleStudentClick(student.id)}
+                        >
+                          <CardContent className="p-4">
+                            <div className="flex items-center justify-between mb-2">
+                              <h4 className="text-lg font-semibold">{student.name}</h4>
+                              {selectedClub === Club.SPARKS && (
+                                <Button
+                                  size="sm"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleQuickCompleteClick(student);
+                                  }}
+                                  className="text-xs px-3 py-1"
+                                >
+                                  <Play className="w-3 h-3 mr-1" />
+                                  완료
+                                </Button>
+                              )}
+                            </div>
 
-                    <div className="space-y-1">
-                      <div className="flex justify-between items-center">
-                        <p className="text-sm text-muted-foreground">
-                          {getProgressText(summary)}
-                        </p>
-                        <p className="text-sm font-medium text-primary">
-                          오늘: {getTodayCompletedCount(student.id)}개
-                        </p>
-                      </div>
-                    </div>
+                            <div className="space-y-1">
+                              <div className="flex justify-between items-center">
+                                <p className="text-sm text-muted-foreground">
+                                  {getProgressText(summary)}
+                                </p>
+                                <p className="text-sm font-medium text-primary">
+                                  오늘: {getTodayCompletedCount(student.id)}개
+                                </p>
+                              </div>
+                            </div>
 
-                    {summary?.lastCompletedDate && (
-                      <p className="text-xs text-muted-foreground mt-2">
-                        마지막: {summary.lastCompletedDate.toLocaleDateString('ko-KR')}
-                      </p>
-                    )}
-                  </CardContent>
-                </Card>
+                            {summary?.lastCompletedDate && (
+                              <p className="text-xs text-muted-foreground mt-2">
+                                마지막: {summary.lastCompletedDate.toLocaleDateString('ko-KR')}
+                              </p>
+                            )}
+                          </CardContent>
+                        </Card>
+                      );
+                    })}
+                  </div>
+                </div>
               );
             })}
           </div>
@@ -397,7 +529,7 @@ export default function HandbookPage() {
 
       {/* 데스크톱: 테이블 */}
       <div className="hidden md:block">
-        {sparksLoading ? (
+        {selectedClub === Club.SPARKS && sparksLoading ? (
           <div className="text-center py-8">
             <p>로딩 중...</p>
           </div>
@@ -450,26 +582,42 @@ export default function HandbookPage() {
             />
           </div>
 
-          {/* 학생 선택 리스트 */}
-          <div className="max-h-60 overflow-y-auto space-y-2">
-            {students?.filter(student => student.club === Club.SPARKS).map((student) => (
-              <div
-                key={student.id}
-                onClick={() => handleStudentToggle(student.id)}
-                className={`flex items-center justify-between p-3 rounded-lg border cursor-pointer ${selectedAttendances.has(student.id)
-                  ? 'bg-primary text-primary-foreground border-primary'
-                  : 'bg-card border-border'
-                  }`}
-              >
-                <span className="font-medium">
-                  {student.name}
-                </span>
-                <CheckCircle
-                  className={`h-5 w-5 ${selectedAttendances.has(student.id) ? 'text-white' : 'text-muted-foreground'
-                    }`}
-                />
-              </div>
-            ))}
+          {/* 학생 선택 리스트 - 선생님별 그룹화 */}
+          <div className="max-h-60 overflow-y-auto space-y-4">
+            {Array.from(studentsByTeacher.entries()).map(([teacherId, teacherStudents]) => {
+              const teacher = teachers.find(t => t.uid === teacherId);
+              const teacherName = teacherId === 'unassigned' ? '미배정' : teacher?.displayName || '알 수 없음';
+
+              if (teacherStudents.length === 0) return null;
+
+              return (
+                <div key={teacherId} className="space-y-2">
+                  <h4 className="text-sm font-semibold text-primary border-b pb-1">
+                    {teacherName} 선생님 ({teacherStudents.length}명)
+                  </h4>
+                  <div className="space-y-1">
+                    {teacherStudents.map((student) => (
+                      <div
+                        key={student.id}
+                        onClick={() => handleStudentToggle(student.id)}
+                        className={`flex items-center justify-between p-2 rounded-lg border cursor-pointer text-sm ${selectedAttendances.has(student.id)
+                          ? 'bg-primary text-primary-foreground border-primary'
+                          : 'bg-card border-border'
+                          }`}
+                      >
+                        <span className="font-medium">
+                          {student.name}
+                        </span>
+                        <CheckCircle
+                          className={`h-4 w-4 ${selectedAttendances.has(student.id) ? 'text-white' : 'text-muted-foreground'
+                            }`}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
           </div>
 
           <p className="text-sm text-muted-foreground text-center mt-4 mb-6">

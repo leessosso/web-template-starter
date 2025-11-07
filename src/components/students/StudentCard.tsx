@@ -37,9 +37,15 @@ export function StudentCard({
     return teacher?.displayName || '알 수 없음';
   };
 
-  const getGradeText = (grade: number) => {
-    const grades = ['Puggles', 'Cubbies', 'Sparks', 'T&T'];
-    return grades[grade - 1] || '알 수 없음';
+  const getClubText = (club: string) => {
+    const clubMap: Record<string, string> = {
+      'Cubbies': 'Cubbies',
+      'Sparks': 'Sparks',
+      'T&T': 'T&T',
+      'Journey': 'Journey',
+      'Trek': 'Trek',
+    };
+    return clubMap[club] || club;
   };
 
   const getGenderText = (gender: 'male' | 'female') => {
@@ -94,7 +100,7 @@ export function StudentCard({
                 </h3>
                 <div className="flex gap-2 mt-1">
                   <Badge variant="outline">
-                    {getGradeText(student.grade)}
+                    {getClubText(student.club)}
                   </Badge>
                   <Badge variant="outline">
                     {getGenderText(student.gender)}

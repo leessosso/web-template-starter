@@ -2,6 +2,15 @@ import { useState, useEffect } from 'react';
 import type { StudentFormData, Student } from '../../models/Student';
 import type { User } from '../../models/User';
 import { Club, CLUB_OPTIONS } from '../../constants/clubs';
+
+// 클럽별 기본 학년 매핑
+const CLUB_TO_GRADE_MAP: Record<Club, number> = {
+  [Club.CUBBIES]: 1, // 만3-5세 → 1학년
+  [Club.SPARKS]: 2,  // K-2학년 → 2학년
+  [Club.TNT]: 3,     // 3-6학년 → 3학년
+  [Club.JOURNEY]: 4, // 중학부 → 4학년
+  [Club.TREK]: 4,    // 고등부 → 4학년
+};
 import { useAuthStore } from '../../store/authStore';
 import { userService } from '../../services/userService';
 import { Button } from '../ui/Button';
@@ -89,7 +98,7 @@ export function StudentFormDialog({
         setStudentForm({
           name: '',
           club: Club.CUBBIES,
-          grade: 1,
+          grade: CLUB_TO_GRADE_MAP[Club.CUBBIES],
           gender: 'male',
           birthDate: undefined,
           assignedTeacherId: undefined,
@@ -107,7 +116,7 @@ export function StudentFormDialog({
       setStudentForm({
         name: '',
         club: Club.CUBBIES,
-        grade: 1,
+        grade: CLUB_TO_GRADE_MAP[Club.CUBBIES],
         gender: 'male',
         birthDate: undefined,
         assignedTeacherId: undefined,
@@ -164,7 +173,14 @@ export function StudentFormDialog({
             </label>
             <Select
               value={studentForm.club}
-              onValueChange={(value) => setStudentForm({ ...studentForm, club: value as Club })}
+              onValueChange={(value) => {
+                const selectedClub = value as Club;
+                setStudentForm({
+                  ...studentForm,
+                  club: selectedClub,
+                  grade: CLUB_TO_GRADE_MAP[selectedClub] || 1
+                });
+              }}
             >
               <SelectTrigger>
                 <SelectValue placeholder="클럽을 선택하세요" />
@@ -177,27 +193,9 @@ export function StudentFormDialog({
                 ))}
               </SelectContent>
             </Select>
-          </div>
-
-          {/* 학년 */}
-          <div>
-            <label className="text-sm font-medium mb-2 block">
-              학년 <span className="text-red-500">*</span>
-            </label>
-            <Select
-              value={studentForm.grade.toString()}
-              onValueChange={(value) => setStudentForm({ ...studentForm, grade: parseInt(value) })}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="학년을 선택하세요" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="1">1학년 (Puggles)</SelectItem>
-                <SelectItem value="2">2학년 (Cubbies)</SelectItem>
-                <SelectItem value="3">3학년 (Sparks)</SelectItem>
-                <SelectItem value="4">4학년 (T&T)</SelectItem>
-              </SelectContent>
-            </Select>
+            <p className="text-xs text-muted-foreground mt-1">
+              선택된 클럽에 따라 학년이 자동으로 설정됩니다.
+            </p>
           </div>
 
           {/* 성별 */}
