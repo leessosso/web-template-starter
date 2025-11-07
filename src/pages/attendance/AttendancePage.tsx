@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { User as UserIcon, CheckCircle2, Circle, CheckCircle, Calendar, Plus } from 'lucide-react';
+import { useMobile } from '../../hooks/useMobile';
 import { useAttendanceStore } from '../../store/attendanceStore';
 import { useStudentStore } from '../../store/studentStore';
 import { useAuthStore } from '../../store/authStore';
@@ -39,7 +40,7 @@ type StudentWithAttendance = {
 };
 
 export default function AttendancePage() {
-  const [isMobile, setIsMobile] = useState(false);
+  const isMobile = useMobile();
   const { user } = useAuthStore();
   const {
     attendances,
@@ -68,16 +69,6 @@ export default function AttendancePage() {
   const [selectedAttendances, setSelectedAttendances] = useState<Set<string>>(new Set());
   const [teachers, setTeachers] = useState<User[]>([]);
   const [studentDialogOpen, setStudentDialogOpen] = useState(false);
-
-  // 모바일 감지
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
 
   // 선생님 목록 가져오기
   useEffect(() => {
@@ -447,15 +438,17 @@ export default function AttendancePage() {
       {isMobile && (
         <>
           <Button
-            className="fixed bottom-20 right-4 h-14 w-14 rounded-full shadow-lg z-40"
+            className="fixed bottom-20 right-4 h-14 w-14 rounded-full shadow-lg z-50 bg-muted hover:bg-muted/80 border-2 border-primary"
             onClick={() => setStudentDialogOpen(true)}
             variant="outline"
+            style={{ zIndex: 9999 }}
           >
             <Plus className="h-6 w-6" />
           </Button>
           <Button
-            className="fixed bottom-4 right-4 h-14 w-14 rounded-full shadow-lg z-40"
+            className="fixed bottom-4 right-4 h-14 w-14 rounded-full shadow-lg z-50 bg-primary hover:bg-primary/90"
             onClick={handleOpenAttendanceDialog}
+            style={{ zIndex: 9999 }}
           >
             <Calendar className="h-6 w-6" />
           </Button>

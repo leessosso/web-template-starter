@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useMobile } from '../../hooks/useMobile';
 import { Search, CheckCircle, Play, Calendar } from 'lucide-react';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
@@ -61,20 +62,10 @@ export default function HandbookPage() {
   const [filteredStudents, setFilteredStudents] = useState<Student[]>([]);
   const [studentsByTeacher, setStudentsByTeacher] = useState<Map<string, Student[]>>(new Map());
   const [teachers, setTeachers] = useState<User[]>([]);
-  const [isMobile, setIsMobile] = useState(false);
+  const isMobile = useMobile();
   const [attendanceDialogOpen, setAttendanceDialogOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
   const [selectedAttendances, setSelectedAttendances] = useState<Set<string>>(new Set());
-
-  // 모바일 감지
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
 
   // 선생님 목록 가져오기
   useEffect(() => {
@@ -554,8 +545,9 @@ export default function HandbookPage() {
       {/* 모바일 출결 체크 FAB */}
       {isMobile && (
         <Button
-          className="fixed bottom-4 right-4 h-14 w-14 rounded-full shadow-lg z-40"
+          className="fixed bottom-4 right-4 h-14 w-14 rounded-full shadow-lg z-50 bg-primary hover:bg-primary/90"
           onClick={handleOpenAttendanceDialog}
+          style={{ zIndex: 9999 }}
         >
           <Calendar className="h-6 w-6" />
         </Button>
