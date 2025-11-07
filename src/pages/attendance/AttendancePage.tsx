@@ -315,11 +315,6 @@ export default function AttendancePage() {
                 month: 'long',
                 day: 'numeric'
               })}
-              {selectedDate === new Date().toISOString().split('T')[0] && (
-                <span className="ml-1 text-xs bg-primary text-primary-foreground px-1.5 py-0.5 rounded">
-                  오늘
-                </span>
-              )}
             </span>
           </div>
 
