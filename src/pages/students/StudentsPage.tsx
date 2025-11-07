@@ -13,6 +13,7 @@ import { useStudentStore } from '../../store/studentStore';
 import { useAuthStore } from '../../store/authStore';
 import { userService } from '../../services/userService';
 import { isAdmin } from '../../utils/permissions';
+import { Club } from '../../constants';
 import type { Student, StudentFormData } from '../../models/Student';
 import type { User } from '../../models/User';
 import { StudentFormDialog } from '../../components/forms';
