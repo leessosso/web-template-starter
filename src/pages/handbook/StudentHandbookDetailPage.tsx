@@ -36,7 +36,7 @@ export default function StudentHandbookDetailPage() {
   const { studentId } = useParams<{ studentId: string }>();
   const { user } = useAuthStore();
 
-  const { students } = useStudentStore();
+  const { students, fetchStudents } = useStudentStore();
   const {
     studentSummaries,
     studentProgresses,
@@ -57,6 +57,13 @@ export default function StudentHandbookDetailPage() {
   // 학생 정보 찾기
   const student = students?.find(s => s.id === studentId);
   const summary = studentId ? studentSummaries.get(studentId) : undefined;
+
+  // 학생 목록 로드
+  useEffect(() => {
+    if (user?.churchId) {
+      fetchStudents();
+    }
+  }, [user?.churchId, fetchStudents]);
 
   useEffect(() => {
     if (studentId && user?.churchId) {
@@ -113,7 +120,7 @@ export default function StudentHandbookDetailPage() {
     }
 
     const isCompleted = isSectionCompleted(jewelType, section);
-    
+
     setSelectedSection(section);
     setSelectedJewelType(jewelType);
     setIsCompletedSection(isCompleted);
@@ -301,24 +308,23 @@ export default function StudentHandbookDetailPage() {
                 return (
                   <div key={`red-${section.major}-${section.minor}`}>
                     <Card
-                      className={`cursor-pointer border-2 h-12 sm:h-16 flex flex-col transition-shadow hover:shadow-md ${
-                        isCompleted
-                          ? 'border-green-500 bg-red-50'
-                          : 'border-border bg-card'
-                      }`}
+                      className={`cursor-pointer border-2 h-12 sm:h-16 flex flex-col transition-shadow hover:shadow-md ${isCompleted
+                        ? 'border-green-500 bg-red-50 dark:bg-red-950/40'
+                        : 'border-border bg-card'
+                        }`}
                       onClick={() => handleSectionClick(section, JewelType.RED)}
                     >
                       <CardContent className="p-1 sm:p-2 text-center flex-1 flex flex-col justify-center">
                         {/* 섹션 번호 */}
-                        <p className="text-xs sm:text-sm font-medium mb-1">
+                        <p className={`text-xs sm:text-sm font-medium mb-1 ${isCompleted ? 'text-gray-900 dark:text-gray-100' : ''}`}>
                           {sectionToString(section)}
                         </p>
                         {/* 체크 아이콘과 날짜 */}
                         {isCompleted && (
                           <div className="flex items-center justify-center">
-                            <CheckCircle className="text-green-500 w-3 h-3 sm:w-3.5 sm:h-3.5 mr-0.5" />
+                            <CheckCircle className="text-green-500 dark:text-green-400 w-3 h-3 sm:w-3.5 sm:h-3.5 mr-0.5" />
                             {completedDate && (
-                              <span className="text-xs text-green-500 font-medium">
+                              <span className="text-xs text-green-500 dark:text-green-400 font-medium">
                                 {completedDate.toLocaleDateString('ko-KR', {
                                   month: 'short',
                                   day: 'numeric'
@@ -347,24 +353,23 @@ export default function StudentHandbookDetailPage() {
                 return (
                   <div key={`green-${section.major}-${section.minor}`}>
                     <Card
-                      className={`cursor-pointer border-2 h-12 sm:h-16 flex flex-col transition-shadow hover:shadow-md ${
-                        isCompleted
-                          ? 'border-green-500 bg-green-50'
-                          : 'border-border bg-card'
-                      }`}
+                      className={`cursor-pointer border-2 h-12 sm:h-16 flex flex-col transition-shadow hover:shadow-md ${isCompleted
+                        ? 'border-green-500 bg-green-50 dark:bg-green-950/40'
+                        : 'border-border bg-card'
+                        }`}
                       onClick={() => handleSectionClick(section, JewelType.GREEN)}
                     >
                       <CardContent className="p-1 sm:p-2 text-center flex-1 flex flex-col justify-center">
                         {/* 섹션 번호 */}
-                        <p className="text-xs sm:text-sm font-medium mb-1">
+                        <p className={`text-xs sm:text-sm font-medium mb-1 ${isCompleted ? 'text-gray-900 dark:text-gray-100' : ''}`}>
                           {sectionToString(section)}
                         </p>
                         {/* 체크 아이콘과 날짜 */}
                         {isCompleted && (
                           <div className="flex items-center justify-center">
-                            <CheckCircle className="text-green-500 w-3 h-3 sm:w-3.5 sm:h-3.5 mr-0.5" />
+                            <CheckCircle className="text-green-500 dark:text-green-400 w-3 h-3 sm:w-3.5 sm:h-3.5 mr-0.5" />
                             {completedDate && (
-                              <span className="text-xs text-green-500 font-medium">
+                              <span className="text-xs text-green-500 dark:text-green-400 font-medium">
                                 {completedDate.toLocaleDateString('ko-KR', {
                                   month: 'short',
                                   day: 'numeric'

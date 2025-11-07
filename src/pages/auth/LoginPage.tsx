@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Eye, EyeOff } from 'lucide-react';
 import { useAuthStore } from '../../store/authStore';
+import { UserRole } from '../../models/User';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../../components/ui/Card';
@@ -12,14 +13,23 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
-  const { signIn, isLoading, error, clearError } = useAuthStore();
+  const { signIn, isLoading, error, clearError, user, isAuthenticated } = useAuthStore();
+
+  // 로그인 성공 후 역할에 따른 리다이렉트
+  useEffect(() => {
+    if (isAuthenticated && user) {
+      // 관리자는 대시보드로, 다른 선생님들은 핸드북으로
+      const redirectPath = user.role === UserRole.ADMIN ? '/dashboard' : '/handbook';
+      navigate(redirectPath, { replace: true });
+    }
+  }, [isAuthenticated, user, navigate]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     clearError();
     try {
       await signIn(email, password);
-      navigate('/');
+      // 리다이렉트는 useEffect에서 처리됨
     } catch {
       // 에러는 store에서 처리됨
     }

@@ -1,13 +1,14 @@
 import { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuthStore } from '../../store/authStore';
+import { UserRole } from '../../models/User';
 
 interface AuthGuardProps {
   children: React.ReactNode;
 }
 
 export default function AuthGuard({ children }: AuthGuardProps) {
-  const { isAuthenticated, isLoading, initializeAuth } = useAuthStore();
+  const { isAuthenticated, isLoading, initializeAuth, user } = useAuthStore();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -15,6 +16,15 @@ export default function AuthGuard({ children }: AuthGuardProps) {
     // 인증 상태 초기화
     initializeAuth();
   }, [initializeAuth]);
+
+  // 루트 경로 접근 시 역할에 따른 리다이렉트
+  useEffect(() => {
+    if (!isLoading && isAuthenticated && user && location.pathname === '/') {
+      // 관리자는 대시보드로, 다른 선생님들은 핸드북으로
+      const redirectPath = user.role === UserRole.ADMIN ? '/dashboard' : '/handbook';
+      navigate(redirectPath, { replace: true });
+    }
+  }, [isAuthenticated, isLoading, user, location.pathname, navigate]);
 
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {

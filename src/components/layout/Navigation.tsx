@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
-import { Menu as MenuIcon } from 'lucide-react'
+import { Menu as MenuIcon, Moon, Sun, ArrowRight } from 'lucide-react'
 import { useAuthStore } from '../../store/authStore'
+import { useTheme } from '../../contexts/ThemeContext'
 import { Avatar, AvatarFallback } from '../ui/avatar'
 import {
   DropdownMenu,
@@ -30,6 +31,7 @@ const navItems = [
 
 export function Navigation() {
   const { user, signOut } = useAuthStore()
+  const { theme, toggleTheme } = useTheme()
   const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState(false)
 
@@ -52,7 +54,7 @@ export function Navigation() {
     <>
       <header className="sticky top-0 z-40 border-b border-border/5 bg-background/90 backdrop-blur">
         <div className="container-section flex h-16 items-center justify-between">
-          <NavLink to="/" className="text-lg font-semibold text-foreground">
+          <NavLink to="/handbook" className="text-lg font-semibold text-foreground">
             AWANA LMS
           </NavLink>
 
@@ -111,6 +113,26 @@ export function Navigation() {
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => navigate('/settings')}>
                   설정
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={toggleTheme}>
+                  <div className="flex items-center gap-2 w-full">
+                    <span>테마</span>
+                    <div className="flex items-center gap-1.5 ml-auto">
+                      {theme === 'dark' ? (
+                        <>
+                          <Moon className="h-4 w-4" />
+                          <ArrowRight className="h-3 w-3" />
+                          <Sun className="h-4 w-4" />
+                        </>
+                      ) : (
+                        <>
+                          <Sun className="h-4 w-4" />
+                          <ArrowRight className="h-3 w-3" />
+                          <Moon className="h-4 w-4" />
+                        </>
+                      )}
+                    </div>
+                  </div>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={handleLogout} className="text-destructive">
@@ -199,6 +221,27 @@ export function Navigation() {
                         className="px-3 py-2 rounded-md text-sm font-medium text-left text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
                       >
                         설정
+                      </button>
+                      <button
+                        onClick={toggleTheme}
+                        className="px-3 py-2 rounded-md text-sm font-medium text-left text-muted-foreground hover:bg-muted hover:text-foreground transition-colors flex items-center gap-2 justify-between w-full"
+                      >
+                        <span>테마</span>
+                        <div className="flex items-center gap-1.5">
+                          {theme === 'dark' ? (
+                            <>
+                              <Moon className="h-4 w-4" />
+                              <ArrowRight className="h-3 w-3" />
+                              <Sun className="h-4 w-4" />
+                            </>
+                          ) : (
+                            <>
+                              <Sun className="h-4 w-4" />
+                              <ArrowRight className="h-3 w-3" />
+                              <Moon className="h-4 w-4" />
+                            </>
+                          )}
+                        </div>
                       </button>
                       <button
                         onClick={handleLogout}
