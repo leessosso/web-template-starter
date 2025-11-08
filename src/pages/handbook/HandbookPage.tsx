@@ -175,15 +175,19 @@ export default function HandbookPage() {
     if (!summary) return '진도 없음';
     if (!summary.currentHandbook) return '-';
 
-    const jewelType = summary.currentJewelType === 'red' ? '빨강' : '초록';
-
-    // 마지막 완료된 섹션이 있으면 그 섹션을 현재 진도로 표시
+    // 마지막 완료된 섹션이 있으면 그 섹션을 표시
     if (summary.lastCompletedSection) {
       const { major, minor } = summary.lastCompletedSection;
-      return `${getHandbookLabel(summary.currentHandbook)} - ${jewelType}(${major}:${minor})`;
+      // 마지막 완료된 섹션의 보석 타입을 찾아서 표시
+      const lastCompletedProgress = studentProgresses.get(summary.studentId)?.find(
+        p => p.section.major === major && p.section.minor === minor
+      );
+      const lastJewelType = lastCompletedProgress?.jewelType === 'red' ? '빨강' : '초록';
+      return `${getHandbookLabel(summary.currentHandbook)} - ${lastJewelType}(${major}:${minor})`;
     }
 
     // 마지막 완료 섹션이 없으면 첫 번째 섹션부터 시작
+    const jewelType = summary.currentJewelType === 'red' ? '빨강' : '초록';
     return `${getHandbookLabel(summary.currentHandbook)} - ${jewelType}(1:1)`;
   };
 

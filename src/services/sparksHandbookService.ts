@@ -218,9 +218,46 @@ export class SparksHandbookService {
 
     // 현재 진행 중인 핸드북 결정 (가장 최근에 완료한 섹션이 있는 핸드북)
     const currentHandbook = lastProgress?.handbook || null;
-    const currentJewelType = lastProgress?.jewelType || null;
     const lastCompletedSection = lastProgress?.section || null;
     const lastCompletedDate = lastProgress?.completedDate || null;
+
+    // 현재 진행 중인 보석 타입 결정 (올바른 순서에 따라)
+    let currentJewelType: JewelType | null = null;
+    if (currentHandbook) {
+      const handbookProgress = progresses.filter(p => p.handbook === currentHandbook);
+
+      // 마지막 완료 섹션이 속한 major 버전 찾기
+      const lastMajor = lastCompletedSection?.major || 1;
+
+      // 해당 major 버전에서 RED와 GREEN의 완료 상태 확인
+      const redInMajor = handbookProgress.filter(p =>
+        p.jewelType === JewelType.RED && p.section.major === lastMajor
+      ).length;
+      const greenInMajor = handbookProgress.filter(p =>
+        p.jewelType === JewelType.GREEN && p.section.major === lastMajor
+      ).length;
+
+      // 해당 major 버전에서 RED가 모두 완료되었는지 확인 (4개)
+      if (redInMajor >= 4) {
+        // RED가 완료되었으면 GREEN 진행 중
+        currentJewelType = JewelType.GREEN;
+
+        // GREEN도 모두 완료되었으면 다음 major 버전의 RED로
+        if (greenInMajor >= 4) {
+          // 다음 major 버전으로 넘어가거나 완료
+          if (lastMajor >= 4) {
+            // 모든 major 버전 완료
+            currentJewelType = null;
+          } else {
+            // 다음 major 버전의 RED부터 시작
+            currentJewelType = JewelType.RED;
+          }
+        }
+      } else {
+        // RED가 아직 완료되지 않았으면 RED 진행 중
+        currentJewelType = JewelType.RED;
+      }
+    }
 
     return {
       studentId,
@@ -324,31 +361,31 @@ export class SparksHandbookService {
         }
       }
 
-      // 다음 완료할 섹션 찾기 (현재 보석 타입부터)
-      const allSections = generateJewelSections();
-
-      // 현재 보석 타입에서 완료되지 않은 첫 번째 섹션 찾기
-      for (const section of allSections) {
-        const key = `${summary.currentJewelType}-${section.major}-${section.minor}`;
-        if (!completionStatus.get(key)) {
-          return {
-            handbook: summary.currentHandbook,
-            jewelType: summary.currentJewelType,
-            section
-          };
+      // 다음 완료할 섹션 찾기 (올바른 순서: 각 major마다 RED→GREEN 순서)
+      // 각 major 버전(1~4)마다 RED 1-4, GREEN 1-4 순으로 진행
+      for (let major = 1; major <= 4; major++) {
+        // 각 major 버전에서 RED 보석부터 확인
+        for (let minor = 1; minor <= 4; minor++) {
+          const redKey = `${JewelType.RED}-${major}-${minor}`;
+          if (!completionStatus.get(redKey)) {
+            return {
+              handbook: summary.currentHandbook,
+              jewelType: JewelType.RED,
+              section: { major, minor }
+            };
+          }
         }
-      }
 
-      // 현재 보석 타입이 모두 완료된 경우, 다른 보석 타입으로 넘어감
-      const otherJewelType = summary.currentJewelType === JewelType.RED ? JewelType.GREEN : JewelType.RED;
-      for (const section of allSections) {
-        const key = `${otherJewelType}-${section.major}-${section.minor}`;
-        if (!completionStatus.get(key)) {
-          return {
-            handbook: summary.currentHandbook,
-            jewelType: otherJewelType,
-            section
-          };
+        // RED가 모두 완료된 경우, 같은 major 버전의 GREEN 보석 확인
+        for (let minor = 1; minor <= 4; minor++) {
+          const greenKey = `${JewelType.GREEN}-${major}-${minor}`;
+          if (!completionStatus.get(greenKey)) {
+            return {
+              handbook: summary.currentHandbook,
+              jewelType: JewelType.GREEN,
+              section: { major, minor }
+            };
+          }
         }
       }
 
