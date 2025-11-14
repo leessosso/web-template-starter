@@ -99,9 +99,11 @@
     -webkit-tap-highlight-color: transparent;
   }
 
-  /* 모바일 우선 폰트 사이즈 */
+  /* 모바일 우선 폰트 사이즈 & 스크롤바 공간 예약 */
   html {
     font-size: 16px;
+    /* 스크롤바 공간을 항상 예약하여 레이아웃 시프트 방지 */
+    scrollbar-gutter: stable;
   }
 
   /* 모바일에서 더 작은 기본 폰트 사이즈 */
@@ -126,14 +128,13 @@
   /* 모바일 우선 컨테이너 - 작은 화면에서 최대한 공간 활용 */
   .container-section {
     @apply mx-auto w-full px-4;
-    max-width: 100%;
+    max-width: 1280px;
   }
 
   /* 태블릿 이상에서 패딩 증가 */
   @media (min-width: 640px) {
     .container-section {
       @apply px-6;
-      max-width: 640px;
     }
   }
 
@@ -141,14 +142,6 @@
   @media (min-width: 1024px) {
     .container-section {
       @apply px-8;
-      max-width: 1024px;
-    }
-  }
-
-  /* 대형 화면에서 최대 너비 제한 */
-  @media (min-width: 1280px) {
-    .container-section {
-      max-width: 1280px;
     }
   }
 
