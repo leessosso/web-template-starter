@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "clean": "rm -rf node_modules/.vite dist",
     "setup:env": "cp .env.example .env 2>/dev/null || echo '⚠️  .env.example 파일이 없습니다. 수동으로 .env 파일을 생성해주세요.'",
-    "deploy": "npm run build && gh-pages -d dist"
+    "predeploy": "npm run build",
+    "deploy": "rm -rf docs && mv dist docs && git add docs && git commit -m 'Deploy to GitHub Pages' && git push origin awana-lms"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -57,7 +58,6 @@
     "eslint": "^9.36.0",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.22",
-    "gh-pages": "^6.3.0",
     "globals": "^16.4.0",
     "postcss": "^8.5.6",
     "tailwindcss": "^3.4.17",
