@@ -547,7 +547,7 @@ export default function HandbookPage() {
       )}
 
       {/* 모바일 출결 체크 FAB */}
-      {isMobile && (
+      {isMobile && !attendanceDialogOpen && (
         <Button
           className="fixed bottom-4 right-4 h-14 w-14 rounded-full shadow-lg z-50 bg-primary hover:bg-primary/90"
           onClick={handleOpenAttendanceDialog}
