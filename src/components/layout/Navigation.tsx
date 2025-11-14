@@ -80,10 +80,7 @@ export function Navigation() {
 
           {/* 데스크톱 사용자 메뉴 - 아바타 + 이름 */}
           <div className="hidden items-center gap-4 md:flex">
-            <DropdownMenu 
-              modal={false}
-              onOpenAutoFocus={(e) => e.preventDefault()}
-            >
+            <DropdownMenu modal={false}>
               <DropdownMenuTrigger asChild>
                 <button className="flex items-center gap-3 rounded-md px-2 py-1.5 hover:bg-muted transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
                   <Avatar className="h-8 w-8">
@@ -101,7 +98,11 @@ export function Navigation() {
                   </div>
                 </button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-56">
+              <DropdownMenuContent 
+                align="end" 
+                className="w-56"
+                onOpenAutoFocus={(e) => e.preventDefault()}
+              >
                 <DropdownMenuLabel>
                   <div className="flex flex-col space-y-1">
                     <p className="text-sm font-medium leading-none">{user?.displayName}</p>
