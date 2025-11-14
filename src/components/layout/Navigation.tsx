@@ -80,7 +80,10 @@ export function Navigation() {
 
           {/* 데스크톱 사용자 메뉴 - 아바타 + 이름 */}
           <div className="hidden items-center gap-4 md:flex">
-            <DropdownMenu>
+            <DropdownMenu 
+              modal={false}
+              onOpenAutoFocus={(e) => e.preventDefault()}
+            >
               <DropdownMenuTrigger asChild>
                 <button className="flex items-center gap-3 rounded-md px-2 py-1.5 hover:bg-muted transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
                   <Avatar className="h-8 w-8">
