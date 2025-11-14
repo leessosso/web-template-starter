@@ -36,6 +36,59 @@ import type { Student, StudentFormData } from '../models/Student';
 // }
 
 export class StudentService {
+  // 학생 데이터를 처리하고 기간 만료된 임시 배정 정보를 정리하는 헬퍼 메서드
+  private async processStudentData(docId: string, data: any): Promise<Student> {
+    const now = new Date();
+    let tempAssignedTeacherId = data.tempAssignedTeacherId || undefined;
+    let tempAssignedUntil = data.tempAssignedUntil
+      ? data.tempAssignedUntil instanceof Timestamp
+        ? data.tempAssignedUntil.toDate()
+        : new Date(data.tempAssignedUntil)
+      : undefined;
+
+    // 임시 배정 기간이 만료되었는지 확인
+    if (tempAssignedTeacherId && tempAssignedUntil && tempAssignedUntil < now) {
+      // 기간 만료된 임시 배정 정보를 Firebase에서 정리
+      try {
+        await updateDoc(doc(db, 'students', docId), {
+          tempAssignedTeacherId: deleteField(),
+          tempAssignedUntil: deleteField(),
+        });
+        console.log(`학생 ${data.name}의 만료된 임시 배정 정보가 정리되었습니다.`);
+        // 로컬 변수에서도 정리
+        tempAssignedTeacherId = undefined;
+        tempAssignedUntil = undefined;
+      } catch (error) {
+        console.error(`학생 ${data.name}의 임시 배정 정보 정리 실패:`, error);
+      }
+    }
+
+    return {
+      id: docId,
+      name: data.name,
+      photoURL: data.photoURL || undefined,
+      club: data.club,
+      grade: data.grade,
+      gender: data.gender,
+      birthDate: data.birthDate
+        ? data.birthDate instanceof Timestamp
+          ? data.birthDate.toDate()
+          : new Date(data.birthDate)
+        : undefined,
+      createdAt: data.createdAt instanceof Timestamp
+        ? data.createdAt.toDate()
+        : new Date(data.createdAt),
+      createdBy: data.createdBy,
+      churchId: data.churchId,
+      assignedTeacherId: data.assignedTeacherId || undefined,
+      tempAssignedTeacherId,
+      tempAssignedUntil,
+      parentName: data.parentName || undefined,
+      parentPhone: data.parentPhone || undefined,
+      address: data.address || undefined,
+    } as Student;
+  }
+
   async createStudent(
     studentData: StudentFormData,
     createdBy: string,
@@ -257,40 +310,15 @@ export class StudentService {
         // 두 결과를 합치고 중복 제거
         const studentMap = new Map<string, Student>();
 
-        assignedSnapshot.docs.forEach((doc) => {
+        // assignedSnapshot 처리 (병렬 처리)
+        const assignedPromises = assignedSnapshot.docs.map(async (doc) => {
           const data = doc.data();
-          studentMap.set(doc.id, {
-            id: doc.id,
-            name: data.name,
-            photoURL: data.photoURL || undefined,
-            club: data.club,
-            grade: data.grade,
-            gender: data.gender,
-            birthDate: data.birthDate
-              ? data.birthDate instanceof Timestamp
-                ? data.birthDate.toDate()
-                : new Date(data.birthDate)
-              : undefined,
-            createdAt: data.createdAt instanceof Timestamp
-              ? data.createdAt.toDate()
-              : new Date(data.createdAt),
-            createdBy: data.createdBy,
-            churchId: data.churchId,
-            assignedTeacherId: data.assignedTeacherId || undefined,
-            tempAssignedTeacherId: data.tempAssignedTeacherId || undefined,
-            tempAssignedUntil: data.tempAssignedUntil
-              ? data.tempAssignedUntil instanceof Timestamp
-                ? data.tempAssignedUntil.toDate()
-                : new Date(data.tempAssignedUntil)
-              : undefined,
-            parentName: data.parentName || undefined,
-            parentPhone: data.parentPhone || undefined,
-            address: data.address || undefined,
-          });
+          const processedStudent = await this.processStudentData(doc.id, data);
+          studentMap.set(doc.id, processedStudent);
         });
 
-        const now = new Date();
-        tempAssignedSnapshot.docs.forEach((doc) => {
+        // tempAssignedSnapshot 처리 (임시 담당 기간 확인 후 처리)
+        const tempPromises = tempAssignedSnapshot.docs.map(async (doc) => {
           const data = doc.data();
           const tempUntil = data.tempAssignedUntil
             ? data.tempAssignedUntil instanceof Timestamp
@@ -298,34 +326,15 @@ export class StudentService {
               : new Date(data.tempAssignedUntil)
             : undefined;
 
+          const now = new Date();
           // 임시 담당 종료일이 없거나 아직 지나지 않은 경우만 포함
           if (!tempUntil || tempUntil >= now) {
-            studentMap.set(doc.id, {
-              id: doc.id,
-              name: data.name,
-              photoURL: data.photoURL || undefined,
-              club: data.club,
-              grade: data.grade,
-              gender: data.gender,
-              birthDate: data.birthDate
-                ? data.birthDate instanceof Timestamp
-                  ? data.birthDate.toDate()
-                  : new Date(data.birthDate)
-                : undefined,
-              createdAt: data.createdAt instanceof Timestamp
-                ? data.createdAt.toDate()
-                : new Date(data.createdAt),
-              createdBy: data.createdBy,
-              churchId: data.churchId,
-              assignedTeacherId: data.assignedTeacherId || undefined,
-              tempAssignedTeacherId: data.tempAssignedTeacherId || undefined,
-              tempAssignedUntil: tempUntil,
-              parentName: data.parentName || undefined,
-              parentPhone: data.parentPhone || undefined,
-              address: data.address || undefined,
-            });
+            const processedStudent = await this.processStudentData(doc.id, data);
+            studentMap.set(doc.id, processedStudent);
           }
         });
+
+        await Promise.all([...assignedPromises, ...tempPromises]);
 
         return Array.from(studentMap.values()) as Student[];
       } else {
@@ -336,37 +345,13 @@ export class StudentService {
         );
         const querySnapshot = await getDocs(q);
 
-        return querySnapshot.docs.map((doc) => {
+        // 각 학생 데이터를 병렬로 처리
+        const studentPromises = querySnapshot.docs.map(async (doc) => {
           const data = doc.data();
-          return {
-            id: doc.id,
-            name: data.name,
-            photoURL: data.photoURL || undefined,
-            club: data.club,
-            grade: data.grade,
-            gender: data.gender,
-            birthDate: data.birthDate
-              ? data.birthDate instanceof Timestamp
-                ? data.birthDate.toDate()
-                : new Date(data.birthDate)
-              : undefined,
-            createdAt: data.createdAt instanceof Timestamp
-              ? data.createdAt.toDate()
-              : new Date(data.createdAt),
-            createdBy: data.createdBy,
-            churchId: data.churchId,
-            assignedTeacherId: data.assignedTeacherId || undefined,
-            tempAssignedTeacherId: data.tempAssignedTeacherId || undefined,
-            tempAssignedUntil: data.tempAssignedUntil
-              ? data.tempAssignedUntil instanceof Timestamp
-                ? data.tempAssignedUntil.toDate()
-                : new Date(data.tempAssignedUntil)
-              : undefined,
-            parentName: data.parentName || undefined,
-            parentPhone: data.parentPhone || undefined,
-            address: data.address || undefined,
-          } as Student;
+          return await this.processStudentData(doc.id, data);
         });
+
+        return await Promise.all(studentPromises);
       }
     } catch (error) {
       console.error('학생 목록 가져오기 실패:', error);
@@ -387,37 +372,13 @@ export class StudentService {
       );
       const querySnapshot = await getDocs(q);
 
-      return querySnapshot.docs.map((doc) => {
+      // 각 학생 데이터를 병렬로 처리
+      const studentPromises = querySnapshot.docs.map(async (doc) => {
         const data = doc.data();
-        return {
-          id: doc.id,
-          name: data.name,
-          photoURL: data.photoURL || undefined,
-          club: data.club,
-          grade: data.grade,
-          gender: data.gender,
-          birthDate: data.birthDate
-            ? data.birthDate instanceof Timestamp
-              ? data.birthDate.toDate()
-              : new Date(data.birthDate)
-            : undefined,
-          createdAt: data.createdAt instanceof Timestamp
-            ? data.createdAt.toDate()
-            : new Date(data.createdAt),
-          createdBy: data.createdBy,
-          churchId: data.churchId,
-          assignedTeacherId: data.assignedTeacherId || undefined,
-          tempAssignedTeacherId: data.tempAssignedTeacherId || undefined,
-          tempAssignedUntil: data.tempAssignedUntil
-            ? data.tempAssignedUntil instanceof Timestamp
-              ? data.tempAssignedUntil.toDate()
-              : new Date(data.tempAssignedUntil)
-            : undefined,
-          parentName: data.parentName || undefined,
-          parentPhone: data.parentPhone || undefined,
-          address: data.address || undefined,
-        } as Student;
+        return await this.processStudentData(doc.id, data);
       });
+
+      return await Promise.all(studentPromises);
     } catch (error) {
       console.error('클럽별 학생 목록 가져오기 실패:', error);
       throw error;

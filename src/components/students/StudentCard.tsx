@@ -62,12 +62,12 @@ export function StudentCard({
         tempAssignedTeacherId: null as any,
         tempAssignedUntil: null as any,
       });
-      
+
       // 학생 목록 새로고침
       if (onUpdate) {
         onUpdate();
       }
-      
+
       alert('임시 담당이 취소되었습니다.');
     } catch (error) {
       console.error('임시 담당 취소 실패:', error);
@@ -75,7 +75,14 @@ export function StudentCard({
     }
   };
 
-  const hasTempAssignment = student.tempAssignedTeacherId && student.tempAssignedUntil;
+  const hasTempAssignment = (() => {
+    if (!student.tempAssignedTeacherId || !student.tempAssignedUntil) {
+      return false;
+    }
+    const now = new Date();
+    const tempUntil = student.tempAssignedUntil instanceof Date ? student.tempAssignedUntil : new Date(student.tempAssignedUntil);
+    return tempUntil >= now;
+  })();
 
   return (
     <Card className={`hover:shadow-lg transition-shadow min-h-[130px] md:min-h-[150px] ${isSelected ? 'ring-2 ring-primary' : ''}`}>
