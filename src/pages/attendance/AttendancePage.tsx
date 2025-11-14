@@ -435,7 +435,7 @@ export default function AttendancePage() {
       )}
 
       {/* 모바일 출결 체크 FAB */}
-      {isMobile && (
+      {isMobile && !attendanceDialogOpen && !studentDialogOpen && (
         <>
           <Button
             className="fixed bottom-20 right-4 h-14 w-14 rounded-full shadow-lg z-50 bg-muted hover:bg-muted/80 border-2 border-primary"
