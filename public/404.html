@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Awana LMS</title>
+    <script type="text/javascript">
+        // Single Page Apps for GitHub Pages
+        // MIT License
+        // https://github.com/rafgraph/spa-github-pages
+        // This script takes the current url and converts the path and query
+        // string into just a query string, and then redirects the browser
+        // to the new url with only a query string and hash fragment,
+        // e.g., https://www.foo.tld/one/two?a=b&c=d#qwe, becomes
+        // https://www.foo.tld/?/one/two&a=b~and~c=d#qwe
+        // Note: this 404.html file must be at least 512 bytes for it to work
+        // with Internet Explorer (it is currently > 512 bytes)
+
+        // If you're creating a Project Pages site and NOT using a custom domain,
+        // then set pathSegmentsToKeep to 1 (enterprise users may need to set it to > 1).
+        // This way the code will only replace the route part and not the real repository name,
+        // which is what will happen if pathSegmentsToKeep is 0 (default).
+        // Examples:
+        // 1. If your repository is https://github.com/username/repo-name, then
+        //    pathSegmentsToKeep should be 1, and your site will be https://username.github.io/repo-name
+        // 2. If your repository is https://github.com/username/repo-name and you're using a
+        //    custom domain, then pathSegmentsToKeep should be 0 (default), and your site will be https://foo.tld
+        // 3. If your site is https://foo.github.io/bar/, then pathSegmentsToKeep should be 1
+        // For more info: https://github.com/rafgraph/spa-github-pages
+
+        // Single Page Apps for GitHub Pages
+        // https://github.com/rafgraph/spa-github-pages
+        // This script supports the following query parameters:
+        // - repository-name: the name of the GitHub repository
+        // - pathSegmentsToKeep: the number of path segments to keep in the URL
+
+        var l = window.location;
+        var redirect = l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '');
+        var pathSegmentsToKeep = parseInt(l.search.split('pathSegmentsToKeep=')[1]) || 0;
+
+        // Get the path segments
+        var pathSegments = l.pathname.split('/').filter(function (segment) {
+            return segment.length > 0;
+        });
+
+        // Keep only the specified number of path segments
+        var pathToKeep = pathSegments.slice(0, pathSegmentsToKeep).join('/');
+
+        // Build the redirect URL
+        redirect += '/' + (pathToKeep ? pathToKeep + '/' : '') + '?/' +
+            pathSegments.slice(pathSegmentsToKeep).join('/') +
+            (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
+            l.hash;
+
+        // Perform the redirect
+        window.location.replace(redirect);
+    </script>
+</head>
+
+<body>
+</body>
+
+</html>

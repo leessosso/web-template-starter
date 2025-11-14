@@ -38,6 +38,10 @@ import type { Student, StudentFormData } from '../models/Student';
 export class StudentService {
   // 학생 데이터를 처리하고 기간 만료된 임시 배정 정보를 정리하는 헬퍼 메서드
   private async processStudentData(docId: string, data: any): Promise<Student> {
+    if (!isFirebaseConfigured() || !db) {
+      throw new Error('Firebase가 설정되지 않았습니다.');
+    }
+
     const now = new Date();
     let tempAssignedTeacherId = data.tempAssignedTeacherId || undefined;
     let tempAssignedUntil = data.tempAssignedUntil
