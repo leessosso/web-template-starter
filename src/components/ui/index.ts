@@ -76,3 +76,60 @@ export {
 } from './select';
 
 export { Checkbox } from './checkbox';
+
+export {
+  Table,
+  TableHeader,
+  TableBody,
+  TableFooter,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableCaption,
+} from './table';
+
+export { Textarea } from './textarea';
+
+export { Switch } from './switch';
+
+export {
+  Avatar,
+  AvatarImage,
+  AvatarFallback,
+} from './avatar';
+
+export { Skeleton } from './skeleton';
+
+export { Separator } from './separator';
+
+export {
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
+  TooltipProvider,
+} from './tooltip';
+
+export { Progress } from './progress';
+
+export {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from './accordion';
+
+export { Slider } from './slider';
+
+export { Calendar } from './calendar';
+
+export {
+  Command,
+  CommandDialog,
+  CommandInput,
+  CommandList,
+  CommandEmpty,
+  CommandGroup,
+  CommandItem,
+  CommandShortcut,
+  CommandSeparator,
+} from './command';

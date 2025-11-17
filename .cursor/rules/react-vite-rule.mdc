@@ -94,9 +94,16 @@ alwaysApply: true
   - Ensure keyboard navigation support.
 
   Testing
+  - Follow Test-Driven Development (TDD) principles: write tests before implementation when appropriate (Red-Green-Refactor cycle).
   - Write unit tests for components using Jest and React Testing Library.
+  - Test user interactions and component behavior, not implementation details.
+  - Prioritize accessibility-focused queries (getByRole, getByLabelText) from React Testing Library.
+  - Write tests for utility functions, custom hooks, and business logic first using TDD.
+  - Mock external dependencies, API calls, and browser APIs in tests.
   - Implement integration tests for critical user flows.
-  - Use snapshot testing judiciously.
+  - Use snapshot testing judiciously and for UI regression testing.
+  - Keep tests isolated, fast, and independent from each other.
+  - Use descriptive test names that explain the expected behavior.
 
   Security
   - Sanitize user inputs to prevent XSS attacks.
@@ -120,3 +127,86 @@ alwaysApply: true
   - Implement route-based code splitting with React.lazy().
   - Use React Router loaders and actions for data fetching when using React Router v6.4+.
   - For API calls, use async/await with proper error handling.
+
+  Project Structure
+  - Organize files by feature/domain rather than by type (feature-based architecture).
+  - Use index.ts files for clean imports and barrel exports.
+  - Keep components, hooks, utils, and types in separate directories within features.
+  - Use consistent naming: lowercase with dashes for directories, PascalCase for components.
+  - Place shared/common code in a shared or common directory.
+  - Keep configuration files at the root level.
+  - Use .env files for environment-specific configurations.
+
+  Development Workflow
+  - Use Git flow or GitHub flow for branching strategy.
+  - Create feature branches from main/develop for new features.
+  - Use descriptive commit messages in Korean with conventional commits format.
+  - Follow conventional commits pattern: `type(scope): description`
+  - Common commit types: `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`
+  - Write commit messages that clearly explain what was changed and why.
+  - Keep commit messages under 50 characters for the first line.
+  - Use imperative mood for commit messages (e.g., "Add feature" not "Added feature").
+  - Implement pre-commit hooks for code quality checks (linting, formatting).
+  - Use semantic versioning for releases.
+  - Maintain a changelog for version tracking.
+  - Set up automated testing in CI/CD pipeline.
+
+  Build and Deployment
+  - Configure Vite for different environments (development, staging, production).
+  - Use environment variables for API endpoints, feature flags, and secrets.
+  - Implement proper build optimization (code splitting, tree shaking, minification).
+  - Set up CI/CD pipeline with automated testing and deployment.
+  - Use Docker for containerization when deploying to cloud platforms.
+  - Implement health checks and monitoring for production deployments.
+  - Configure proper caching strategies for static assets.
+
+  Code Quality and Documentation
+  - Maintain comprehensive README with setup, development, and deployment instructions.
+  - Document complex business logic and architectural decisions.
+  - Use JSDoc or TSDoc for public API documentation.
+  - Implement code review checklists and standards.
+  - Regularly audit and update dependencies for security vulnerabilities.
+  - Maintain coding standards and style guides.
+  - Use tools like Storybook for component documentation and testing.
+
+  Monitoring and Analytics
+  - Implement error tracking with services like Sentry or LogRocket.
+  - Set up application monitoring and alerting.
+  - Track user interactions and conversion funnels.
+  - Monitor performance metrics and Web Vitals.
+  - Implement logging for debugging and troubleshooting.
+  - Use analytics to understand user behavior and improve UX.
+
+  Shared Components Usage
+  - Use the established shadcn/ui component library for consistent UI across projects.
+  - Import components from the centralized location: `import { Button, Card } from '@/components/ui'`.
+  - Extend existing components by wrapping them with custom logic or styling when needed.
+  - Follow the established variant and size patterns for component customization.
+  - Create project-specific components in the project's `components/` folder for unique requirements.
+  - Maintain component prop interfaces - avoid breaking changes to shared components.
+  - Document any custom extensions or modifications to shared components.
+  - Use TypeScript for all component definitions to ensure type safety across projects.
+  - Test components thoroughly before adding to the shared library.
+  - Consider creating feature-specific component folders when components become numerous.
+  - Keep the shared component library lightweight and focused on reusable primitives.
+
+  Component Development Guidelines
+  - Build upon existing shadcn/ui components rather than recreating basic UI elements.
+  - Use the `cn()` utility function for consistent className merging across all components.
+  - Implement proper TypeScript interfaces for all component props.
+  - Include accessibility features (ARIA attributes, keyboard navigation) in custom components.
+  - Use forwardRef when DOM access is needed by parent components.
+  - Document component usage with JSDoc comments for better developer experience.
+  - Follow the established naming conventions: PascalCase for components, camelCase for props.
+  - Implement proper error boundaries for complex components.
+  - Use React.memo() for performance optimization when appropriate.
+  - Keep components focused on single responsibilities.
+
+  Design System Consistency
+  - Adhere to the established Tailwind CSS design tokens for colors, spacing, and typography.
+  - Use the theme system (light/dark mode) consistently across all components.
+  - Maintain consistent spacing using the predefined spacing scale.
+  - Follow the established component sizing patterns (sm, md, lg variants).
+  - Use semantic color naming (primary, secondary, destructive) for consistent theming.
+  - Implement responsive design patterns consistently across components.
+  - Document design decisions and component usage patterns for team alignment.
