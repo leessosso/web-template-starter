@@ -1,10 +1,7 @@
 {
   "navigation": {
     "home": "Home",
-    "service": "Services",
-    "product": "Product",
-    "portfolio": "Portfolio",
-    "analytics": "Data Analytics",
+    "components": "Components",
     "contact": "Request Quote"
   },
   "hero": {
@@ -169,5 +166,93 @@
       "careers": "Careers"
     },
     "copyright": "© {{year}} WebTemplateStudio. All rights reserved."
+  },
+  "components": {
+    "title": "UI Component Library",
+    "description": "Browse and test the common UI components used throughout the project.",
+    "tabs": {
+      "buttons": "Buttons",
+      "forms": "Forms",
+      "dataDisplay": "Data Display",
+      "feedback": "Feedback"
+    },
+    "buttons": {
+      "title": "Button Components",
+      "description": "Various styles of button components.",
+      "default": "Default Button",
+      "secondary": "Secondary Button",
+      "outline": "Outline Button",
+      "ghost": "Ghost Button",
+      "destructive": "Destructive Button",
+      "disabled": "Disabled",
+      "small": "Small Button",
+      "defaultSize": "Default Size",
+      "large": "Large Button"
+    },
+    "badges": {
+      "title": "Badge Components",
+      "description": "Badges for displaying status or categories.",
+      "default": "Default",
+      "secondary": "Secondary",
+      "destructive": "Destructive",
+      "outline": "Outline"
+    },
+    "forms": {
+      "title": "Form Components",
+      "description": "Components for user input and forms.",
+      "input": "Input Field",
+      "inputPlaceholder": "Enter text here",
+      "textarea": "Text Area",
+      "textareaPlaceholder": "Enter longer text here",
+      "select": "Select",
+      "selectPlaceholder": "Choose an option",
+      "option1": "Option 1",
+      "option2": "Option 2",
+      "option3": "Option 3",
+      "checkbox": "Checkbox",
+      "checkboxLabel": "I agree",
+      "switch": "Switch",
+      "on": "On",
+      "off": "Off",
+      "slider": "Slider",
+      "sliderValue": "Value"
+    },
+    "dataDisplay": {
+      "title": "Data Display Components",
+      "description": "Components for displaying data and information.",
+      "avatar": "Avatar",
+      "progress": "Progress",
+      "table": "Table",
+      "name": "Name",
+      "email": "Email",
+      "role": "Role",
+      "accordion": "Accordion",
+      "accordionItem1": "First Item",
+      "accordionContent1": "This is the content of the first accordion item.",
+      "accordionItem2": "Second Item",
+      "accordionContent2": "This is the content of the second accordion item.",
+      "tabs": "Tabs",
+      "tab1": "Tab 1",
+      "tab1Content": "This is the content of the first tab.",
+      "tab2": "Tab 2",
+      "tab2Content": "This is the content of the second tab."
+    },
+    "feedback": {
+      "title": "Feedback Components",
+      "description": "Components for providing user feedback and interactions.",
+      "alert": "Alert",
+      "alertTitle": "Alert Title",
+      "alertDescription": "This is a default alert message.",
+      "skeleton": "Skeleton",
+      "dialog": "Dialog",
+      "openDialog": "Open Dialog",
+      "dialogTitle": "Dialog Title",
+      "dialogDescription": "This is the dialog description.",
+      "dialogContent": "This is the dialog content.",
+      "tooltip": "Tooltip",
+      "tooltipTrigger": "Hover me",
+      "tooltipContent": "This is a tooltip!",
+      "themeSelector": "Theme Selector"
+    }
   }
 }

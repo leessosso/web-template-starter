@@ -1,10 +1,7 @@
 {
   "navigation": {
     "home": "홈",
-    "service": "서비스 소개",
-    "product": "제품 페이지",
-    "portfolio": "포트폴리오",
-    "analytics": "데이터 애널리틱스",
+    "components": "컴포넌트",
     "contact": "견적 문의"
   },
   "hero": {
@@ -169,5 +166,93 @@
       "careers": "채용"
     },
     "copyright": "© {{year}} WebTemplateStudio. All rights reserved."
+  },
+  "components": {
+    "title": "UI 컴포넌트 라이브러리",
+    "description": "프로젝트에서 사용되는 공통 UI 컴포넌트들을 확인하고 테스트할 수 있습니다.",
+    "tabs": {
+      "buttons": "버튼",
+      "forms": "폼",
+      "dataDisplay": "데이터 표시",
+      "feedback": "피드백"
+    },
+    "buttons": {
+      "title": "버튼 컴포넌트",
+      "description": "다양한 스타일의 버튼 컴포넌트들입니다.",
+      "default": "기본 버튼",
+      "secondary": "보조 버튼",
+      "outline": "외곽선 버튼",
+      "ghost": "고스트 버튼",
+      "destructive": "삭제 버튼",
+      "disabled": "비활성화",
+      "small": "작은 버튼",
+      "defaultSize": "기본 크기",
+      "large": "큰 버튼"
+    },
+    "badges": {
+      "title": "뱃지 컴포넌트",
+      "description": "상태나 카테고리를 표시하는 뱃지입니다.",
+      "default": "기본",
+      "secondary": "보조",
+      "destructive": "주의",
+      "outline": "외곽선"
+    },
+    "forms": {
+      "title": "폼 컴포넌트",
+      "description": "사용자 입력을 위한 폼 컴포넌트들입니다.",
+      "input": "입력 필드",
+      "inputPlaceholder": "텍스트를 입력하세요",
+      "textarea": "텍스트 영역",
+      "textareaPlaceholder": "긴 텍스트를 입력하세요",
+      "select": "선택",
+      "selectPlaceholder": "선택하세요",
+      "option1": "옵션 1",
+      "option2": "옵션 2",
+      "option3": "옵션 3",
+      "checkbox": "체크박스",
+      "checkboxLabel": "동의합니다",
+      "switch": "스위치",
+      "on": "켜짐",
+      "off": "꺼짐",
+      "slider": "슬라이더",
+      "sliderValue": "값"
+    },
+    "dataDisplay": {
+      "title": "데이터 표시 컴포넌트",
+      "description": "데이터를 표시하기 위한 컴포넌트들입니다.",
+      "avatar": "아바타",
+      "progress": "진행률",
+      "table": "테이블",
+      "name": "이름",
+      "email": "이메일",
+      "role": "역할",
+      "accordion": "아코디언",
+      "accordionItem1": "첫 번째 항목",
+      "accordionContent1": "이것은 첫 번째 아코디언 항목의 내용입니다.",
+      "accordionItem2": "두 번째 항목",
+      "accordionContent2": "이것은 두 번째 아코디언 항목의 내용입니다.",
+      "tabs": "탭",
+      "tab1": "탭 1",
+      "tab1Content": "첫 번째 탭의 내용입니다.",
+      "tab2": "탭 2",
+      "tab2Content": "두 번째 탭의 내용입니다."
+    },
+    "feedback": {
+      "title": "피드백 컴포넌트",
+      "description": "사용자에게 피드백을 제공하는 컴포넌트들입니다.",
+      "alert": "알림",
+      "alertTitle": "알림 제목",
+      "alertDescription": "이것은 기본 알림 메시지입니다.",
+      "skeleton": "스켈레톤",
+      "dialog": "다이얼로그",
+      "openDialog": "다이얼로그 열기",
+      "dialogTitle": "다이얼로그 제목",
+      "dialogDescription": "다이얼로그의 설명입니다.",
+      "dialogContent": "다이얼로그 내용입니다.",
+      "tooltip": "툴팁",
+      "tooltipTrigger": "호버해보세요",
+      "tooltipContent": "이것은 툴팁입니다!",
+      "themeSelector": "테마 선택기"
+    }
   }
 }

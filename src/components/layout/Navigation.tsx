@@ -3,10 +3,7 @@ import { useTranslation } from 'react-i18next'
 
 const navItems = [
   { to: '/', key: 'navigation.home' },
-  { to: '/service', key: 'navigation.service' },
-  { to: '/product', key: 'navigation.product' },
-  { to: '/portfolio', key: 'navigation.portfolio' },
-  { to: '/analytics', key: 'navigation.analytics' },
+  { to: '/components', key: 'navigation.components' },
 ]
 
 export function Navigation() {
