@@ -223,7 +223,7 @@ PR 템플릿을 `.github/pull_request_template.md`에 추가
 
 ## 📚 참고 문서
 
-- [DEVELOPMENT_GUIDE.md](./DEVELOPMENT_GUIDE.md) - 개발 가이드
-- [README.md](./README.md) - 프로젝트 소개 및 사용 가이드
-- [ANALYTICS_SETUP_BEGINNER.md](./ANALYTICS_SETUP_BEGINNER.md) - 분석 도구 설정 가이드
+- [개발 가이드](./DEVELOPMENT_GUIDE.md) - 개발 가이드
+- [프로젝트 README](../README.md) - 프로젝트 소개 및 사용 가이드
+- [초보자용 분석 도구 설정](./ANALYTICS_SETUP_BEGINNER.md) - 분석 도구 설정 가이드
 

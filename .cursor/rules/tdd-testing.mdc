@@ -1,0 +1,172 @@
+---
+alwaysApply: true
+---
+
+# TDD 및 테스트 가이드
+
+## TDD (Test Driven Development) 원칙 (필수 준수)
+
+이 프로젝트는 **TDD**를 완전히 지원합니다. **항상 테스트를 먼저 작성해야 합니다.**
+
+### TDD 사이클: Red → Green → Refactor (필수 순서)
+
+새로운 기능을 개발할 때는 반드시 다음 순서를 따라야 합니다:
+
+1. **Red**: 실패하는 테스트를 먼저 작성
+2. **Green**: 테스트를 통과하는 최소한의 코드만 작성
+3. **Refactor**: 코드를 개선하되 테스트는 계속 통과해야 함
+
+### TDD 워크플로우 (필수 절차)
+
+새 컴포넌트나 기능을 개발할 때:
+1. Watch 모드 시작: `npm test` (터미널에서 실행)
+2. 테스트 파일 먼저 작성 (예: `Component.test.tsx`)
+3. 파일 저장 → 자동으로 테스트 실행됨
+4. 테스트 실패 확인 (Red) → 이제 코드 작성
+5. 테스트 통과 확인 (Green) → 리팩토링 진행
+
+## 테스트 작성 규칙 (필수 준수)
+
+### 파일 명명 규칙
+- 테스트 파일: 반드시 `*.test.tsx` 또는 `*.spec.tsx` 형식 사용
+- 테스트 위치: 테스트 대상 파일과 **반드시 같은 디렉토리**에 배치
+  ```
+  src/components/ui/Button.tsx
+  src/components/ui/Button.test.tsx  ✅ 올바른 위치
+  ```
+
+### 테스트 구조 (AAA 패턴 필수 사용)
+모든 테스트는 Arrange-Act-Assert 패턴을 따라야 합니다:
+
+```tsx
+import { describe, it, expect } from 'vitest'
+import { render, screen } from '../test/test-utils'
+import { ComponentName } from './ComponentName'
+
+describe('ComponentName', () => {
+  it('기능을 수행한다', () => {
+    // Arrange: 테스트 준비
+    const props = { title: '테스트' }
+    
+    // Act: 테스트 실행
+    render(<ComponentName {...props} />)
+    
+    // Assert: 결과 검증
+    expect(screen.getByText('테스트')).toBeInTheDocument()
+  })
+})
+```
+
+## 테스트 실행
+
+```bash
+npm test             # Watch 모드 (TDD 권장)
+npm run test:ui      # 테스트 UI (브라우저)
+npm run test:coverage # 커버리지 확인
+npm run test:run     # 테스트 한 번만 실행 (CI/CD용)
+```
+
+## 테스트 유틸리티 (필수 사용)
+
+컴포넌트 테스트 시 반드시 프로젝트의 `src/test/test-utils.tsx`를 사용해야 합니다. 
+이 유틸리티는 자동으로 다음 Provider를 포함합니다:
+- BrowserRouter (React Router)
+- I18nextProvider (다국어)
+- ThemeProvider (테마)
+
+```tsx
+// ✅ 올바른 사용법
+import { render, screen } from '../test/test-utils'
+import { Button } from './Button'
+
+// render()를 사용하면 모든 Provider가 자동으로 적용됨
+render(<Button>클릭</Button>)
+
+// ❌ 잘못된 사용법 - @testing-library/react를 직접 import하지 말 것
+import { render } from '@testing-library/react'  // 사용 금지
+```
+
+## 테스트 작성 모범 사례
+
+### 1. 접근성 중심 쿼리 사용
+```tsx
+// ❌ 나쁜 예
+const button = container.querySelector('.btn-primary')
+
+// ✅ 좋은 예
+const button = screen.getByRole('button', { name: '제출' })
+```
+
+### 2. 사용자 관점에서 테스트
+```tsx
+// ❌ 나쁜 예: 내부 상태 확인
+expect(component.state.isOpen).toBe(true)
+
+// ✅ 좋은 예: 사용자가 보는 것 확인
+expect(screen.getByText('메뉴 열림')).toBeInTheDocument()
+```
+
+### 3. 의미 있는 테스트 이름
+```tsx
+// ❌ 나쁜 예
+it('works', () => { ... })
+
+// ✅ 좋은 예
+it('버튼 클릭 시 모달이 열린다', () => { ... })
+```
+
+## 컴포넌트 테스트 예시
+
+```tsx
+import { describe, it, expect, vi } from 'vitest'
+import { render, screen } from '../test/test-utils'
+import { Button } from './Button'
+
+describe('Button', () => {
+  it('버튼 텍스트를 렌더링한다', () => {
+    render(<Button>클릭하세요</Button>)
+    expect(screen.getByText('클릭하세요')).toBeInTheDocument()
+  })
+
+  it('클릭 이벤트를 처리한다', () => {
+    const handleClick = vi.fn()
+    render(<Button onClick={handleClick}>클릭</Button>)
+    screen.getByText('클릭').click()
+    expect(handleClick).toHaveBeenCalledTimes(1)
+  })
+})
+```
+
+## Zustand 스토어 테스트 예시
+
+```tsx
+import { describe, it, expect, beforeEach } from 'vitest'
+import { useThemeStore } from './useThemeStore'
+
+describe('useThemeStore', () => {
+  beforeEach(() => {
+    useThemeStore.setState({ theme: 'dark' })
+  })
+
+  it('테마를 변경한다', () => {
+    const { setTheme } = useThemeStore.getState()
+    setTheme('light')
+    expect(useThemeStore.getState().theme).toBe('light')
+  })
+})
+```
+
+## TDD 체크리스트
+
+새 기능을 개발할 때:
+- [ ] **Red**: 실패하는 테스트를 먼저 작성했는가?
+- [ ] **Green**: 테스트를 통과하는 최소한의 코드를 작성했는가?
+- [ ] **Refactor**: 코드를 개선했는가? (테스트는 여전히 통과하는가?)
+- [ ] **Edge Cases**: 경계 케이스에 대한 테스트를 추가했는가?
+
+## Watch 모드 단축키
+
+- `f`: 실패한 테스트만 실행
+- `t`: 필터 모드 (파일명/테스트명으로 필터링)
+- `a`: 모든 테스트 실행
+- `q`: 종료

@@ -1,0 +1,229 @@
+---
+alwaysApply: true
+---
+
+# Zustand 상태 관리 가이드
+
+이 프로젝트는 전역 상태 관리를 위해 **Zustand**를 사용합니다. 
+전역 상태가 필요한 경우 반드시 Zustand를 사용해야 하며, Context API는 중간 상태 공유에만 사용합니다.
+
+## 기본 사용법 (필수 준수)
+
+### 스토어 생성 규칙
+
+새로운 Zustand 스토어를 생성할 때는 반드시 다음 형식을 따라야 합니다:
+
+```typescript
+import { create } from 'zustand'
+
+// 1. 반드시 TypeScript 인터페이스 정의
+interface CounterState {
+  count: number
+  increment: () => void
+  decrement: () => void
+}
+
+// 2. create 함수 사용
+export const useCounterStore = create<CounterState>((set) => ({
+  count: 0,
+  increment: () => set((state) => ({ count: state.count + 1 })),
+  decrement: () => set((state) => ({ count: state.count - 1 })),
+}))
+```
+
+### 스토어 파일 위치 (필수)
+- 모든 스토어는 `src/stores/` 디렉토리에 위치해야 함
+- 파일명: `useStoreName.ts` 형식 (예: `useThemeStore.ts`)
+- `src/stores/index.ts`에서 통합 export 필수
+
+### 컴포넌트에서 사용 (필수 규칙)
+
+스토어는 반드시 `@/stores`에서 import해야 합니다:
+
+```tsx
+import { useCounterStore } from '@/stores'
+
+function Counter() {
+  // ✅ 올바른 사용법: 필요한 상태와 액션만 구조 분해
+  const { count, increment, decrement } = useCounterStore()
+  
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={increment}>+</button>
+      <button onClick={decrement}>-</button>
+    </div>
+  )
+}
+```
+
+### 선택적 구독 (성능 최적화 필수)
+
+성능을 위해 반드시 선택적 구독을 사용해야 합니다. 전체 스토어를 구독하지 마세요:
+
+```tsx
+// ✅ 올바른 사용법: 필요한 상태만 구독
+const count = useCounterStore((state) => state.count)
+const increment = useCounterStore((state) => state.increment)
+
+// ❌ 잘못된 사용법: 전체 스토어 구독 (불필요한 리렌더링 발생)
+const store = useCounterStore()  // 사용 금지
+```
+
+## 프로젝트의 기본 스토어
+
+### useThemeStore
+- 테마 관련 상태 관리
+- persist 미들웨어 포함 (localStorage 저장)
+- `theme`, `themeColor`, `setTheme`, `setThemeColor`, `toggleTheme`
+
+### useAppStore
+- 앱 전역 상태 관리
+- devtools 미들웨어 포함
+- `isLoading`, `error`, `setLoading`, `setError`, `clearError`
+
+## 고급 사용법
+
+### Persist 미들웨어 (로컬 스토리지 저장)
+
+```typescript
+import { create } from 'zustand'
+import { persist } from 'zustand/middleware'
+
+export const useStore = create<State>()(
+  persist(
+    (set) => ({
+      // ... 상태
+    }),
+    {
+      name: 'storage-key', // localStorage 키
+    }
+  )
+)
+```
+
+### Devtools 미들웨어 (개발 도구)
+
+```typescript
+import { create } from 'zustand'
+import { devtools } from 'zustand/middleware'
+
+export const useStore = create<State>()(
+  devtools(
+    (set) => ({
+      // ... 상태
+    }),
+    {
+      name: 'store-name', // Redux DevTools에서 표시될 이름
+    }
+  )
+)
+```
+
+### 비동기 액션
+
+```typescript
+interface DataState {
+  data: Data | null
+  loading: boolean
+  fetchData: () => Promise<void>
+}
+
+export const useDataStore = create<DataState>((set) => ({
+  data: null,
+  loading: false,
+  fetchData: async () => {
+    set({ loading: true })
+    try {
+      const response = await fetch('/api/data')
+      const data = await response.json()
+      set({ data, loading: false })
+    } catch (error) {
+      set({ loading: false })
+      console.error(error)
+    }
+  },
+}))
+```
+
+### 컴포넌트 외부에서 스토어 사용
+
+```typescript
+// 스토어 상태 가져오기
+const { theme } = useThemeStore.getState()
+
+// 액션 실행
+useThemeStore.getState().toggleTheme()
+
+// 구독 (컴포넌트 외부)
+const unsubscribe = useThemeStore.subscribe(
+  (state) => state.theme,
+  (theme) => {
+    console.log('테마 변경:', theme)
+  }
+)
+```
+
+## 모범 사례
+
+### 1. 스토어 분리
+관심사에 따라 스토어를 분리하세요:
+- `useThemeStore.ts` - 테마 관련
+- `useUserStore.ts` - 사용자 관련
+- `useCartStore.ts` - 장바구니 관련
+
+### 2. 타입 안전성
+항상 TypeScript 인터페이스를 정의하세요:
+
+```typescript
+interface StoreState {
+  value: string
+  setValue: (value: string) => void
+}
+```
+
+### 3. 선택적 구독 사용
+성능을 위해 필요한 상태만 구독하세요:
+
+```tsx
+// ❌ 나쁜 예: 전체 스토어 구독
+const store = useStore()
+
+// ✅ 좋은 예: 필요한 상태만 구독
+const value = useStore((state) => state.value)
+```
+
+### 4. 액션 네이밍
+액션은 동사로 시작하세요:
+
+```typescript
+// ✅ 좋은 예
+setUser, incrementCount, toggleTheme
+
+// ❌ 나쁜 예
+user, count, theme
+```
+
+### 5. 불변성 유지
+상태를 직접 수정하지 마세요:
+
+```typescript
+// ❌ 나쁜 예
+const increment = () => {
+  state.count++ // 직접 수정
+}
+
+// ✅ 좋은 예
+const increment = () => set((state) => ({ 
+  count: state.count + 1 
+}))
+```
+
+## 스토어 위치
+
+스토어는 `src/stores/` 디렉토리에 위치하며, `src/stores/index.ts`에서 통합 export합니다:
+
+```typescript
+export { useThemeStore } from './useThemeStore'
+export { useAppStore } from './useAppStore'
+```

@@ -39,7 +39,7 @@ npm install
 
 # 환경 변수 설정 (선택사항)
 # .env 파일을 생성하고 필요한 환경 변수를 설정하세요
-# 자세한 내용은 ANALYTICS_SETUP_BEGINNER.md 참고
+# 자세한 내용은 docs/ANALYTICS_SETUP_BEGINNER.md 참고
 
 # 개발 서버 실행
 npm run dev
@@ -298,14 +298,23 @@ npm install
 
 ## 👨‍💻 개발 가이드
 
-새로운 브랜치에서 개발을 시작할 때는 [DEVELOPMENT_GUIDE.md](./DEVELOPMENT_GUIDE.md)를 참고하세요.
+새로운 브랜치에서 개발을 시작할 때는 [개발 가이드](./docs/DEVELOPMENT_GUIDE.md)를 참고하세요.
 
-### 주요 내용
-- 브랜치 전략 및 워크플로우
-- 코딩 규칙 및 스타일 가이드
-- 커밋 메시지 규칙
-- 테스트 작성 가이드 (Vitest + React Testing Library)
-- 코드 리뷰 가이드
+> 💡 **Cursor IDE 사용자**: `.cursor/rules/` 폴더에 개발 규칙이 자동으로 적용됩니다. Cursor가 자동으로 읽어서 개발 시 참고합니다.
+
+### 📚 문서 목록
+
+#### 개발 가이드
+- [개발 가이드](./docs/DEVELOPMENT_GUIDE.md) - 브랜치 전략, 커밋 규칙, 코딩 규칙
+- [테스트 가이드](./docs/TESTING_GUIDE.md) - Vitest, React Testing Library, TDD
+- [TDD 실전 예시](./docs/TDD_EXAMPLE.md) - TDD 단계별 예시
+- [Zustand 가이드](./docs/ZUSTAND_GUIDE.md) - 상태 관리 가이드
+- [프로젝트 분석](./docs/PROJECT_ANALYSIS.md) - 프로젝트 구조 분석
+
+#### 분석 도구 가이드
+- [초보자용 분석 도구 설정](./docs/ANALYTICS_SETUP_BEGINNER.md)
+- [Google Analytics 설정](./docs/GOOGLE_ANALYTICS_SETUP.md)
+- [분석 도구 통합](./docs/analytics-integrations.md)
 
 ### 테스트 및 TDD
 
@@ -330,7 +339,7 @@ npm run test:coverage
 
 Watch 모드가 파일 변경을 감지하여 자동으로 테스트를 실행하므로 빠른 피드백 루프를 제공합니다.
 
-자세한 내용은 [TESTING_GUIDE.md](./TESTING_GUIDE.md)와 [DEVELOPMENT_GUIDE.md](./DEVELOPMENT_GUIDE.md#테스트-가이드)를 참고하세요.
+자세한 내용은 [테스트 가이드](./docs/TESTING_GUIDE.md)와 [개발 가이드](./docs/DEVELOPMENT_GUIDE.md#테스트-가이드)를 참고하세요.
 
 ### 상태 관리 (Zustand)
 
@@ -345,7 +354,7 @@ function ThemeToggle() {
 }
 ```
 
-자세한 사용법은 [ZUSTAND_GUIDE.md](./ZUSTAND_GUIDE.md)를 참고하세요.
+자세한 사용법은 [Zustand 가이드](./docs/ZUSTAND_GUIDE.md)를 참고하세요.
 
 ### 환경 변수 설정
 
@@ -359,7 +368,7 @@ VITE_GA_MEASUREMENT_ID=G-XXXXXXXXXX
 VITE_CLARITY_PROJECT_ID=your_clarity_project_id
 ```
 
-자세한 설정 방법은 [ANALYTICS_SETUP_BEGINNER.md](./ANALYTICS_SETUP_BEGINNER.md)를 참고하세요.
+자세한 설정 방법은 [초보자용 분석 도구 설정](./docs/ANALYTICS_SETUP_BEGINNER.md)를 참고하세요.
 
 ## 🔮 향후 확장 아이디어
 
