@@ -67,7 +67,7 @@ export const useClarity = () => {
 export const useTrackClarityEvent = (eventName: string) => {
     const { trackEvent } = useClarity();
 
-    const track = useCallback((properties?: Record<string, any>) => {
+    const track = useCallback((properties?: Record<string, unknown>) => {
         trackEvent(eventName, properties);
     }, [trackEvent, eventName]);
 

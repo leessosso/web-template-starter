@@ -16,15 +16,15 @@ export class ClarityProvider {
 
     // Clarity가 로드되었는지 확인
     isLoaded(): boolean {
-        return typeof window !== 'undefined' && !!(window as any).clarity;
+        return typeof window !== 'undefined' && !!window.clarity;
     }
 
     // 이벤트 추적 (Clarity는 제한된 이벤트만 지원)
-    trackEvent(eventName: string, properties?: Record<string, any>): void {
+    trackEvent(eventName: string, properties?: Record<string, unknown>): void {
         if (!this.isEnabled() || !this.isLoaded()) return;
 
         try {
-            (window as any).clarity('event', eventName, properties);
+            window.clarity('event', eventName, properties);
         } catch (error) {
             console.warn('Clarity event tracking failed:', error);
         }
@@ -42,11 +42,11 @@ export class ClarityProvider {
     }
 
     // 사용자 식별 (선택사항)
-    identify(userId: string, properties?: Record<string, any>): void {
+    identify(userId: string, properties?: Record<string, unknown>): void {
         if (!this.isEnabled() || !this.isLoaded()) return;
 
         try {
-            (window as any).clarity('identify', userId, properties);
+            window.clarity('identify', userId, properties);
         } catch (error) {
             console.warn('Clarity user identification failed:', error);
         }
@@ -57,7 +57,7 @@ export class ClarityProvider {
         if (!this.isEnabled() || !this.isLoaded()) return;
 
         try {
-            (window as any).clarity('set', key, value);
+            window.clarity('set', key, value);
         } catch (error) {
             console.warn('Clarity user property setting failed:', error);
         }

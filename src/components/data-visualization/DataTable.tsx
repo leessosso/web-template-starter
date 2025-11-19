@@ -163,6 +163,7 @@ export function DataTable<T extends TableData>({
 }
 
 // 타입 정의 헬퍼 함수
+// eslint-disable-next-line react-refresh/only-export-components
 export function createTableColumnHelper<T extends TableData>() {
   return createColumnHelper<T>();
 }

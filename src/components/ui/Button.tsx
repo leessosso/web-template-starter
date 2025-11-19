@@ -3,8 +3,8 @@ import { useAnalytics } from '../../analytics';
 import { useClarity } from '../../analytics/useClarity';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger';
-  size?: 'sm' | 'md' | 'lg';
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger' | 'default' | 'destructive';
+  size?: 'sm' | 'md' | 'lg' | 'default';
   children: React.ReactNode;
   analyticsTracking?: {
     eventName: string;
@@ -57,15 +57,18 @@ export function Button({
 
   const variantClasses = {
     primary: 'bg-primary text-primary-foreground hover:bg-primary/90 focus-visible:ring-primary/50 focus-visible:ring-2 focus-visible:ring-offset-2',
+    default: 'bg-primary text-primary-foreground hover:bg-primary/90 focus-visible:ring-primary/50 focus-visible:ring-2 focus-visible:ring-offset-2',
     secondary: 'bg-muted text-foreground hover:bg-muted/80 focus-visible:ring-border/50 focus-visible:ring-2 focus-visible:ring-offset-2',
     outline: 'border border-border bg-background text-foreground hover:bg-muted/50 focus-visible:ring-border/50 focus-visible:ring-2 focus-visible:ring-offset-2',
     ghost: 'text-foreground hover:bg-muted/50 focus-visible:ring-border/50 focus-visible:ring-2 focus-visible:ring-offset-2',
     danger: 'bg-red-600 text-white hover:bg-red-700 focus-visible:ring-red-600',
+    destructive: 'bg-red-600 text-white hover:bg-red-700 focus-visible:ring-red-600',
   };
 
   const sizeClasses = {
     sm: 'px-3 py-1.5 text-sm',
     md: 'px-4 py-2 text-sm',
+    default: 'px-4 py-2 text-sm',
     lg: 'px-6 py-3 text-base',
   };
 
