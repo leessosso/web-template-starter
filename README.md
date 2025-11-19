@@ -10,6 +10,7 @@ React + TypeScript + Vite 기반으로 제작된 웹사이트 템플릿 스타�
 - [🚀 권장 워크플로우](#-권장-워크플로우)
 - [📋 주문 제작 실전 예시](#-주문-제작-실전-예시)
 - [🛠️ 문제 해결 가이드](#️-문제-해결-가이드)
+- [👨‍💻 개발 가이드](#-개발-가이드)
 - [🔮 향후 확장 아이디어](#-향후-확장-아이디어)
 
 ## 주요 특징
@@ -29,8 +30,36 @@ React + TypeScript + Vite 기반으로 제작된 웹사이트 템플릿 스타�
 ## 빠른 시작
 
 ```bash
+# 저장소 클론
+git clone <repository-url>
+cd web-template-starter
+
+# 의존성 설치
 npm install
+
+# 환경 변수 설정 (선택사항)
+# .env 파일을 생성하고 필요한 환경 변수를 설정하세요
+# 자세한 내용은 ANALYTICS_SETUP_BEGINNER.md 참고
+
+# 개발 서버 실행
 npm run dev
+```
+
+### 개발 스크립트
+
+```bash
+npm run dev          # 개발 서버 실행
+npm run build        # 프로덕션 빌드
+npm run preview      # 빌드 결과 미리보기
+npm run lint         # 코드 린팅
+npm run lint:fix     # 린팅 오류 자동 수정
+npm run format       # 코드 포맷팅
+npm run format:check # 포맷팅 검사
+npm run type-check   # TypeScript 타입 체크
+npm test             # 테스트 실행 (Watch 모드)
+npm run test:ui      # 테스트 UI 실행
+npm run test:coverage # 테스트 커버리지 확인
+npm run test:run     # 테스트 한 번만 실행
 ```
 
 ## 파일 구조
@@ -43,8 +72,14 @@ src/
     ui/                    # 범용 UI 컴포넌트 (Button, Card, Input 등)
     content/               # 콘텐츠 표시 컴포넌트 (Hero, FeatureCard 등)
     forms/                 # 폼 관련 컴포넌트 (ContactForm, SearchForm 등)
+  stores/                  # Zustand 상태 관리 스토어
+    useThemeStore.ts       # 테마 관련 상태
+    useAppStore.ts         # 앱 전역 상태
   routes/                  # React Router 라우트 정의
   styles/                  # Tailwind 전역 스타일 및 유틸리티
+  test/                    # 테스트 유틸리티 및 설정
+    setup.ts               # 테스트 환경 설정
+    test-utils.tsx         # 커스텀 렌더 유틸리티
   templates/
     home/                  # 홈 랜딩 템플릿 (Hero, 서비스, 후기 등)
     service/               # 서비스 소개 페이지 템플릿
@@ -53,6 +88,7 @@ src/
     analytics/             # 데이터 애널리틱스 페이지 템플릿
 
 tailwind.config.js         # Tailwind 커스텀 테마 및 플러그인 설정
+vite.config.ts             # Vite 설정 (테스트 설정 포함)
 ```
 
 ## 🎨 테마 변경 가이드
@@ -259,6 +295,71 @@ npm install
 - [Tailwind CSS 가이드](https://tailwindcss.com/docs)
 - [Vite 문서](https://vitejs.dev)
 - [TypeScript 핸드북](https://typescriptlang.org/docs)
+
+## 👨‍💻 개발 가이드
+
+새로운 브랜치에서 개발을 시작할 때는 [DEVELOPMENT_GUIDE.md](./DEVELOPMENT_GUIDE.md)를 참고하세요.
+
+### 주요 내용
+- 브랜치 전략 및 워크플로우
+- 코딩 규칙 및 스타일 가이드
+- 커밋 메시지 규칙
+- 테스트 작성 가이드 (Vitest + React Testing Library)
+- 코드 리뷰 가이드
+
+### 테스트 및 TDD
+
+프로젝트는 **Vitest**와 **React Testing Library**를 사용하며, **TDD (Test Driven Development)**를 완전히 지원합니다:
+
+```bash
+# 테스트 실행 (Watch 모드) - TDD 권장
+npm test
+
+# 테스트 UI (브라우저)
+npm run test:ui
+
+# 커버리지 확인
+npm run test:coverage
+```
+
+#### TDD 워크플로우
+
+1. **Red**: 실패하는 테스트 작성
+2. **Green**: 테스트를 통과하는 코드 작성
+3. **Refactor**: 코드 개선
+
+Watch 모드가 파일 변경을 감지하여 자동으로 테스트를 실행하므로 빠른 피드백 루프를 제공합니다.
+
+자세한 내용은 [TESTING_GUIDE.md](./TESTING_GUIDE.md)와 [DEVELOPMENT_GUIDE.md](./DEVELOPMENT_GUIDE.md#테스트-가이드)를 참고하세요.
+
+### 상태 관리 (Zustand)
+
+프로젝트는 전역 상태 관리를 위해 **Zustand**를 사용합니다:
+
+```tsx
+import { useThemeStore } from '@/stores'
+
+function ThemeToggle() {
+  const { theme, toggleTheme } = useThemeStore()
+  return <button onClick={toggleTheme}>테마 변경</button>
+}
+```
+
+자세한 사용법은 [ZUSTAND_GUIDE.md](./ZUSTAND_GUIDE.md)를 참고하세요.
+
+### 환경 변수 설정
+
+프로젝트 루트에 `.env` 파일을 생성하고 다음 변수를 설정하세요:
+
+```env
+# Google Analytics 측정 ID
+VITE_GA_MEASUREMENT_ID=G-XXXXXXXXXX
+
+# Microsoft Clarity 프로젝트 ID
+VITE_CLARITY_PROJECT_ID=your_clarity_project_id
+```
+
+자세한 설정 방법은 [ANALYTICS_SETUP_BEGINNER.md](./ANALYTICS_SETUP_BEGINNER.md)를 참고하세요.
 
 ## 🔮 향후 확장 아이디어
 
