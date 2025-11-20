@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
-import { render, screen } from '../test/test-utils'
+import { render, screen } from '../../test/test-utils'
 import { Button } from './Button'
 
 describe('Button', () => {
@@ -37,10 +37,10 @@ describe('Button', () => {
   it('클릭 이벤트를 처리한다', () => {
     const handleClick = vi.fn()
     render(<Button onClick={handleClick}>클릭</Button>)
-    
+
     const button = screen.getByRole('button')
     button.click()
-    
+
     expect(handleClick).toHaveBeenCalledTimes(1)
   })
 
@@ -51,10 +51,10 @@ describe('Button', () => {
         비활성화
       </Button>
     )
-    
+
     const button = screen.getByRole('button')
     expect(button).toBeDisabled()
-    
+
     button.click()
     expect(handleClick).not.toHaveBeenCalled()
   })
