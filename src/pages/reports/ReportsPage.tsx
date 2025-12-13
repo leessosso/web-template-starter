@@ -41,7 +41,7 @@ export default function ReportsPage() {
     },
     {
       title: '클럽별 보고서',
-      description: 'SPARKS, CUBBIES 등 클럽별 학생 현황과 진도 통계를 확인합니다.',
+      description: 'SPARKS, T&T, Trek 등 클럽별 학생 현황과 진도 통계를 확인합니다.',
       icon: <SchoolIcon />,
       path: '/reports/club-reports',
       color: 'info',

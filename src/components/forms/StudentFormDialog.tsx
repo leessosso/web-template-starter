@@ -5,11 +5,9 @@ import { Club, CLUB_OPTIONS } from '../../constants/clubs';
 
 // 클럽별 기본 학년 매핑
 const CLUB_TO_GRADE_MAP: Record<Club, number> = {
-  [Club.CUBBIES]: 1, // 만3-5세 → 1학년
-  [Club.SPARKS]: 2,  // K-2학년 → 2학년
-  [Club.TNT]: 3,     // 3-6학년 → 3학년
-  [Club.JOURNEY]: 4, // 중학부 → 4학년
-  [Club.TREK]: 4,    // 고등부 → 4학년
+  [Club.SPARKS]: 2,  // 7세~2학년
+  [Club.TNT]: 3,     // 3~6학년
+  [Club.TREK]: 4,    // 중등부
 };
 import { useAuthStore } from '../../store/authStore';
 import { userService } from '../../services/userService';
@@ -49,8 +47,8 @@ export function StudentFormDialog({
   const [teachers, setTeachers] = useState<User[]>([]);
   const [studentForm, setStudentForm] = useState<StudentFormData>({
     name: '',
-    club: Club.CUBBIES,
-    grade: 1,
+    club: Club.SPARKS,
+    grade: 2,
     gender: 'male',
     birthDate: undefined,
     assignedTeacherId: undefined,
@@ -97,8 +95,8 @@ export function StudentFormDialog({
         // 추가 모드: 빈 폼으로 초기화
         setStudentForm({
           name: '',
-          club: Club.CUBBIES,
-          grade: CLUB_TO_GRADE_MAP[Club.CUBBIES],
+          club: Club.SPARKS,
+          grade: CLUB_TO_GRADE_MAP[Club.SPARKS],
           gender: 'male',
           birthDate: undefined,
           assignedTeacherId: undefined,
@@ -115,8 +113,8 @@ export function StudentFormDialog({
     if (!open) {
       setStudentForm({
         name: '',
-        club: Club.CUBBIES,
-        grade: CLUB_TO_GRADE_MAP[Club.CUBBIES],
+        club: Club.SPARKS,
+        grade: CLUB_TO_GRADE_MAP[Club.SPARKS],
         gender: 'male',
         birthDate: undefined,
         assignedTeacherId: undefined,
@@ -178,7 +176,7 @@ export function StudentFormDialog({
                 setStudentForm({
                   ...studentForm,
                   club: selectedClub,
-                  grade: CLUB_TO_GRADE_MAP[selectedClub] || 1
+                  grade: CLUB_TO_GRADE_MAP[selectedClub]
                 });
               }}
             >
@@ -225,9 +223,9 @@ export function StudentFormDialog({
             <Input
               type="date"
               value={studentForm.birthDate ? new Date(studentForm.birthDate).toISOString().split('T')[0] : ''}
-              onChange={(e) => setStudentForm({ 
-                ...studentForm, 
-                birthDate: e.target.value ? new Date(e.target.value) : undefined 
+              onChange={(e) => setStudentForm({
+                ...studentForm,
+                birthDate: e.target.value ? new Date(e.target.value) : undefined
               })}
               style={{ colorScheme: 'light dark' }}
             />
@@ -240,8 +238,8 @@ export function StudentFormDialog({
             </label>
             <Select
               value={studentForm.assignedTeacherId || 'none'}
-              onValueChange={(value) => setStudentForm({ 
-                ...studentForm, 
+              onValueChange={(value) => setStudentForm({
+                ...studentForm,
                 assignedTeacherId: value === 'none' ? undefined : value
               })}
             >

@@ -39,10 +39,8 @@ export function StudentCard({
 
   const getClubText = (club: string) => {
     const clubMap: Record<string, string> = {
-      'Cubbies': 'Cubbies',
       'Sparks': 'Sparks',
       'T&T': 'T&T',
-      'Journey': 'Journey',
       'Trek': 'Trek',
     };
     return clubMap[club] || club;

@@ -267,10 +267,8 @@ export default function StudentsPage() {
 
   const getClubText = (club: string) => {
     const clubMap: Record<string, string> = {
-      [Club.CUBBIES]: 'Cubbies',
       [Club.SPARKS]: 'Sparks',
       [Club.TNT]: 'T&T',
-      [Club.JOURNEY]: 'Journey',
       [Club.TREK]: 'Trek',
     };
     return clubMap[club] || club;

@@ -187,10 +187,8 @@ export default function AttendancePage() {
   // 클럽을 텍스트로 변환하는 함수
   const getClubText = (club: Club): string => {
     const clubMap: Record<Club, string> = {
-      [Club.CUBBIES]: 'Cubbies',
       [Club.SPARKS]: 'Sparks',
       [Club.TNT]: 'T&T',
-      [Club.JOURNEY]: 'Journey',
       [Club.TREK]: 'Trek',
     };
     return clubMap[club] || club;

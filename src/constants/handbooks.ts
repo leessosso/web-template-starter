@@ -22,10 +22,8 @@ const createHandbook = (id: string, name: string, club: Club, totalUnits: number
 
 // 클럽별 핸드북 설정
 const HANDBOOK_CONFIGS: Record<Club, { id: string; name: string; totalUnits: number }> = {
-  [Club.CUBBIES]: { id: 'cubbies-1', name: 'Cubbies 핸드북 1', totalUnits: 10 },
   [Club.SPARKS]: { id: 'sparks-1', name: 'Sparks 핸드북 1', totalUnits: 12 },
   [Club.TNT]: { id: 'tnt-1', name: 'T&T 핸드북 1', totalUnits: 15 },
-  [Club.JOURNEY]: { id: 'journey-1', name: 'Journey 핸드북 1', totalUnits: 20 },
   [Club.TREK]: { id: 'trek-1', name: 'Trek 핸드북 1', totalUnits: 20 },
 };
 
