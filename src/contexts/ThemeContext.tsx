@@ -33,7 +33,7 @@ interface ThemeProviderProps {
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({
     children,
     defaultTheme = 'light',
-    defaultThemeColor = 'blue'
+    defaultThemeColor = 'orange'
 }) => {
     const [theme, setTheme] = useState<Theme>(defaultTheme)
     const [themeColor, setThemeColor] = useState<ThemeColor>(defaultThemeColor)
@@ -44,14 +44,14 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
         if (user) {
             // User is logged in - use user's theme settings or defaults
             setTheme(user.theme || 'light')
-            setThemeColor(user.themeColor || 'blue')
+            setThemeColor(user.themeColor || 'orange')
         } else {
             // User is not logged in - use localStorage or defaults
             const savedTheme = localStorage.getItem('theme') as Theme
             const savedThemeColor = localStorage.getItem('themeColor') as ThemeColor
 
             setTheme(savedTheme || 'light')
-            setThemeColor(savedThemeColor || 'blue')
+            setThemeColor(savedThemeColor || 'orange')
         }
     }, [user])
 
