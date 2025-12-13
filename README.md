@@ -83,9 +83,32 @@ npm install
 
 # 2. 환경변수 설정
 npm run setup:env
+# 또는 .env.example을 복사하여 .env 파일 생성
+cp .env.example .env
+# .env 파일을 열어 Firebase 설정 정보 입력
 
 # 3. 개발 서버 실행
 npm run dev
+```
+
+### 📝 환경 변수 설정
+
+`.env` 파일에 다음 정보를 입력하세요:
+
+**필수 설정:**
+- `VITE_FIREBASE_API_KEY`: Firebase API Key
+- `VITE_FIREBASE_AUTH_DOMAIN`: Firebase Auth Domain
+- `VITE_FIREBASE_PROJECT_ID`: Firebase Project ID
+- `VITE_FIREBASE_STORAGE_BUCKET`: Firebase Storage Bucket
+- `VITE_FIREBASE_MESSAGING_SENDER_ID`: Firebase Messaging Sender ID
+- `VITE_FIREBASE_APP_ID`: Firebase App ID
+
+**테스트 모드 (선택적):**
+로컬 개발 시 자동 로그인을 사용하려면:
+```env
+VITE_SKIP_AUTH=true
+VITE_TEST_EMAIL=test@example.com
+VITE_TEST_PASSWORD=your_test_password
 ```
 
 ### 🔧 초기 설정 (필수)
@@ -115,13 +138,36 @@ Awana LMS는 **만료된 임시 배정 데이터를 자동으로 정리**하는 
 # 생성된 JSON 파일을 scripts/serviceAccountKey.json으로 저장
 ```
 
-#### 2. GitHub Secrets 설정 (자동 정리용)
+#### 2. GitHub Secrets 설정
 
 GitHub 저장소 → Settings → Secrets and variables → Actions → New repository secret
 
+**필수 Secrets (Firebase 설정):**
+```
+VITE_FIREBASE_API_KEY = [Firebase API Key]
+VITE_FIREBASE_AUTH_DOMAIN = [Firebase Auth Domain]
+VITE_FIREBASE_PROJECT_ID = [Firebase Project ID]
+VITE_FIREBASE_STORAGE_BUCKET = [Firebase Storage Bucket]
+VITE_FIREBASE_MESSAGING_SENDER_ID = [Firebase Messaging Sender ID]
+VITE_FIREBASE_APP_ID = [Firebase App ID]
+```
+
+**자동 정리용 Secrets:**
 ```
 FIREBASE_SERVICE_ACCOUNT_KEY = [서비스 계정 키 JSON 내용 전체]
 ```
+
+**테스트 모드용 Secrets (선택적):**
+배포 환경에서 자동 로그인을 사용하려면 다음을 추가하세요:
+```
+VITE_SKIP_AUTH = true
+VITE_TEST_EMAIL = [테스트용 이메일 주소]
+VITE_TEST_PASSWORD = [테스트용 비밀번호]
+```
+
+> ⚠️ **보안 주의사항**: 
+> - 테스트용 계정 정보는 실제 프로덕션 계정과 분리된 테스트 계정을 사용하세요
+> - 테스트가 끝나면 `VITE_SKIP_AUTH`를 제거하거나 `false`로 설정하세요
 
 #### 3. 수동 정리 실행
 

@@ -3,8 +3,8 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - awana-lms  # 현재 브랜치에서만 배포
-  workflow_dispatch:  # 수동 실행도 가능
+      - awana-lms # 현재 브랜치에서만 배포
+  workflow_dispatch: # 수동 실행도 가능
 
 permissions:
   contents: read
@@ -26,8 +26,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: "20"
+          cache: "npm"
 
       - name: Install dependencies
         run: npm ci
@@ -43,6 +43,10 @@ jobs:
           VITE_FIREBASE_STORAGE_BUCKET: ${{ secrets.VITE_FIREBASE_STORAGE_BUCKET }}
           VITE_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.VITE_FIREBASE_MESSAGING_SENDER_ID }}
           VITE_FIREBASE_APP_ID: ${{ secrets.VITE_FIREBASE_APP_ID }}
+          # 테스트 모드 환경 변수 (선택적, GitHub Secrets에서 가져옴)
+          VITE_SKIP_AUTH: ${{ secrets.VITE_SKIP_AUTH }}
+          VITE_TEST_EMAIL: ${{ secrets.VITE_TEST_EMAIL }}
+          VITE_TEST_PASSWORD: ${{ secrets.VITE_TEST_PASSWORD }}
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
@@ -50,7 +54,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './dist'
+          path: "./dist"
 
   deploy:
     environment:
