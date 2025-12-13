@@ -1,6 +1,5 @@
 import { create } from 'zustand';
 import type { User, Theme, ThemeColor } from '../models/User';
-import { UserRole } from '../models/User';
 import { signIn, signUp, signOut, onAuthStateChange, getCurrentUser } from '../services/authService';
 import { userService } from '../services/userService';
 import { logger } from '../utils/logger';
