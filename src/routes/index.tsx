@@ -15,6 +15,7 @@ import StudentHandbookDetailPage from '../pages/handbook/StudentHandbookDetailPa
 import ReportsPage from '../pages/reports/ReportsPage'
 import StudentProgressReportPage from '../pages/reports/StudentProgressReportPage'
 import ChurchStatisticsPage from '../pages/reports/ChurchStatisticsPage'
+import GameTimePage from '../pages/game-time/GameTimePage'
 import SettingsPage from '../pages/SettingsPage'
 import NotFoundPage from '../pages/NotFoundPage'
 
@@ -88,6 +89,10 @@ export const router = createBrowserRouter([
       {
         path: 'reports/church-statistics',
         element: <ChurchStatisticsPage />,
+      },
+      {
+        path: 'game-time',
+        element: <GameTimePage />,
       },
       {
         path: 'settings',

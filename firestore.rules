@@ -38,5 +38,32 @@ service cloud.firestore {
       // allow read, write: if isAuthenticated(); // 임시로 모든 권한 허용 (테스트용)
       allow read, write: if true;
     }
+
+    // 게임시간 세션 컬렉션 (기존)
+    match /gameTimeSessions/{sessionId} {
+      allow read, write: if isAuthenticated();
+    }
+    // 게임시간 세션 컬렉션 쿼리 허용
+    match /gameTimeSessions {
+      allow list: if isAuthenticated();
+    }
+
+    // SPARKS 게임시간 세션 컬렉션
+    match /sparksGameTimeSessions/{sessionId} {
+      allow read, write: if isAuthenticated();
+    }
+    // SPARKS 게임시간 세션 컬렉션 쿼리 허용
+    match /sparksGameTimeSessions {
+      allow list: if isAuthenticated();
+    }
+
+    // T&T 게임시간 세션 컬렉션
+    match /tntGameTimeSessions/{sessionId} {
+      allow read, write: if isAuthenticated();
+    }
+    // T&T 게임시간 세션 컬렉션 쿼리 허용
+    match /tntGameTimeSessions {
+      allow list: if isAuthenticated();
+    }
   }
 }

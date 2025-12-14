@@ -3,3 +3,4 @@ export * from './studentStore';
 export * from './attendanceStore';
 export * from './handbookStore';
 export * from './sparksHandbookStore';
+export * from './gameTimeStore';

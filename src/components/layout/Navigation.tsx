@@ -26,6 +26,7 @@ const navItems = [
   { to: '/attendance', label: '출석 관리' },
   { to: '/handbook', label: '핸드북' },
   { to: '/students', label: '학생 관리' },
+  { to: '/game-time', label: '게임시간' },
   { to: '/reports', label: '보고서' },
 ]
 
