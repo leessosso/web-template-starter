@@ -26,14 +26,11 @@ jobs:
     - name: Install Firebase Admin SDK
       run: npm install firebase-admin
 
-    - name: Create service account key file
-      run: |
-        printf '%s' '${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}' > scripts/serviceAccountKey.json
-
     - name: Run cleanup script
       run: node scripts/cleanup-expired-temp-assignments.js
       env:
         NODE_ENV: production
+        FIREBASE_SERVICE_ACCOUNT_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}
 
     - name: Send notification on failure
       if: failure()
