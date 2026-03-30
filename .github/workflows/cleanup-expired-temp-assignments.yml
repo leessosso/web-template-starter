@@ -28,9 +28,7 @@ jobs:
 
     - name: Create service account key file
       run: |
-        echo "${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}" > scripts/serviceAccountKey.json
-      env:
-        FIREBASE_SERVICE_ACCOUNT_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}
+        printf '%s' '${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}' > scripts/serviceAccountKey.json
 
     - name: Run cleanup script
       run: node scripts/cleanup-expired-temp-assignments.js
